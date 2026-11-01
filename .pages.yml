@@ -1,0 +1,68 @@
+# Налаштування адмінки Pages CMS (https://app.pagescms.org) – вхід через GitHub.
+# Після збереження статті GitHub Actions автоматично збирає сторінку і публікує сайт.
+media:
+  input: assets/blog
+  output: /assets/blog
+  categories: [image]
+
+content:
+  - name: blog
+    label: Блог
+    type: collection
+    path: content/blog
+    filename: "{year}-{month}-{day}-{fields.slug}.md"
+    format: yaml-frontmatter
+    view:
+      fields: [title, date, category, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Заголовок (H1, до 70 символів)
+        type: string
+        required: true
+      - name: slug
+        label: Адреса сторінки латиницею (наприклад, tsiny-na-logotyp)
+        type: string
+        required: true
+        pattern:
+          regex: "^[a-z0-9-]+$"
+          message: Лише малі латинські літери, цифри та дефіс
+      - name: description
+        label: Опис для Google (до 160 символів)
+        type: text
+        required: true
+      - name: date
+        label: Дата публікації (майбутня дата = відкладена публікація)
+        type: date
+        required: true
+      - name: updated
+        label: Дата оновлення (необов'язково)
+        type: date
+      - name: category
+        label: Рубрика
+        type: select
+        options:
+          values: [Ціни, Бізнес, Для ГО, Брендинг, SMM, Презентації, Реклама, Поліграфія, Кейси, Новини студії]
+      - name: tags
+        label: Теги / ключові слова
+        type: string
+        list: true
+      - name: cover
+        label: Обкладинка (рекомендовано 1200×630, WebP або JPG)
+        type: image
+      - name: cover_alt
+        label: Опис обкладинки (для Google і незрячих)
+        type: string
+      - name: draft
+        label: Чернетка (не публікувати)
+        type: boolean
+        default: false
+      - name: body
+        label: Текст статті
+        type: rich-text
+        options:
+          format: markdown
