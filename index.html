@@ -93,11 +93,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ---------- прелоадер ---------- */
 .preloader{position:fixed;inset:0;z-index:200;background:var(--night);display:grid;place-items:center;animation:pl-failsafe .6s 4.5s forwards}
 @keyframes pl-failsafe{to{opacity:0;visibility:hidden}}
-.preloader__mark{width:min(64vw,420px);position:relative}
-.preloader__mark svg{width:100%;height:auto;display:block}
-.preloader__fill{position:absolute;inset:0;clip-path:inset(100% 0 0 0)}
-.preloader__count{position:absolute;right:max(24px,env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));font-family:var(--f-display);font-weight:800;font-size:clamp(48px,10vw,140px);line-height:1;color:var(--violet);font-variant-numeric:tabular-nums}
-.preloader__cap{position:absolute;left:max(24px,env(safe-area-inset-left,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));color:var(--fg-faint);font-size:14px}
+.pl-stage{position:relative;width:min(80vw,440px);aspect-ratio:1;display:grid;place-items:center}
+.pl-rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.pl-mark{position:relative;width:62%;clip-path:inset(0 100% 0 0)}
+.pl-mark svg{width:100%;height:auto;display:block}
 
 /* ---------- курсор ---------- */
 .cursor{position:fixed;left:0;top:0;z-index:150;pointer-events:none;display:none;opacity:0}
@@ -165,9 +164,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .mini{background:rgba(19,29,30,.6);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:var(--r-md);padding:16px 18px;display:flex;align-items:center;gap:14px;max-width:290px}
 .mini b{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1}
 .mini span{font-size:13px;color:var(--fg-dim);line-height:1.35}
-.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 10px;border-radius:999px;font-weight:600;font-size:14px;box-shadow:0 14px 40px rgba(0,0,0,.35);white-space:nowrap}
+.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 10px;border-radius:999px;font-weight:600;font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.16);white-space:nowrap}
 .chip i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.12)}
-.chip--sun{background:var(--sun);color:var(--on-light);left:51%;top:calc(var(--h0) * .36);rotate:-8deg}
+.chip--sun{background:var(--sun);color:var(--on-light);left:45%;top:calc(var(--h0) * .44);rotate:-8deg}
 .chip--cream{background:var(--cream);color:var(--on-light);left:86%;top:calc(var(--h0) * .45);rotate:6deg}
 .chip--ember{background:var(--ember);color:#fff;left:54%;top:calc(var(--h0) * .70);rotate:4deg}
 .hero__scroll{position:absolute;left:max(20px,env(safe-area-inset-left,0px));bottom:calc(var(--ext) + 28px);z-index:3;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--fg-faint)}
@@ -181,6 +180,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .hero__statue{bottom:auto}
   .ribbons{margin-top:-50px}
   .hero__inner{order:1}
+  .hero h1{font-size:clamp(34px,10.4vw,60px);line-height:1.1}
+  .hero h1 .shapes-pill{font-size:.72em;margin-left:.16em}
   .hero__statue{order:2}
   .hero__inner{grid-template-columns:1fr;min-height:0;padding-bottom:0;gap:28px}
   .hero__side{display:none}
@@ -188,7 +189,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .hero__orbit{left:50%;top:auto;bottom:-6%;width:120vw;transform:translateX(-50%)}
   .chip{font-size:12px;padding:8px 12px 8px 8px}
   .chip i{width:22px;height:22px}
-  .chip--sun{left:4%;top:auto;bottom:44%}
+  .chip--sun{left:4%;top:auto;bottom:40%}
   .chip--cream{left:auto;right:4%;top:auto;bottom:30%}
   .chip--ember{left:10%;top:auto;bottom:12%}
   .hero__scroll{display:none}
@@ -634,12 +635,26 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 <!-- ======= прелоадер ======= -->
 <div class="preloader" id="preloader" aria-hidden="true">
-  <div class="preloader__mark">
-    <svg viewBox="0 0 1346 272" style="color:#232D2F"><use href="#wm" fill="currentColor"/></svg>
-    <div class="preloader__fill" id="plFill"><svg viewBox="0 0 1346 272" style="color:#8A31EF"><use href="#wm" fill="currentColor"/></svg></div>
+  <div class="pl-stage" id="plStage">
+    <svg class="pl-rings" viewBox="0 0 400 400" fill="none">
+      <defs><linearGradient id="plGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A45CFF"/><stop offset=".6" stop-color="#8A31EF"/><stop offset="1" stop-color="#FF6016"/></linearGradient></defs>
+      <circle class="pl-r" cx="200" cy="200" r="196" stroke="rgba(205,176,255,.28)" stroke-width="1" stroke-dasharray="3 7"/>
+      <circle class="pl-r" cx="200" cy="200" r="168" stroke="rgba(205,176,255,.12)" stroke-width="1"/>
+      <circle class="pl-r" cx="200" cy="200" r="138" stroke="rgba(244,239,249,.07)" stroke-width="3"/>
+      <circle id="plArc" cx="200" cy="200" r="138" stroke="url(#plGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="867.1" stroke-dashoffset="867.1" transform="rotate(-90 200 200)"/>
+      <circle class="pl-r" cx="200" cy="200" r="104" fill="rgba(138,49,239,.10)"/>
+      <g class="pl-orbit" id="plOrb1"><circle cx="200" cy="4" r="5" fill="#FF6016"/></g>
+      <g class="pl-orbit" id="plOrb2"><circle cx="200" cy="32" r="3.5" fill="#FFC94A"/></g>
+      <g class="pl-orbit" id="plOrb3"><circle cx="200" cy="396" r="3" fill="#CDB0FF"/></g>
+    </svg>
+    <div class="pl-mark" id="plMark">
+      <svg viewBox="0 0 1346 272"><use href="#wm" fill="#F4EFF9"/>
+        <path fill="#8A31EF" fill-rule="evenodd" d="M88.9347 81.7891V230.389L41.752 271.996V81.7891H88.9347Z"/>
+        <path fill="#8A31EF" fill-rule="evenodd" d="M1.45665 1.57053L0 0.0935581L2.05902 0.0732422H150.035C190.311 0.0732422 222.951 32.7349 222.951 73.0104C222.951 113.265 190.311 145.926 150.035 145.926H42.8138V102.572H150.742C167.073 102.572 180.304 89.3412 180.304 73.0104C180.304 56.6797 167.073 43.4274 150.742 43.4274H43.3125L1.45665 1.57053Z"/>
+      </svg>
+    </div>
   </div>
-  <div class="preloader__cap">Digital Studio · дизайн і SMM</div>
-  <div class="preloader__count" id="plCount">0</div>
+</div>
 </div>
 
 <!-- ======= курсор ======= -->
@@ -703,16 +718,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   <div class="wrap hero__inner">
     <div class="hero__copy">
       <span class="eyebrow" data-hero>Digital-студія дизайну та SMM</span>
-      <h1 aria-label="Робимо бренди помітними">
-        <span class="ln"><span>Робимо
+      <h1 aria-label="Говоримо мовою вашої аудиторії">
+        <span class="ln"><span>Говоримо
           <span class="shapes-pill" aria-hidden="true">
             <svg viewBox="0 0 100 100" class="spin" style="color:#1F1233"><use href="#flower"/></svg>
             <svg viewBox="0 0 24 24" style="color:#FFC94A"><use href="#star4"/></svg>
             <svg viewBox="0 0 100 100" style="color:#F3E6D8"><path d="M0 100A50 50 0 0 1 100 100Z" transform="translate(0,-25)" fill="currentColor"/></svg>
           </span>
         </span></span>
-        <span class="ln"><span>бренди</span></span>
-        <span class="ln"><span><em>помітними</em></span></span>
+        <span class="ln"><span>мовою вашої</span></span>
+        <span class="ln"><span><em>аудиторії</em></span></span>
       </h1>
       <p class="hero__lead" data-hero>Пости, сторіз, презентації й реклама для вашого бренду щомісяця. Ви пишете задачу в чат, ми повертаємося з готовим макетом.</p>
       <div class="hero__ctas" data-hero>
@@ -1379,17 +1394,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     return tl;
   };
 
-  const counter = { v: 0 };
   const plTl = gsap.timeline({
     onComplete: () => {
       gsap.to(preloader, { yPercent: -100, duration: 1, ease: 'expo.inOut', onComplete: () => preloader.remove() });
       gsap.delayedCall(.35, () => { if (!reduce) heroIntro(); lenis && lenis.start(); });
     }
   });
-  plTl.to(counter, { v: 100, duration: reduce ? .1 : 1.3, ease: 'power2.inOut', onUpdate: () => {
-      $('#plCount').textContent = Math.round(counter.v);
-      $('#plFill').style.clipPath = `inset(${100 - counter.v}% 0 0 0)`;
-    } });
+  ['#plOrb1', '#plOrb2', '#plOrb3'].forEach((id, i) => gsap.to(id, { rotation: i === 1 ? -360 : 360, svgOrigin: '200 200', duration: [2.4, 3.6, 5][i], repeat: -1, ease: 'none' }));
+  plTl.from('.pl-r', { scale: .55, opacity: 0, svgOrigin: '200 200', duration: 1, stagger: .08, ease: 'expo.out' })
+      .from('.pl-orbit', { opacity: 0, duration: .5 }, .2)
+      .to('#plArc', { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, .15)
+      .to('#plMark', { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power3.inOut' }, .35)
+      .from('#plMark', { y: 14, duration: 1.1, ease: 'power3.out' }, .35)
+      .to('#plStage', { scale: 1.12, opacity: 0, duration: .5, ease: 'power2.in' }, '+=.2');
+  if (reduce) plTl.timeScale(8);
 
   /* ---------- шапка ---------- */
   const header = $('#header');
