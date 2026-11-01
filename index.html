@@ -1,0 +1,1658 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#131D1E">
+<title>Perseus Digital Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Perseus – digital-студія графічного дизайну та SMM: дизайн-супровід бренду, пости, сторіз, презентації, рекламні креативи, ведення соцмереж.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700&family=Unbounded:wght@400;500;600;700;800;900&display=swap">
+<link rel="preload" as="image" href="assets/perseus.webp" type="image/webp">
+<style>
+/* Мармур і пурпур: статуя – вісь першого екрана; далі чергування темних полотен,
+   фіолетового блоку послуг, кольорових бенто-карток і світлої секції тарифів. */
+:root{
+  color-scheme: dark;
+  --ink:#0B1112;        /* найглибше тло (від #131D1E) */
+  --night:#131D1E;      /* фірмовий темний */
+  --night-2:#1A2729;
+  --plum:#1F1233;       /* темно-фіолетова поверхня */
+  --violet:#8A31EF;     /* головний */
+  --violet-2:#A45CFF;
+  --lilac:#CDB0FF;
+  --ember:#FF6016;      /* акцент */
+  --cream:#F3E6D8;      /* тілесний */
+  --cream-2:#E9D6C2;
+  --sun:#FFC94A;        /* жовтий */
+  --fg:#F4EFF9;
+  --fg-dim:rgba(244,239,249,.64);
+  --fg-faint:rgba(244,239,249,.38);
+  --line:rgba(244,239,249,.12);
+  --on-light:#131D1E;
+
+  --f-display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body:"Commissioner", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --r-lg:36px; --r-md:22px; --r-sm:14px;
+  --ease: cubic-bezier(.22,1,.36,1);
+  --wrap: 1360px;
+  --h0: clamp(700px,100svh,1200px);   /* висота першого екрана */
+  --ext: clamp(170px,19vw,270px);    /* продовження фону під стрічками */
+}
+*,*::before,*::after{box-sizing:border-box}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink); color:var(--fg);
+  font-family:var(--f-body); font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden; margin:0;
+}
+body::before{ /* смуга під системною панеллю телефона */
+  content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--ink);
+}
+body::after{ /* зерно */
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:90; opacity:.045;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+img{max-width:100%;display:block}
+main,footer{overflow-x:clip}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--violet);color:#fff}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:8px}
+
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(20px, env(safe-area-inset-left,0px));padding-right:max(20px, env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--f-body);font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--lilac);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px rgba(255,96,22,.18)}
+.h-sec{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:.95;font-size:clamp(40px,7.4vw,118px);text-wrap:balance;margin:0}
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em}
+.split .wi{display:inline-block;will-change:transform}
+
+/* ---------- кнопки ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 26px;border-radius:999px;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;isolation:isolate;transition:color .4s var(--ease)}
+.btn .roll{display:inline-grid;overflow:hidden;height:1.3em;line-height:1.3em}
+.btn .roll span{grid-area:1/1;transition:transform .5s var(--ease)}
+.btn .roll span+span{transform:translateY(110%)}
+.btn:hover .roll span:first-child{transform:translateY(-110%)}
+.btn:hover .roll span+span{transform:translateY(0)}
+.btn--ember{background:var(--ember);color:#fff}
+.btn--ember::before{content:"";position:absolute;inset:0;background:var(--fg);border-radius:inherit;transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}
+.btn--ember:hover{color:var(--on-light)}
+.btn--ember:hover::before{transform:translateY(0)}
+.btn--ghost{border:1px solid var(--line);color:var(--fg);background:rgba(244,239,249,.04);backdrop-filter:blur(8px)}
+.btn--ghost:hover{border-color:var(--lilac)}
+.btn .arr{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);transition:transform .5s var(--ease)}
+.btn:hover .arr{transform:rotate(45deg)}
+.btn--ghost .arr{background:var(--violet)}
+
+/* ---------- прелоадер ---------- */
+.preloader{position:fixed;inset:0;z-index:200;background:var(--night);display:grid;place-items:center;animation:pl-failsafe .6s 4.5s forwards}
+@keyframes pl-failsafe{to{opacity:0;visibility:hidden}}
+.preloader__mark{width:min(64vw,420px);position:relative}
+.preloader__mark svg{width:100%;height:auto;display:block}
+.preloader__fill{position:absolute;inset:0;clip-path:inset(100% 0 0 0)}
+.preloader__count{position:absolute;right:max(24px,env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));font-family:var(--f-display);font-weight:800;font-size:clamp(48px,10vw,140px);line-height:1;color:var(--violet);font-variant-numeric:tabular-nums}
+.preloader__cap{position:absolute;left:max(24px,env(safe-area-inset-left,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));color:var(--fg-faint);font-size:14px}
+
+/* ---------- курсор ---------- */
+.cursor{position:fixed;left:0;top:0;z-index:150;pointer-events:none;display:none;opacity:0}
+.cursor__dot{position:fixed;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--ember)}
+.cursor__ring{position:fixed;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:1px solid rgba(205,176,255,.6);display:grid;place-items:center;transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .35s,border-color .35s}
+.cursor__label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .25s}
+.cursor.is-link .cursor__ring{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(138,49,239,.18);border-color:var(--violet)}
+.cursor.is-label .cursor__ring{width:96px;height:96px;margin:-48px 0 0 -48px;background:var(--violet);border-color:var(--violet)}
+.cursor.is-label .cursor__label{opacity:1}
+.cursor.is-label .cursor__dot{opacity:0}
+@media (pointer:fine){ .cursor{display:block} }
+
+/* ---------- шапка ---------- */
+.header{position:fixed;left:0;right:0;top:0;z-index:100;padding-top:calc(env(safe-area-inset-top,0px) + 14px);padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));pointer-events:none}
+.header__bar{pointer-events:auto;max-width:1240px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;height:64px;padding:0 10px 0 24px;border-radius:999px;border:1px solid transparent;transition:background .4s,border-color .4s,backdrop-filter .4s}
+.header.is-scrolled .header__bar{background:rgba(19,29,30,.66);border-color:var(--line);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3)}
+.logo{display:block;width:132px;color:var(--fg);transform:translateY(3px)}
+.logo svg{width:100%;height:auto;display:block}
+.nav{display:flex;gap:4px}
+.nav a{position:relative;padding:10px 16px;border-radius:999px;font-size:15px;font-weight:500;color:var(--fg-dim);transition:color .3s,background .3s}
+.nav a:hover{color:var(--fg);background:rgba(244,239,249,.06)}
+.header .btn{height:46px;padding:0 8px 0 20px;font-size:15px}
+.burger{display:none;width:46px;height:46px;border-radius:50%;background:var(--violet);position:relative}
+.burger span{position:absolute;left:14px;right:14px;height:2px;background:#fff;border-radius:2px;transition:transform .4s var(--ease),top .4s var(--ease)}
+.burger span:nth-child(1){top:18px}.burger span:nth-child(2){top:26px}
+.menu-open .burger span:nth-child(1){top:22px;transform:rotate(45deg)}
+.menu-open .burger span:nth-child(2){top:22px;transform:rotate(-45deg)}
+.mmenu{position:fixed;inset:0;z-index:99;background:var(--plum);display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding:110px max(24px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));clip-path:circle(0% at calc(100% - 46px) 46px);visibility:hidden;transition:clip-path .8s var(--ease),visibility 0s .8s}
+.menu-open .mmenu{clip-path:circle(150% at calc(100% - 46px) 46px);visibility:visible;transition:clip-path .8s var(--ease)}
+.mmenu a.mm{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,10vw,56px);line-height:1.05;text-transform:uppercase;display:block}
+.mmenu a.mm em{font-style:normal;color:var(--violet-2)}
+.mmenu small{color:var(--fg-dim);font-size:15px}
+@media (max-width:980px){ .nav{display:none} .header .btn{display:none} .burger{display:block} }
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:calc(var(--h0) + var(--ext));overflow:hidden;padding-top:150px;padding-bottom:var(--ext);isolation:isolate}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--ext) * .55);background:linear-gradient(180deg,transparent,var(--ink));z-index:2;pointer-events:none}
+.hero__bg{position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 55% at 70% 45%, rgba(138,49,239,.42), transparent 70%),
+  radial-gradient(40% 40% at 10% 90%, rgba(255,96,22,.12), transparent 70%),
+  linear-gradient(180deg, var(--night) 0%, var(--ink) 100%)}
+.hero__grid{position:absolute;inset:0;z-index:-2;opacity:.35;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:88px 88px;mask-image:radial-gradient(70% 60% at 60% 40%,#000,transparent 75%);-webkit-mask-image:radial-gradient(70% 60% at 60% 40%,#000,transparent 75%)}
+.hero__orbit{position:absolute;left:68%;top:calc(var(--h0) * .58);width:min(62vw,820px);aspect-ratio:1;transform:translate(-50%,-50%);z-index:-1;pointer-events:none}
+.hero__orbit .disc{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 40% 35%, var(--violet-2), var(--violet) 45%, #5B17B0 100%);box-shadow:0 0 120px 20px rgba(138,49,239,.35)}
+.hero__orbit .ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(205,176,255,.28)}
+.hero__orbit .ring.r2{inset:5%;border-style:solid;border-color:rgba(205,176,255,.12)}
+.hero__orbit .sat{position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--ember);box-shadow:0 0 18px var(--ember)}
+.hero__statue{position:absolute;bottom:calc(var(--ext) * .45);left:68%;transform:translateX(-50%);height:calc(min(var(--h0) * .84, 830px) + var(--ext) * .45);aspect-ratio:1100/1356;z-index:1;pointer-events:none}
+.hero__statue img{width:100%;height:100%;object-fit:contain;object-position:bottom;-webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%),linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,#000 78%,transparent 100%),linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);mask-composite:intersect}
+.hero__inner{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;min-height:calc(var(--h0) - 150px);align-items:center;padding-bottom:90px}
+.hero__copy{display:flex;flex-direction:column;gap:28px;max-width:640px}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(36px,4.6vw,76px);line-height:1.12;letter-spacing:-.03em;margin:0}
+.hero h1 .ln{display:block;overflow:hidden;padding-block:.04em .1em;margin-block:-.04em -.1em}
+.hero h1 .ln>span{display:inline-block;will-change:transform}
+.hero h1 em{font-style:normal;color:var(--ember)}
+.shapes-pill{margin-left:.12em;display:inline-flex;align-items:center;gap:.14em;height:.86em;padding:0 .22em;border-radius:.2em;background:var(--violet);vertical-align:middle}
+.shapes-pill svg{width:.56em;height:.56em;display:block}
+.hero__lead{font-size:clamp(16px,1.35vw,19px);color:var(--fg-dim);max-width:500px;margin:0}
+.hero__ctas{display:flex;flex-wrap:wrap;gap:12px}
+.hero__side{align-self:end;justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+.badge{position:relative;width:148px;height:148px;display:grid;place-items:center}
+.badge svg.txt{position:absolute;inset:0;width:100%;height:100%}
+.badge__core{width:76px;height:76px;border-radius:50%;background:var(--ember);display:grid;place-items:center;color:#fff;transition:transform .5s var(--ease)}
+.badge:hover .badge__core{transform:scale(1.12) rotate(45deg)}
+.mini{background:rgba(19,29,30,.6);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:var(--r-md);padding:16px 18px;display:flex;align-items:center;gap:14px;max-width:290px}
+.mini b{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1}
+.mini span{font-size:13px;color:var(--fg-dim);line-height:1.35}
+.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 10px;border-radius:999px;font-weight:600;font-size:14px;box-shadow:0 14px 40px rgba(0,0,0,.35);white-space:nowrap}
+.chip i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.12)}
+.chip--sun{background:var(--sun);color:var(--on-light);left:51%;top:calc(var(--h0) * .36);rotate:-8deg}
+.chip--cream{background:var(--cream);color:var(--on-light);left:86%;top:calc(var(--h0) * .45);rotate:6deg}
+.chip--ember{background:var(--ember);color:#fff;left:54%;top:calc(var(--h0) * .70);rotate:4deg}
+.hero__scroll{position:absolute;left:max(20px,env(safe-area-inset-left,0px));bottom:calc(var(--ext) + 28px);z-index:3;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--fg-faint)}
+.hero__scroll .mouse{width:22px;height:34px;border:1.5px solid var(--fg-faint);border-radius:12px;position:relative}
+.hero__scroll .mouse::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--ember);animation:wheel 1.8s infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(10px)}}
+
+@media (max-width:900px){
+  .hero{padding-top:118px;padding-bottom:0;min-height:0;display:flex;flex-direction:column}
+  .hero::after{height:90px}
+  .hero__statue{bottom:auto}
+  .ribbons{margin-top:-50px}
+  .hero__inner{order:1}
+  .hero__statue{order:2}
+  .hero__inner{grid-template-columns:1fr;min-height:0;padding-bottom:0;gap:28px}
+  .hero__side{display:none}
+  .hero__statue{position:relative;left:auto;transform:none;height:auto;width:min(100%,560px);margin:10px auto 0}
+  .hero__orbit{left:50%;top:auto;bottom:-6%;width:120vw;transform:translateX(-50%)}
+  .chip{font-size:12px;padding:8px 12px 8px 8px}
+  .chip i{width:22px;height:22px}
+  .chip--sun{left:4%;top:auto;bottom:44%}
+  .chip--cream{left:auto;right:4%;top:auto;bottom:30%}
+  .chip--ember{left:10%;top:auto;bottom:12%}
+  .hero__scroll{display:none}
+}
+
+
+.hx{position:absolute;z-index:3;pointer-events:none}
+.hx-spark{width:22px;height:22px}
+.hx-spark svg{width:100%;height:100%;display:block}
+.hx-s1{left:48%;top:calc(var(--h0) * .24);color:var(--sun)}
+.hx-s2{left:96%;top:calc(var(--h0) * .44);color:var(--lilac);width:16px;height:16px}
+.hx-s3{left:62%;top:calc(var(--h0) * .16);color:var(--cream);width:14px;height:14px}
+.hx-s4{left:47%;top:calc(var(--h0) * .76);color:var(--ember);width:18px;height:18px}
+.hx-s5{left:79%;top:calc(var(--h0) * .66);color:var(--sun);width:12px;height:12px}
+.hx-dots{left:92%;top:calc(var(--h0) * .30);width:64px;height:64px;opacity:.5;background-image:radial-gradient(var(--lilac) 1.5px,transparent 1.6px);background-size:12px 12px}
+@media (max-width:900px){ .hx{display:none} }
+
+/* ---------- стрічки ---------- */
+.ribbons{position:relative;height:var(--ext);margin-top:calc(-1 * var(--ext));z-index:4;overflow:hidden}
+.ribbon{position:absolute;left:-5%;right:-5%;top:50%;overflow:hidden;padding:clamp(12px,1.4vw,20px) 0;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.ribbon--a{background:var(--violet);transform:translateY(-62%) rotate(-3.5deg);z-index:2}
+.ribbon--b{background:var(--cream);color:var(--on-light);transform:translateY(-30%) rotate(2.6deg)}
+.ribbon__track{display:flex;width:max-content;will-change:transform}
+.ribbon__group{display:flex;align-items:center;gap:clamp(18px,2vw,32px);padding-right:clamp(18px,2vw,32px)}
+.ribbon__group span{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(20px,2.8vw,40px);letter-spacing:-.01em;white-space:nowrap}
+.ribbon__group svg{width:clamp(18px,2vw,28px);height:auto;flex:none}
+.ribbon--a svg{color:var(--sun)}
+.ribbon--b svg{color:var(--ember)}
+
+/* ---------- про студію ---------- */
+.about{padding-block:clamp(90px,12vw,170px) clamp(80px,10vw,140px)}
+.about__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 60px;margin-bottom:clamp(40px,6vw,80px)}
+.about__head .h-sec{flex:0 1 auto}
+.about__head p{max-width:420px;color:var(--fg-dim);margin:0;font-size:16px}
+.manifest{font-family:var(--f-display);font-weight:500;font-size:clamp(24px,3.2vw,48px);line-height:1.2;letter-spacing:-.02em;max-width:1200px;margin:0 0 clamp(60px,8vw,110px)}
+.manifest .mw{opacity:1}
+.manifest .hl{color:var(--lilac)}
+.manifest .hl2{color:var(--ember)}
+.about__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:stretch}
+.phone-card{position:relative;border-radius:var(--r-lg);overflow:hidden;background:radial-gradient(80% 70% at 50% 100%, rgba(138,49,239,.55), transparent 70%), var(--night);border:1px solid var(--line);min-height:520px;display:grid;place-items:center;padding:84px 20px 36px}
+.phone{position:relative;height:clamp(360px,30vw,430px);aspect-ratio:9/18.5;max-width:100%;border-radius:38px;background:#05090A;border:6px solid #2A3638;box-shadow:0 40px 80px rgba(0,0,0,.5);overflow:hidden}
+.phone::before{content:"";position:absolute;top:8px;left:50%;width:76px;height:20px;margin-left:-38px;border-radius:12px;background:#05090A;z-index:3}
+.phone__top{position:absolute;inset:0 0 auto;height:74px;padding:34px 14px 0;display:flex;align-items:center;gap:8px;background:linear-gradient(#05090A 70%,transparent);z-index:2;font-size:12px;font-weight:600}
+.phone__top .av{width:26px;height:26px;border-radius:50%;background:var(--violet);display:grid;place-items:center}
+.phone__top .av svg{width:14px}
+.feed-wrap{position:absolute;inset:74px 3px 0;overflow:hidden}
+.feed{display:grid;grid-template-columns:repeat(3,1fr);column-gap:3px;animation:feed 26s linear infinite}
+.feed>div{margin-bottom:3px;aspect-ratio:4/5;border-radius:4px;position:relative;overflow:hidden;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:11px;text-align:center;line-height:1.05;padding:6px}
+@keyframes feed{to{transform:translateY(-50%)}}
+.t1{background:var(--violet);color:#fff}.t2{background:var(--cream);color:var(--on-light)}.t3{background:var(--sun);color:var(--on-light)}
+.t4{background:var(--ember);color:#fff}.t5{background:var(--night-2);color:var(--lilac)}.t6{background:var(--lilac);color:var(--plum)}
+.t-c{width:56%;aspect-ratio:1;border-radius:50%;background:currentColor;opacity:.9}
+.t-h{width:60%;aspect-ratio:2/1;border-radius:99px 99px 0 0;background:currentColor;opacity:.85}
+.phone-card__tag{position:absolute;left:20px;top:20px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(244,239,249,.08);border:1px solid var(--line)}
+.tag .dot{width:7px;height:7px;border-radius:50%;background:#3BE38B;box-shadow:0 0 0 3px rgba(59,227,139,.2)}
+.stats{display:flex;flex-direction:column;gap:12px}
+.stat{border-radius:var(--r-md);background:var(--night);border:1px solid var(--line);overflow:hidden;transition:border-color .3s}
+.stat:hover{border-color:rgba(205,176,255,.35)}
+.stat button{width:100%;display:flex;align-items:center;gap:18px;padding:22px 26px;text-align:left}
+.stat .num{font-family:var(--f-display);font-weight:800;font-size:clamp(36px,4vw,56px);line-height:1;letter-spacing:-.03em;min-width:3.2ch;font-variant-numeric:tabular-nums}
+.stat .num sup{font-size:.45em;color:var(--ember);vertical-align:top;margin-left:2px}
+.stat .lbl{flex:1;font-weight:500;line-height:1.25;font-size:16px}
+.stat .chev{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:transform .5s var(--ease),background .3s}
+.stat.open .chev{transform:rotate(180deg);background:var(--violet);border-color:var(--violet)}
+.stat .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.stat.open .body{grid-template-rows:1fr}
+.stat .body>div{overflow:hidden}
+.stat .body p{margin:0;padding:0 26px 24px;color:var(--fg-dim);font-size:15px;max-width:52ch}
+@media (max-width:900px){ .about__grid{grid-template-columns:1fr} .phone-card{min-height:460px} }
+
+/* ---------- послуги ---------- */
+.services{position:relative;background:var(--violet);padding-block:clamp(80px,10vw,150px);border-radius:var(--r-lg) var(--r-lg) 0 0;overflow:hidden;isolation:isolate}
+.services::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(50% 60% at 100% 0%, rgba(255,201,74,.18), transparent 70%),
+  radial-gradient(60% 60% at 0% 100%, rgba(31,18,51,.55), transparent 70%)}
+.services__lines{position:absolute;inset:0;z-index:-1;opacity:.25;pointer-events:none}
+.services__head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 40px;margin-bottom:clamp(40px,5vw,70px)}
+.services__head .btn--ghost{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.08)}
+.services__head .btn--ghost .arr{background:var(--ember)}
+.svc-list{display:flex;flex-direction:column;gap:12px}
+.svc{position:relative;border-radius:var(--r-lg);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);overflow:hidden;isolation:isolate;transition:color .45s var(--ease),border-color .45s}
+.svc::before{content:"";position:absolute;inset:0;background:var(--cream);z-index:-1;transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.svc:hover::before,.svc.open::before{transform:scaleX(1)}
+.svc:hover,.svc.open{color:var(--on-light);border-color:var(--cream)}
+.svc__row{width:100%;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:24px;padding:clamp(18px,2vw,26px) clamp(18px,2.4vw,30px);text-align:left}
+.svc__ico{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.14);transition:background .45s,color .45s}
+.svc:hover .svc__ico,.svc.open .svc__ico{background:var(--violet);color:#fff}
+.svc__ico svg{width:24px;height:24px}
+.svc__title{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,2.6vw,38px);letter-spacing:-.02em;line-height:1.1}
+.svc__price{font-size:15px;font-weight:600;opacity:.85;white-space:nowrap}
+.svc__arr{width:54px;height:54px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;transition:transform .55s var(--ease),background .45s,color .45s,border-color .45s}
+.svc:hover .svc__arr,.svc.open .svc__arr{background:var(--night);color:#fff;border-color:var(--night);transform:rotate(45deg)}
+.svc.open .svc__arr{transform:rotate(135deg)}
+.svc__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.svc.open .svc__body{grid-template-rows:1fr}
+.svc__body>div{overflow:hidden}
+.svc__inner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:30px;padding:0 clamp(18px,2.4vw,30px) clamp(24px,3vw,34px) calc(clamp(18px,2.4vw,30px) + 76px)}
+.svc__inner p{margin:0;font-size:16px;max-width:56ch}
+.svc__chips{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.svc__chips span{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(19,29,30,.08);border:1px solid rgba(19,29,30,.14)}
+@media (max-width:760px){
+  .svc__row{grid-template-columns:1fr auto;gap:14px}
+  .svc__ico{display:none}
+  .svc__price{grid-column:1;grid-row:2;font-size:13px}
+  .svc__arr{grid-column:2;grid-row:1/3;width:46px;height:46px}
+  .svc__inner{grid-template-columns:1fr;padding-left:clamp(18px,2.4vw,30px);gap:16px}
+}
+
+
+/* ---------- бізнес і громадський сектор ---------- */
+.sectors{padding-block:clamp(90px,11vw,160px) clamp(40px,5vw,70px);position:relative}
+.sectors__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px;margin-bottom:clamp(36px,5vw,60px)}
+.sectors__head p{max-width:440px;color:var(--fg-dim);margin:0}
+.sp-wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;perspective:1400px}
+.sp{position:relative;border-radius:var(--r-lg);padding:clamp(26px,3vw,44px);overflow:hidden;isolation:isolate;display:flex;flex-direction:column;gap:22px;min-height:620px;transform-style:preserve-3d;will-change:transform}
+.sp--biz{background:var(--cream);color:var(--on-light)}
+.sp--ngo{background:radial-gradient(90% 70% at 100% 0%, rgba(138,49,239,.55), transparent 60%), radial-gradient(70% 60% at 0% 100%, rgba(255,96,22,.16), transparent 70%), var(--plum);border:1px solid rgba(205,176,255,.18)}
+.sp__kicker{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:8px 14px 8px 8px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.04em}
+.sp__kicker i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
+.sp__kicker svg{width:15px;height:15px}
+.sp--biz .sp__kicker{background:rgba(19,29,30,.07)}
+.sp--biz .sp__kicker i{background:var(--ember);color:#fff}
+.sp--ngo .sp__kicker{background:rgba(244,239,249,.08)}
+.sp--ngo .sp__kicker i{background:var(--sun);color:var(--on-light)}
+.sp h3{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,2.8vw,42px);line-height:1.05;letter-spacing:-.025em;margin:0;text-wrap:balance;max-width:16ch}
+.sp>p{margin:0;font-size:16px;line-height:1.55;max-width:46ch}
+.sp--biz>p{color:rgba(19,29,30,.75)}
+.sp--ngo>p{color:var(--fg-dim)}
+.sp__list{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.sp__list li{padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600}
+.sp--biz .sp__list li{background:#fff;border:1px solid rgba(19,29,30,.08)}
+.sp--ngo .sp__list li{background:rgba(244,239,249,.06);border:1px solid rgba(205,176,255,.2)}
+.sp__art{position:relative;height:clamp(250px,22vw,320px);margin-top:auto;flex:none}
+/* бізнес: креативи + графік */
+.biz-card{position:absolute;border-radius:16px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--f-display);font-weight:800;line-height:1.05;box-shadow:0 24px 50px rgba(19,29,30,.18);font-size:clamp(12px,1.05vw,15px)}
+.biz-card .cta{align-self:flex-start;font-family:var(--f-body);font-weight:700;font-size:12px;padding:6px 12px;border-radius:99px;background:var(--fg);color:var(--on-light)}
+.biz-card--a{left:2%;bottom:4%;width:34%;aspect-ratio:4/5;background:var(--violet);color:#fff;transform:rotate(-7deg)}
+.biz-card--b{left:31%;bottom:16%;width:24%;aspect-ratio:9/16;background:var(--night);color:var(--sun);transform:rotate(4deg);z-index:2}
+.biz-card--c{right:3%;bottom:6%;width:40%;aspect-ratio:1.25;background:#fff;color:var(--on-light);transform:rotate(-3deg);padding:16px}
+.biz-card--c .bars{flex:1;display:flex;align-items:flex-end;gap:7%;margin-top:10px}
+.biz-card--c .bars i{flex:1;border-radius:6px 6px 2px 2px;background:var(--violet);transform-origin:bottom}
+.biz-card--c .bars i:last-child{background:var(--ember)}
+/* ГО: стос документів + печатка */
+.doc{position:absolute;bottom:0;width:30%;aspect-ratio:1/1.38;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 30px 60px rgba(0,0,0,.4);transform-origin:50% 100%;font-family:var(--f-display);font-weight:800;line-height:1.05;font-size:clamp(11px,1vw,14px)}
+.doc .ln{height:6px;border-radius:3px;background:currentColor;opacity:.16}
+.doc .ln.s{width:60%}
+.doc .logos{margin-top:auto;display:flex;gap:6px;align-items:center;padding-top:8px;border-top:1px dashed currentColor}
+.doc .logos i{width:22px;height:12px;border-radius:3px;background:currentColor;opacity:.3}
+.doc .logos i:first-child{width:16px;border-radius:50%;height:16px}
+.doc--1{left:6%;background:var(--cream);color:var(--on-light);transform:rotate(-12deg)}
+.doc--2{left:28%;background:#fff;color:var(--on-light);transform:rotate(0deg);z-index:2}
+.doc--3{left:50%;background:var(--violet);color:#fff;transform:rotate(12deg)}
+.doc .pie{width:56%;aspect-ratio:1;border-radius:50%;align-self:center;margin-block:6px;background:conic-gradient(var(--sun) 0 38%, #fff 0 64%, var(--lilac) 0 100%)}
+.stamp{position:absolute;right:-1%;top:-10%;width:clamp(104px,10vw,138px);aspect-ratio:1;z-index:3;display:grid;place-items:center}
+.stamp svg{position:absolute;inset:0;width:100%;height:100%}
+.stamp b{width:44%;aspect-ratio:1;border-radius:50%;background:var(--sun);color:var(--on-light);display:grid;place-items:center}
+.stamp b svg{position:static;width:50%;height:50%}
+/* смуга про тендери */
+.tender{margin-top:16px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--night);padding:clamp(24px,3vw,40px);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:clamp(24px,4vw,56px);align-items:center}
+.tender h3{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2vw,30px);line-height:1.1;letter-spacing:-.02em;margin:12px 0 0}
+.tender__steps{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tender__line{position:absolute;left:24px;right:24px;top:24px;height:2px;background:repeating-linear-gradient(90deg,rgba(205,176,255,.35) 0 8px,transparent 8px 16px)}
+.tender__line i{position:absolute;inset:0;background:linear-gradient(90deg,var(--violet),var(--ember));transform-origin:left;transform:scaleX(0)}
+.ts{position:relative;display:flex;flex-direction:column;gap:12px}
+.ts__dot{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--plum);border:1px solid rgba(205,176,255,.3);color:var(--lilac);position:relative;z-index:1}
+.ts__dot svg{width:20px;height:20px}
+.ts b{font-weight:700;font-size:16px;line-height:1.3}
+.ts p{margin:0;color:var(--fg-dim);font-size:14.5px;line-height:1.5}
+@media (max-width:980px){
+  .sp-wrap{grid-template-columns:1fr}
+  .sp{min-height:0}
+  .sp__art{height:clamp(230px,60vw,320px)}
+  .tender{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .biz-card{font-size:11px;padding:10px;border-radius:12px}
+  .biz-card .cta{font-size:10px;padding:4px 9px}
+  .biz-card--a{width:42%;left:0}
+  .biz-card--b{width:30%;left:33%}
+  .biz-card--c{width:46%;right:0}
+  .doc{width:36%;font-size:11px;padding:10px;gap:6px}
+  .doc--1{left:0}.doc--2{left:31%}.doc--3{left:62%}
+  .stamp{width:96px;top:-18%}
+  .tender__steps{grid-template-columns:1fr;gap:22px;padding-left:0}
+  .tender__line{left:23px;right:auto;top:24px;bottom:24px;width:2px;height:auto;background:repeating-linear-gradient(180deg,rgba(205,176,255,.35) 0 8px,transparent 8px 16px)}
+  .tender__line i{transform-origin:top;background:linear-gradient(180deg,var(--violet),var(--ember))}
+  .ts{display:grid;grid-template-columns:48px 1fr;column-gap:16px;row-gap:4px}
+  .ts__dot{grid-row:1/3}
+}
+
+/* ---------- чому ми (бенто) ---------- */
+.why{padding-block:clamp(90px,11vw,160px);background:var(--ink);position:relative}
+.why__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px;margin-bottom:clamp(36px,5vw,60px)}
+.why__head p{max-width:400px;color:var(--fg-dim);margin:0}
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:minmax(220px,auto);gap:16px}
+.cell{position:relative;border-radius:var(--r-lg);padding:clamp(22px,2.4vw,32px);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:18px;isolation:isolate}
+.cell h3{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2.2vw,32px);line-height:1.08;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.cell p{margin:0;font-size:15px;line-height:1.5;max-width:42ch}
+.cell .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.cell .big{white-space:nowrap;font-family:var(--f-display);font-weight:800;font-size:clamp(44px,4.4vw,72px);line-height:.9;letter-spacing:-.04em}
+.c-cream{grid-column:span 5;background:var(--cream);color:var(--on-light)}
+.c-violet{grid-column:span 3;background:var(--violet);color:#fff}
+.c-sun{grid-column:span 4;background:var(--sun);color:var(--on-light)}
+.c-tools{grid-column:span 7;grid-row:span 2;background:var(--night);border:1px solid var(--line);min-height:460px}
+.c-ember{grid-column:span 5;background:var(--ember);color:#fff}
+.c-plum{grid-column:span 5;background:var(--plum);border:1px solid rgba(205,176,255,.16)}
+.deco{position:absolute;z-index:-1;pointer-events:none}
+.c-cream .deco{right:-40px;bottom:-50px;width:220px;color:var(--cream-2)}
+.c-sun .deco{right:-30px;top:-30px;width:170px;color:rgba(255,255,255,.4)}
+.c-ember .deco{right:-20px;bottom:-40px;width:180px;color:#fff;opacity:.16}
+.avatars{display:flex}
+.avatars i{width:44px;height:44px;border-radius:50%;border:3px solid var(--violet);margin-left:-12px;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:14px}
+.avatars i:first-child{margin-left:0}
+.pills-zone{position:absolute;inset:0;z-index:1}
+.tool{position:absolute;left:0;top:0;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:600;font-size:clamp(14px,1.2vw,17px);white-space:nowrap;cursor:grab;user-select:none;touch-action:none;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.tool:active{cursor:grabbing}
+.tool.v{background:var(--violet);color:#fff}.tool.c{background:var(--cream);color:var(--on-light)}.tool.s{background:var(--sun);color:var(--on-light)}.tool.e{background:var(--ember);color:#fff}.tool.l{background:var(--lilac);color:var(--plum)}
+.c-tools .txt{position:relative;z-index:2;pointer-events:none;max-width:360px}
+.c-tools .hint{position:relative;z-index:2;pointer-events:none;font-size:13px;color:var(--fg-faint);display:flex;align-items:center;gap:8px}
+@media (max-width:980px){
+  .c-cream,.c-tools{grid-column:span 12}
+  .c-violet,.c-sun,.c-ember,.c-plum{grid-column:span 6}
+}
+@media (max-width:600px){ .c-violet,.c-sun,.c-ember,.c-plum{grid-column:span 12} .c-tools{min-height:420px} }
+
+/* ---------- роботи (горизонтальний скрол) ---------- */
+.works{background:var(--night);position:relative;overflow:hidden}
+.works__pin{height:100svh;display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,3.5vw,44px);padding-block:90px 40px}
+.works__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px}
+.works__head p{max-width:420px;color:var(--fg-dim);margin:0;font-size:16px}
+.works__track{display:flex;gap:20px;width:max-content;padding-left:max(20px, calc((100vw - var(--wrap)) / 2 + 20px));padding-right:10vw;will-change:transform}
+.work{position:relative;flex:none;width:min(62vw,820px);height:min(56svh,520px);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+.work__art{position:absolute;inset:0;z-index:-1;display:grid;place-items:center;overflow:hidden}
+.work__cap{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:24px 28px;background:linear-gradient(180deg,transparent,rgba(5,9,10,.72))}
+.work__cap h3{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,2.2vw,30px);margin:6px 0 0;letter-spacing:-.02em;line-height:1.1}
+.work__cap .k{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac)}
+.work__cap .tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.work__cap .tags span{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);backdrop-filter:blur(6px)}
+.w1{background:var(--plum)} .w2{background:var(--cream)} .w3{background:var(--violet)} .w4{background:#0F2A2C} .w5{background:var(--sun)}
+.w2 .work__cap,.w5 .work__cap{color:var(--fg)}
+/* мок: стрічка */
+.m-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:min(62%,420px);rotate:-6deg;margin-top:-40px}
+.m-grid>div{aspect-ratio:4/5;border-radius:10px;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:clamp(9px,1vw,14px);text-align:center;padding:8px;line-height:1.05}
+/* мок: презентація */
+.m-deck{position:relative;width:min(70%,520px);aspect-ratio:16/10;margin-top:-50px}
+.m-deck .sl{position:absolute;inset:0;border-radius:14px;box-shadow:0 30px 60px rgba(19,29,30,.25)}
+.m-deck .sl:nth-child(1){background:var(--violet);transform:translate(9%,-10%) rotate(6deg)}
+.m-deck .sl:nth-child(2){background:var(--night);transform:translate(4%,-5%) rotate(3deg)}
+.m-deck .sl:nth-child(3){background:#fff;padding:6% 7%;display:flex;flex-direction:column;gap:6%;color:var(--on-light)}
+.m-deck h4{font-family:var(--f-display);margin:0;font-size:clamp(12px,1.6vw,22px);line-height:1.05}
+.m-bars{flex:1;display:flex;align-items:flex-end;gap:6%}
+.m-bars i{flex:1;border-radius:6px 6px 2px 2px;background:var(--violet)}
+.m-bars i:nth-child(4){background:var(--ember)}
+/* мок: сторіз */
+.m-phones{display:flex;gap:16px;align-items:center;margin-top:-40px}
+.m-story{width:clamp(110px,12vw,170px);aspect-ratio:9/16;border-radius:20px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 30px 60px rgba(0,0,0,.3);font-family:var(--f-display);font-weight:800;font-size:clamp(11px,1.2vw,16px);line-height:1.05}
+.m-story .bars{display:flex;gap:3px}
+.m-story .bars i{flex:1;height:3px;border-radius:2px;background:currentColor;opacity:.4}
+.m-story .bars i:first-child{opacity:1}
+.m-story:nth-child(2){transform:translateY(-24px) scale(1.08)}
+/* мок: креативи */
+.m-ads{display:flex;gap:14px;align-items:flex-end;margin-top:-50px}
+.m-ad{border-radius:14px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--f-display);font-weight:800;line-height:1.05;font-size:clamp(10px,1.1vw,15px);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.m-ad .cta{align-self:flex-start;font-family:var(--f-body);font-size:.8em;padding:5px 10px;border-radius:99px;background:var(--fg);color:var(--on-light)}
+/* мок: друк */
+.m-print{display:flex;gap:0;perspective:900px;margin-top:-40px}
+.m-print .pg{width:clamp(120px,13vw,190px);aspect-ratio:1/1.41;padding:14px;display:flex;flex-direction:column;gap:8px;font-family:var(--f-display);font-weight:800;color:var(--on-light);font-size:clamp(11px,1.1vw,15px);line-height:1.05;box-shadow:0 30px 60px rgba(19,29,30,.3)}
+.m-print .pg:nth-child(1){background:var(--cream);transform:rotateY(18deg);transform-origin:right}
+.m-print .pg:nth-child(2){background:#fff;transform:rotateY(-18deg);transform-origin:left}
+.m-print .ln{height:6px;border-radius:3px;background:rgba(19,29,30,.14)}
+.m-print .ln.s{width:60%}
+.works__bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.works__bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--violet),var(--ember));transform-origin:left;transform:scaleX(0)}
+@media (max-width:900px){
+  .works__pin{height:auto;padding-block:90px 70px}
+  .works__scroller{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .works__scroller::-webkit-scrollbar{display:none}
+  .works__track{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:20px;gap:14px}
+  .work{width:84vw;height:min(110vw,480px);scroll-snap-align:center}
+  .work__cap{flex-direction:column;align-items:flex-start;padding:20px}
+  .work__cap .tags{justify-content:flex-start}
+  .works__bar{display:none}
+}
+
+/* ---------- процес ---------- */
+.process{padding-block:clamp(90px,11vw,160px);position:relative}
+.process__grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(30px,6vw,100px);align-items:start}
+.process__aside{position:sticky;top:120px;display:flex;flex-direction:column;gap:24px;min-width:0}
+.process__aside .h-sec{font-size:clamp(36px,5.2vw,78px)}
+.process__aside p{color:var(--fg-dim);margin:0;max-width:420px}
+.steps{position:relative;display:flex;flex-direction:column;gap:20px;padding-left:44px}
+.steps__line{position:absolute;left:12px;top:10px;bottom:10px;width:2px;background:var(--line);border-radius:2px}
+.steps__line i{position:absolute;inset:0;background:linear-gradient(var(--violet),var(--ember));transform-origin:top;transform:scaleY(0);border-radius:2px}
+.step{position:relative;border-radius:var(--r-md);padding:clamp(22px,2.6vw,34px);background:var(--night);border:1px solid var(--line);transition:background .5s,border-color .5s,transform .5s var(--ease)}
+.step::before{content:"";position:absolute;z-index:2;left:-41px;top:36px;width:18px;height:18px;border-radius:50%;background:var(--ink);border:2px solid var(--fg-faint);transition:background .4s,border-color .4s,box-shadow .4s}
+.step.is-on{background:var(--plum);border-color:rgba(205,176,255,.3)}
+.step.is-on::before{background:var(--ember);border-color:var(--ember);box-shadow:0 0 0 6px rgba(255,96,22,.18)}
+.step .n{font-family:var(--f-display);font-weight:800;font-size:14px;color:var(--lilac);letter-spacing:.06em}
+.step h3{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2.2vw,30px);margin:10px 0 12px;letter-spacing:-.02em;line-height:1.1}
+.step p{margin:0;color:var(--fg-dim);font-size:16px;max-width:52ch}
+.step .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:900px){ .process__grid{grid-template-columns:1fr} .process__aside{position:static} }
+
+/* ---------- тарифи (світла секція) ---------- */
+.pricing{background:var(--cream);color:var(--on-light);padding-block:clamp(48px,5.5vw,84px);border-radius:var(--r-lg);position:relative;overflow:hidden;isolation:isolate}
+.pricing .eyebrow{color:var(--violet)}
+.pricing__deco{position:absolute;right:-120px;top:-120px;width:420px;color:var(--cream-2);z-index:-1}
+.pricing__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 40px;margin-bottom:clamp(32px,4vw,52px)}
+.switch{display:inline-flex;padding:6px;border-radius:999px;background:var(--on-light);position:relative}
+.switch button{position:relative;z-index:1;height:46px;padding:0 22px;border-radius:999px;font-weight:600;font-size:15px;color:rgba(244,239,249,.7);transition:color .4s}
+.switch button[aria-pressed="true"]{color:#fff}
+.switch .knob{position:absolute;top:6px;left:6px;height:46px;border-radius:999px;background:var(--violet);transition:transform .55s var(--ease),width .55s var(--ease)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.plan{border-radius:var(--r-lg);padding:clamp(24px,2.6vw,34px);background:#fff;display:flex;flex-direction:column;gap:22px;position:relative;border:1px solid rgba(19,29,30,.08)}
+.plan--hot{background:var(--on-light);color:var(--fg)}
+.plan__name{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.plan__name h3{font-family:var(--f-display);font-weight:700;font-size:24px;margin:0}
+.plan__name .flag{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;background:var(--ember);color:#fff}
+.plan__price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.plan__price b{font-family:var(--f-display);font-weight:800;font-size:clamp(36px,3.6vw,52px);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.plan__price span{font-size:15px;opacity:.65}
+.plan__desc{margin:0;font-size:15px;opacity:.75}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;flex:1}
+.plan li{display:flex;gap:12px;font-size:15px;line-height:1.4}
+.plan li svg{flex:none;width:20px;height:20px;margin-top:1px;color:var(--violet)}
+.plan--hot li svg{color:var(--sun)}
+.plan li.smm-only{display:none}
+.mode-smm .plan li.smm-only{display:flex}
+.plan .btn{justify-content:center;width:100%}
+.plan .btn--dark{background:var(--on-light);color:#fff}
+.plan .btn--dark::before{content:"";position:absolute;inset:0;background:var(--violet);border-radius:inherit;transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}
+.plan .btn--dark:hover::before{transform:translateY(0)}
+.pricing__note{margin:22px 0 0;font-size:14px;opacity:.6}
+@media (max-width:980px){ .plans{grid-template-columns:1fr} .plan--hot{transform:none} }
+
+/* ---------- FAQ ---------- */
+.faq{padding-block:clamp(90px,11vw,160px)}
+.faq__grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,6vw,90px);align-items:start}
+.faq__grid aside{display:flex;flex-direction:column;gap:22px}
+.faq__grid aside p{color:var(--fg-dim);margin:0;max-width:380px}
+.qa{border-bottom:1px solid var(--line)}
+.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 0;text-align:left;font-family:var(--f-display);font-weight:600;font-size:clamp(17px,1.6vw,22px);line-height:1.25;letter-spacing:-.01em}
+.qa .pm{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);position:relative;transition:background .3s,border-color .3s}
+.qa .pm::before,.qa .pm::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;background:currentColor;border-radius:2px;transition:transform .45s var(--ease)}
+.qa .pm::after{transform:rotate(90deg)}
+.qa.open .pm{background:var(--ember);border-color:var(--ember)}
+.qa.open .pm::after{transform:rotate(0)}
+.qa .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.qa.open .a{grid-template-rows:1fr}
+.qa .a>div{overflow:hidden}
+.qa .a p{margin:0;padding:0 60px 26px 0;color:var(--fg-dim);max-width:62ch}
+@media (max-width:900px){ .faq__grid{grid-template-columns:1fr} .qa .a p{padding-right:0} }
+
+/* ---------- футер ---------- */
+.footer{padding-block:0 calc(20px + env(safe-area-inset-bottom,0px))}
+.fcard{position:relative;background:var(--night);border:1px solid var(--line);border-radius:clamp(28px,4vw,56px);padding:clamp(28px,4vw,56px);overflow:hidden;isolation:isolate}
+.fcard::before{content:"";position:absolute;right:-10%;top:-30%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(138,49,239,.35),transparent 65%);z-index:-1}
+.fcard__top{display:grid;grid-template-columns:minmax(0,1.4fr) 1px minmax(0,.8fr);gap:clamp(24px,4vw,60px);align-items:center;padding-block:clamp(10px,2vw,30px) clamp(28px,4vw,56px);border-top:1px solid var(--line);padding-top:clamp(28px,4vw,56px)}
+.fcard__top h2{font-family:var(--f-display);font-weight:600;font-size:clamp(36px,5.4vw,84px);line-height:1;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.fcard__top h2 em{font-style:normal;color:var(--ember)}
+.fcard__divider{align-self:stretch;background:var(--line)}
+.cta-big{justify-self:center;position:relative;display:flex;align-items:center;justify-content:center;width:min(100%,300px);aspect-ratio:2.1/1;border-radius:999px;background:var(--ember);color:#fff;font-family:var(--f-display);font-weight:600;font-size:clamp(20px,2vw,28px);line-height:1.05;text-align:left;padding:0 34px;box-shadow:0 0 0 8px rgba(255,96,22,.16);isolation:isolate;overflow:hidden}
+.cta-big::before{content:"";position:absolute;inset:0;background:var(--violet);border-radius:inherit;transform:scale(0);transition:transform .6s var(--ease);z-index:-1}
+.cta-big:hover::before{transform:scale(1.02)}
+.cta-big .ast{position:absolute;right:28px;top:22px;width:28px;height:28px}
+.fcard__bottom{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px);padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line)}
+.flogo{display:grid;place-items:center;max-width:260px;align-self:start}
+.flogo svg{width:100%;height:auto;display:block;overflow:visible}
+.fcol h4{font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--ember);margin:0 0 16px}
+.fcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.fcol a{color:var(--fg-dim);transition:color .3s}
+.fcol a:hover{color:var(--fg)}
+.copyrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.copyrow code{font-family:var(--f-body);font-size:15px;color:var(--fg);user-select:all}
+.copybtn{height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--fg-dim)}
+.copybtn:hover{border-color:var(--lilac);color:var(--fg)}
+.socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.socials a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(244,239,249,.06);border:1px solid var(--line);transition:background .3s,transform .4s var(--ease)}
+.socials a:hover{background:var(--violet);transform:translateY(-3px)}
+.socials svg{width:18px;height:18px}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:22px 8px 0;font-size:14px;color:var(--fg-faint)}
+.legal a:hover{color:var(--fg)}
+.fcard{padding-bottom:0}
+.giant-foot{position:relative;margin-top:clamp(24px,3vw,44px);margin-inline:calc(-1 * clamp(28px,4vw,56px));padding-inline:clamp(20px,3vw,44px);height:clamp(80px,11vw,170px);overflow:hidden;isolation:isolate}
+.giant-foot::before{content:none}
+.giant-foot svg{width:100%;height:auto;display:block;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 20%,rgba(0,0,0,.55) 36%,transparent 54%);mask-image:linear-gradient(180deg,#000 0%,#000 20%,rgba(0,0,0,.55) 36%,transparent 54%)}
+@media (max-width:900px){
+  .fcard__top{grid-template-columns:1fr}
+  .fcard__divider{display:none}
+  .cta-big{justify-self:start}
+  .fcard__bottom{grid-template-columns:1fr 1fr}
+  .flogo{grid-column:1/-1;max-width:200px}
+}
+@media (max-width:520px){ .fcard__bottom{grid-template-columns:1fr} }
+
+/* ---------- до гори ---------- */
+.totop{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:95;width:54px;height:54px;border-radius:50%;background:rgba(19,29,30,.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:grid;place-items:center;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .4s,transform .4s var(--ease)}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop svg.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.totop svg.ring circle{fill:none;stroke-width:2}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .feed{animation:none}
+}
+</style>
+</head>
+<body>
+
+
+<!-- ======= SVG-бібліотека ======= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="wm" viewBox="0 0 1346 272">
+      <path d="M296.194 0H249.018V212.665H296.194V0Z"/>
+      <path d="M380.756 47.2704V0.09375L258.953 0.09375V47.2704L380.756 47.2704Z"/>
+      <path d="M380.756 212.762V165.585H258.953V212.762H380.756Z"/>
+      <path d="M361.154 130.006V82.8291H258.951V130.006H361.154Z"/>
+      <path d="M937 47.2704V0.09375L827.201 0.09375V47.2704L937 47.2704Z"/>
+      <path d="M937 212.762V165.585H827.201V212.762H937Z"/>
+      <path d="M937 130.525V83.3486H827.201V130.525H937Z"/>
+      <path fill-rule="evenodd" d="M88.9347 81.7891V230.389L41.752 271.996V81.7891H88.9347Z"/>
+      <path d="M459.626 81.7871H412.449V212.758H459.626V81.7871Z"/>
+      <path fill-rule="evenodd" d="M536.358 212.753L488.583 130.003L529.444 106.412L590.835 212.745L536.358 212.753Z"/>
+      <path fill-rule="evenodd" d="M1.45665 1.57053L0 0.0935581L2.05902 0.0732422H150.035C190.311 0.0732422 222.951 32.7349 222.951 73.0104C222.951 113.265 190.311 145.926 150.035 145.926H42.8138V102.572H150.742C167.073 102.572 180.304 89.3412 180.304 73.0104C180.304 56.6797 167.073 43.4274 150.742 43.4274H43.3125L1.45665 1.57053Z"/>
+      <path fill-rule="evenodd" d="M413.22 0.0732422H520.441C560.717 0.0732422 593.357 32.7349 593.357 73.0104C593.357 113.265 560.717 145.926 520.441 145.926H413.22V102.572H521.148C537.479 102.572 550.71 89.3412 550.71 73.0104C550.71 56.6797 537.479 43.4274 521.148 43.4274H413.22V0.0732422Z"/>
+      <path fill-rule="evenodd" d="M1087.75 0.150391H1134.54V129.892C1134.54 175.685 1097.4 212.826 1051.6 212.826C1005.79 212.826 968.651 175.685 968.651 129.892V0.150391H1015.42V133.041C1015.42 153.031 1031.6 169.212 1051.6 169.212C1071.57 169.212 1087.75 153.031 1087.75 133.041V0.150391Z"/>
+      <path fill-rule="evenodd" d="M672.004 129.845C658.161 127.848 645.213 121.441 635.22 111.434C622.971 99.2017 616.127 82.6006 616.127 65.3129C616.127 48.0044 622.971 31.4242 635.22 19.1917C647.429 6.95927 664.032 0.09375 681.336 0.09375H797.405L755.371 44.1762H682.385C677.214 44.1762 672.237 46.2358 668.543 49.8972C664.887 53.5794 662.828 58.5726 662.828 63.7527C662.828 68.9535 664.887 73.9249 668.543 77.6071C672.237 81.2893 677.214 83.3494 682.385 83.3494H732.468C749.771 83.3494 766.375 90.2149 778.623 102.447C790.833 114.68 797.716 131.26 797.716 148.569C797.716 165.856 790.833 182.436 778.623 194.668C766.375 206.901 749.771 213.788 732.468 213.788H616.866L658.432 169.704H731.418C736.589 169.704 741.606 167.645 745.261 163.963C748.955 160.302 751.015 155.308 751.015 150.107C751.015 144.907 748.955 139.935 745.261 136.253C741.606 132.592 736.589 130.532 731.418 130.532L672.004 129.845Z"/>
+      <path fill-rule="evenodd" d="M1219.97 129.845C1206.12 127.848 1193.18 121.441 1183.18 111.434C1170.93 99.2017 1164.09 82.6006 1164.09 65.3129C1164.09 48.0044 1170.93 31.4242 1183.18 19.1917C1195.39 6.95927 1212 0.09375 1229.3 0.09375H1345.37L1303.33 44.1762H1230.35C1225.18 44.1762 1220.2 46.2358 1216.51 49.8972C1212.85 53.5794 1210.79 58.5726 1210.79 63.7527C1210.79 68.9535 1212.85 73.9249 1216.51 77.6071C1220.2 81.2893 1225.18 83.3494 1230.35 83.3494H1280.43C1297.73 83.3494 1314.34 90.2149 1326.59 102.447C1338.8 114.68 1345.68 131.26 1345.68 148.569C1345.68 165.856 1338.8 182.436 1326.59 194.668C1314.34 206.901 1297.73 213.788 1280.43 213.788H1164.83L1206.4 169.704H1279.38C1284.55 169.704 1289.57 167.645 1293.22 163.963C1296.92 160.302 1298.98 155.308 1298.98 150.107C1298.98 144.907 1296.92 139.935 1293.22 136.253C1289.57 132.592 1284.55 130.532 1279.38 130.532L1219.97 129.845Z"/>
+    </symbol>
+    <symbol id="star4" viewBox="0 0 24 24"><path d="M12 0c.8 6.6 4.9 10.9 12 12-7.1 1.1-11.2 5.4-12 12-.8-6.6-4.9-10.9-12-12C7.1 10.9 11.2 6.6 12 0Z" fill="currentColor"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".16"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="flower" viewBox="0 0 100 100"><g fill="currentColor"><circle cx="50" cy="26" r="24"/><circle cx="50" cy="74" r="24"/><circle cx="26" cy="50" r="24"/><circle cx="74" cy="50" r="24"/></g></symbol>
+    <linearGradient id="gFoot" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="272">
+      <stop offset="0" stop-color="#A45CFF"/>
+      <stop offset=".3" stop-color="#8A31EF"/>
+      <stop offset="1" stop-color="#5E1CB0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ======= прелоадер ======= -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__mark">
+    <svg viewBox="0 0 1346 272" style="color:#232D2F"><use href="#wm" fill="currentColor"/></svg>
+    <div class="preloader__fill" id="plFill"><svg viewBox="0 0 1346 272" style="color:#8A31EF"><use href="#wm" fill="currentColor"/></svg></div>
+  </div>
+  <div class="preloader__cap">Digital Studio · дизайн і SMM</div>
+  <div class="preloader__count" id="plCount">0</div>
+</div>
+
+<!-- ======= курсор ======= -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor__dot"></div>
+  <div class="cursor__ring"><span class="cursor__label" id="cursorLabel">Тягни</span></div>
+</div>
+
+<!-- ======= шапка ======= -->
+<header class="header" id="header">
+  <div class="header__bar">
+    <a href="#top" class="logo" aria-label="Perseus – на початок"><svg viewBox="0 0 1346 272"><use href="#wm" fill="currentColor"/></svg></a>
+    <nav class="nav" aria-label="Основна навігація">
+      <a href="#about">Студія</a>
+      <a href="#services">Послуги</a>
+      <a href="#works">Формати</a>
+      <a href="#process">Процес</a>
+      <a href="#pricing">Тарифи</a>
+      <a href="#faq">Питання</a>
+    </nav>
+    <a href="#contact" class="btn btn--ember" data-magnetic><span class="roll"><span>Обговорити проєкт</span><span>Обговорити проєкт</span></span><span class="arr"><svg width="14" height="14"><use href="#arrow"/></svg></span></a>
+    <button class="burger" id="burger" aria-label="Відкрити меню" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+<div class="mmenu" id="mmenu">
+  <a class="mm" href="#about">Студія</a>
+  <a class="mm" href="#services">Послуги</a>
+  <a class="mm" href="#works">Формати</a>
+  <a class="mm" href="#process">Процес</a>
+  <a class="mm" href="#pricing">Тарифи</a>
+  <a class="mm" href="#contact"><em>Контакти</em></a>
+  <small>Telegram @perseus_agency · Instagram @perseus_agency</small>
+</div>
+
+<main id="top">
+
+<!-- ======= HERO ======= -->
+<section class="hero" id="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__grid"></div>
+  <div class="hero__orbit" id="orbit"><div data-depth="0.15" style="position:absolute;inset:0">
+    <div class="ring"></div><div class="ring r2"></div>
+    <div class="disc"></div>
+    <div class="ring-rot" id="ringRot" style="position:absolute;inset:0"><span class="sat"></span></div>
+  </div></div>
+  <div class="hero__statue" id="statue"><div data-depth="0.4" style="height:100%"><div class="s-in" style="height:100%">
+    <img src="assets/perseus.webp" srcset="assets/perseus-sm.webp 640w, assets/perseus.webp 1100w" sizes="(max-width:900px) 90vw, 760px" width="1100" height="1356" alt="Мармурова статуя Персея у фіолетовому плащі – символ студії" fetchpriority="high">
+  </div></div></div>
+
+
+  <span class="hx hx-spark hx-s1" data-depth="1.4" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#star4"/></svg></span>
+  <span class="hx hx-spark hx-s2" data-depth="1.2" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#star4"/></svg></span>
+  <span class="hx hx-spark hx-s3" data-depth="0.9" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#star4"/></svg></span>
+  <span class="hx hx-spark hx-s4" data-depth="1.3" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#star4"/></svg></span>
+  <span class="hx hx-spark hx-s5" data-depth="1" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#star4"/></svg></span>
+  <span class="hx hx-dots" data-depth="0.6" aria-hidden="true"></span>
+  <span class="chip chip--sun" data-depth="0.9"><i><svg width="14" height="14" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg></i>Пости й сторіз</span>
+  <span class="chip chip--cream" data-depth="1.2"><i><svg width="14" height="14" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 17v4M8 21h8" stroke="currentColor" stroke-width="2"/></svg></i>Презентації</span>
+  <span class="chip chip--ember" data-depth="0.7"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></i>SMM-супровід</span>
+
+  <div class="wrap hero__inner">
+    <div class="hero__copy">
+      <span class="eyebrow" data-hero>Digital-студія дизайну та SMM</span>
+      <h1 aria-label="Робимо бренди помітними">
+        <span class="ln"><span>Робимо
+          <span class="shapes-pill" aria-hidden="true">
+            <svg viewBox="0 0 100 100" class="spin" style="color:#1F1233"><use href="#flower"/></svg>
+            <svg viewBox="0 0 24 24" style="color:#FFC94A"><use href="#star4"/></svg>
+            <svg viewBox="0 0 100 100" style="color:#F3E6D8"><path d="M0 100A50 50 0 0 1 100 100Z" transform="translate(0,-25)" fill="currentColor"/></svg>
+          </span>
+        </span></span>
+        <span class="ln"><span>бренди</span></span>
+        <span class="ln"><span><em>помітними</em></span></span>
+      </h1>
+      <p class="hero__lead" data-hero>Пости, сторіз, презентації й реклама для вашого бренду щомісяця. Ви пишете задачу в чат, ми повертаємося з готовим макетом.</p>
+      <div class="hero__ctas" data-hero>
+        <a href="#contact" class="btn btn--ember" data-magnetic><span class="roll"><span>Обговорити проєкт</span><span>Обговорити проєкт</span></span><span class="arr"><svg width="14" height="14"><use href="#arrow"/></svg></span></a>
+        <a href="#services" class="btn btn--ghost"><span class="roll"><span>Послуги й ціни</span><span>Послуги й ціни</span></span><span class="arr"><svg width="14" height="14" style="transform:rotate(90deg)"><use href="#arrow"/></svg></span></a>
+      </div>
+    </div>
+    <div class="hero__side" data-hero>
+      <a href="#works" class="badge" aria-label="Подивитись формати робіт" data-magnetic>
+        <svg class="txt" viewBox="0 0 148 148" id="badgeTxt" aria-hidden="true">
+          <defs><path id="circ" d="M74 74m-58 0a58 58 0 1 1 116 0a58 58 0 1 1-116 0"/></defs>
+          <text font-family="Unbounded, sans-serif" font-size="10.5" font-weight="600" fill="#F4EFF9"><textPath href="#circ" textLength="360" lengthAdjust="spacing">PERSEUS ✦ ДИЗАЙН ✦ SMM ✦ КОНТЕНТ ✦</textPath></text>
+        </svg>
+        <span class="badge__core"><svg width="26" height="26"><use href="#arrow"/></svg></span>
+      </a>
+      <div class="mini">
+        <b data-count="13">13</b>
+        <span>брендів зараз на щомісячному дизайн- та SMM-супроводі</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero__scroll"><span class="mouse"></span>Гортайте вниз</div>
+</section>
+
+<!-- ======= СТРІЧКИ ======= -->
+<div class="ribbons" aria-hidden="true">
+  <div class="ribbon ribbon--b"><div class="ribbon__track" data-dir="1"></div></div>
+  <div class="ribbon ribbon--a"><div class="ribbon__track" data-dir="-1"></div></div>
+</div>
+
+<!-- ======= ПРО СТУДІЮ ======= -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about__head">
+      <h2 class="h-sec split">Про студію</h2>
+    </div>
+    <p class="manifest" id="manifest">Perseus – команда дизайнерів і SMM-фахівців, яка щомісяця веде <span class="hl">візуал і соцмережі</span> брендів. Ми перетворюємо айдентику на робочу систему: шаблони, пости, сторіз, презентації, рекламу. Тому бренд виглядає <span class="hl2">цілісно</span> скрізь, від стрічки в Instagram до презентації для партнерів.</p>
+
+    <div class="about__grid">
+      <div class="phone-card" data-reveal>
+        <div class="phone-card__tag"><span class="tag"><span class="dot"></span>Стрічка, яку ведемо зараз</span></div>
+        <div class="phone">
+          <div class="phone__top"><span class="av"><svg viewBox="0 0 24 24"><use href="#star4"/></svg></span>your.brand</div>
+          <div class="feed-wrap"><div class="feed" id="feed"></div></div>
+        </div>
+      </div>
+      <div class="stats" id="stats">
+        <div class="stat open" data-reveal>
+          <button aria-expanded="true"><span class="num"><span data-count="7">7</span><sup>+</sup></span><span class="lbl">років у графічному дизайні та соцмережах</span><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></button>
+          <div class="body"><div><p>Починали як дизайнери на фрилансі, згодом зібрали команду, щоб закривати весь візуал бренду, а не окремі картинки.</p></div></div>
+        </div>
+        <div class="stat" data-reveal>
+          <button aria-expanded="false"><span class="num"><span data-count="340">340</span></span><span class="lbl">завершених проєктів: презентації, пакети креативів, запуски акаунтів</span><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></button>
+          <div class="body"><div><p>Серед них освітні проєкти, ресторани, меблеві бренди, IT-компанії, громадські організації та медіа.</p></div></div>
+        </div>
+        <div class="stat" data-reveal>
+          <button aria-expanded="false"><span class="num"><span data-count="13">13</span></span><span class="lbl">брендів на щомісячному супроводі</span><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></button>
+          <div class="body"><div><p>За кожним брендом закріплені дизайнер і менеджер. Вони знають ваш стиль і не просять щоразу надсилати бренд-бук.</p></div></div>
+        </div>
+        <div class="stat" data-reveal>
+          <button aria-expanded="false"><span class="num"><span data-count="1200">1200</span></span><span class="lbl">макетів на місяць: пости, сторіз, банери, слайди</span><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></button>
+          <div class="body"><div><p>Шаблони, бібліотеки компонентів у Figma і чіткий процес дозволяють тримати темп без втрати якості.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= ПОСЛУГИ ======= -->
+<section class="services" id="services">
+  <svg class="services__lines" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-50 650 C 300 520, 600 820, 900 600 S 1300 380, 1500 520" fill="none" stroke="#fff" stroke-width="1"/>
+    <path d="M-50 700 C 320 560, 620 870, 920 650 S 1320 430, 1500 570" fill="none" stroke="#fff" stroke-width="1"/>
+    <path d="M-50 750 C 340 600, 640 920, 940 700 S 1340 480, 1500 620" fill="none" stroke="#fff" stroke-width="1"/>
+  </svg>
+  <div class="wrap">
+    <div class="services__head">
+      <h2 class="h-sec split">Послуги</h2>
+      <a href="#pricing" class="btn btn--ghost"><span class="roll"><span>Пакети на місяць</span><span>Пакети на місяць</span></span><span class="arr"><svg width="14" height="14" style="transform:rotate(135deg)"><use href="#arrow"/></svg></span></a>
+    </div>
+    <div class="svc-list">
+      <div class="svc open" data-cursor="Відкрити">
+        <button class="svc__row" aria-expanded="true">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg></span>
+          <span class="svc__title">Дизайн-супровід бренду</span>
+          <span class="svc__price">від 12 000 грн/міс</span>
+          <span class="svc__arr"><svg width="18" height="18"><use href="#arrow"/></svg></span>
+        </button>
+        <div class="svc__body"><div><div class="svc__inner">
+          <p>Підписка на дизайн-команду. Ставите задачі в спільному чаті, отримуєте макети в погоджені терміни. Підходить, коли дизайн потрібен постійно, а брати дизайнера в штат поки зарано.</p>
+          <div class="svc__chips"><span>Пости й сторіз</span><span>Банери для сайту</span><span>Креативи для реклами</span><span>Листівки й розсилки</span><span>Дрібні правки</span></div>
+        </div></div></div>
+      </div>
+      <div class="svc" data-cursor="Відкрити">
+        <button class="svc__row" aria-expanded="false">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
+          <span class="svc__title">Дизайн постів і сторіз</span>
+          <span class="svc__price">від 450 грн/пост</span>
+          <span class="svc__arr"><svg width="18" height="18"><use href="#arrow"/></svg></span>
+        </button>
+        <div class="svc__body"><div><div class="svc__inner">
+          <p>Шаблони в стилі бренду та готові пости під контент-план. Стрічка виглядає як одне ціле, а не як добірка випадкових картинок. Шаблони лишаються у вас, тож дрібні публікації можна робити самостійно.</p>
+          <div class="svc__chips"><span>Сітка стрічки</span><span>Каруселі</span><span>Шаблони сторіз</span><span>Обкладинки Reels</span><span>Highlights</span></div>
+        </div></div></div>
+      </div>
+      <div class="svc" data-cursor="Відкрити">
+        <button class="svc__row" aria-expanded="false">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M12 17v4M8 21h8M7 13l3-3 2 2 4-4"/></svg></span>
+          <span class="svc__title">Презентації та pitch-деки</span>
+          <span class="svc__price">від 600 грн/слайд</span>
+          <span class="svc__arr"><svg width="18" height="18"><use href="#arrow"/></svg></span>
+        </button>
+        <div class="svc__body"><div><div class="svc__inner">
+          <p>Структура, інфографіка та верстка слайдів для продажів, конференцій, грантових заявок та інвесторів. Віддаємо у PowerPoint, Keynote, Google Slides або PDF, з редагованим текстом.</p>
+          <div class="svc__chips"><span>Структура й сторітелінг</span><span>Інфографіка</span><span>Шаблон для команди</span><span>Анімація слайдів</span></div>
+        </div></div></div>
+      </div>
+      <div class="svc" data-cursor="Відкрити">
+        <button class="svc__row" aria-expanded="false">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3.2-6.9"/><path d="M21 4v5h-5"/><path d="M8 13.5l2.5 2.5L16 10"/></svg></span>
+          <span class="svc__title">SMM-супровід акаунтів</span>
+          <span class="svc__price">від 18 000 грн/міс</span>
+          <span class="svc__arr"><svg width="18" height="18"><use href="#arrow"/></svg></span>
+        </button>
+        <div class="svc__body"><div><div class="svc__inner">
+          <p>Стратегія, контент-план, тексти, дизайн, публікації та відповіді в коментарях. Щомісяця ви отримуєте звіт: що спрацювало, що ні, і що змінюємо наступного місяця.</p>
+          <div class="svc__chips"><span>Instagram</span><span>Facebook</span><span>TikTok</span><span>Telegram</span><span>LinkedIn</span><span>Звіт щомісяця</span></div>
+        </div></div></div>
+      </div>
+      <div class="svc" data-cursor="Відкрити">
+        <button class="svc__row" aria-expanded="false">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1Z"/><path d="M17 9a4 4 0 0 1 0 6M19.5 6.5a8 8 0 0 1 0 11"/></svg></span>
+          <span class="svc__title">Рекламні креативи</span>
+          <span class="svc__price">від 900 грн/креатив</span>
+          <span class="svc__arr"><svg width="18" height="18"><use href="#arrow"/></svg></span>
+        </button>
+        <div class="svc__body"><div><div class="svc__inner">
+          <p>Статичні та анімовані креативи для Meta Ads і Google Ads. Робимо кілька варіантів одразу, щоб таргетологу було що тестувати, і ресайзимо під усі потрібні формати.</p>
+          <div class="svc__chips"><span>Статика</span><span>Анімація</span><span>Ресайзи 1:1, 4:5, 9:16</span><span>A/B-варіанти</span><span>Банери GDN</span></div>
+        </div></div></div>
+      </div>
+      <div class="svc" data-cursor="Відкрити">
+        <button class="svc__row" aria-expanded="false">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8V3h10v5"/><rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 14h10v7H7z"/></svg></span>
+          <span class="svc__title">Друк і POS-матеріали</span>
+          <span class="svc__price">від 1 500 грн</span>
+          <span class="svc__arr"><svg width="18" height="18"><use href="#arrow"/></svg></span>
+        </button>
+        <div class="svc__body"><div><div class="svc__inner">
+          <p>Флаєри, буклети, меню, візитки, ролапи та наліпки. Готуємо файли з вильотами й профілем під вимоги конкретної друкарні, щоб не було сюрпризів із кольором.</p>
+          <div class="svc__chips"><span>Меню</span><span>Буклети</span><span>Флаєри</span><span>Ролапи</span><span>Мерч</span></div>
+        </div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======= БІЗНЕС І ГО ======= -->
+<section class="sectors" id="sectors">
+  <div class="wrap">
+    <div class="sectors__head">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span class="eyebrow">Для кого працюємо</span>
+        <h2 class="h-sec split" style="font-size:clamp(38px,6vw,96px)">Бізнес і громадський сектор</h2>
+      </div>
+      <p data-reveal>Одна команда для компаній, які продають, і для організацій, які звітують перед донорами. У цих двох світів різні правила, і ми знаємо обидва.</p>
+    </div>
+
+    <div class="sp-wrap" id="spWrap">
+      <article class="sp sp--biz" data-tilt>
+        <span class="sp__kicker"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg></i>Для бізнесу</span>
+        <h3>Візуал, який допомагає продавати</h3>
+        <p>Ведемо соцмережі й рекламні креативи для магазинів, ресторанів, виробників і IT-компаній. Дивимося на заявки й продажі: те, що не приносить звернень, переробляємо наступного місяця.</p>
+        <ul class="sp__list"><li>Соцмережі</li><li>Креативи для Meta і Google</li><li>Презентації для продажів</li><li>Банери й розсилки</li><li>Меню, буклети, POS</li></ul>
+        <div class="sp__art" aria-hidden="true">
+          <div class="biz-card biz-card--a">Знижка<br>на перше<br>замовлення<span class="cta">Купити</span></div>
+          <div class="biz-card biz-card--b">Новий<br>сезон<span class="cta">Дивитись</span></div>
+          <div class="biz-card biz-card--c">Заявки з реклами<div class="bars"><i style="height:34%"></i><i style="height:50%"></i><i style="height:62%"></i><i style="height:80%"></i><i style="height:100%"></i></div></div>
+        </div>
+      </article>
+
+      <article class="sp sp--ngo" data-tilt>
+        <span class="sp__kicker"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></i>Для громадських організацій</span>
+        <h3>Дизайн для грантових проєктів</h3>
+        <p>Працюємо з ГО, благодійними фондами та ініціативами. Знаємо вимоги донорів щодо видимості: де стоять логотипи партнерів, як оформити дисклеймер, як вписатися у брендбук програми. Беремо участь у тендерах і конкурсних відборах підрядників.</p>
+        <ul class="sp__list"><li>Звіти та інфографіка</li><li>Посібники й методички</li><li>Інформаційні кампанії</li><li>Матеріали для заходів</li><li>Презентації для донорів</li></ul>
+        <div class="sp__art" aria-hidden="true">
+          <div class="doc doc--1">Посібник<span class="ln"></span><span class="ln s"></span><span class="ln"></span><span class="ln s"></span><span class="logos"><i></i><i></i><i></i></span></div>
+          <div class="doc doc--2">Річний<br>звіт<span class="pie"></span><span class="ln s"></span><span class="logos"><i></i><i></i><i></i></span></div>
+          <div class="doc doc--3">Кампанія<br>«Голос<br>громади»<span class="ln"></span><span class="ln s"></span><span class="logos"><i></i><i></i></span></div>
+          <div class="stamp">
+            <svg viewBox="0 0 140 140" id="stampTxt"><defs><path id="circ2" d="M70 70m-54 0a54 54 0 1 1 108 0a54 54 0 1 1-108 0"/></defs><text font-family="Unbounded, sans-serif" font-size="10" font-weight="700" fill="#FFC94A"><textPath href="#circ2" textLength="336" lengthAdjust="spacing">ВИМОГИ ДОНОРА ✦ ВИДИМІСТЬ ✦ ДЕДЛАЙН ✦ </textPath></text></svg>
+            <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></b>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tender" data-reveal>
+      <div>
+        <span class="eyebrow">Для ГО</span>
+        <h3>Працюємо за правилами грантів</h3>
+      </div>
+      <div class="tender__steps" id="tender">
+        <span class="tender__line"><i id="tenderLine"></i></span>
+        <div class="ts"><span class="ts__dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"/></svg></span><b>Вимоги видимості донора</b><p>Розміщуємо логотипи партнерів, дисклеймери й шрифти так, як прописано в брендбуку донора чи програми.</p></div>
+        <div class="ts"><span class="ts__dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M8 2.5v4M16 2.5v4M3 10h18M8 15l2.5 2.5L16 13"/></svg></span><b>Терміни під графік проєкту</b><p>Плануємо роботу під дедлайни звітів, заходів і запусків кампаній.</p></div>
+        <div class="ts"><span class="ts__dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span><b>Документи для звіту</b><p>Договір, рахунки й акти, які приймуть бухгалтерія та донор.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= ЧОМУ МИ ======= -->
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="why__head">
+      <h2 class="h-sec split">Чому Perseus</h2>
+      <p data-reveal>Ми працюємо як ваш внутрішній відділ дизайну, тільки без відпусток, лікарняних і пошуку людини на заміну.</p>
+    </div>
+    <div class="bento" id="bento">
+      <div class="cell c-cream">
+        <svg class="deco" viewBox="0 0 100 100"><use href="#flower"/></svg>
+        <span class="kicker">Команда</span>
+        <div>
+          <h3>Дизайнер, SMM-менеджер і копірайтер в одному чаті</h3>
+        </div>
+        <p>Вони бачать задачі одне одного, тому пост, сторіз і банер до однієї акції виходять в одному стилі й в один день.</p>
+      </div>
+      <div class="cell c-violet">
+        <span class="kicker">Відповідь</span>
+        <div class="big">2&nbsp;год</div>
+        <p>Стільки максимум чекаєте на відповідь у робочий час. Без «я подивлюсь завтра».</p>
+      </div>
+      <div class="cell c-sun">
+        <svg class="deco" viewBox="0 0 24 24"><use href="#star4"/></svg>
+        <span class="kicker">Файли</span>
+        <h3>Усі шаблони й вихідники лишаються у вас</h3>
+        <p>Бібліотека у Figma з кольорами, шрифтами й компонентами належить вам навіть після завершення співпраці.</p>
+      </div>
+      <div class="cell c-tools" data-cursor="Тягни">
+        <div class="txt">
+          <span class="kicker" style="color:var(--lilac)">Інструменти</span>
+          <h3 style="margin-top:12px">Працюємо в тих програмах, де працює ваша команда</h3>
+        </div>
+        <div class="pills-zone" id="pillsZone">
+          <span class="tool v">Figma</span>
+          <span class="tool c">Photoshop</span>
+          <span class="tool s">Illustrator</span>
+          <span class="tool e">After Effects</span>
+          <span class="tool l">InDesign</span>
+          <span class="tool c">Meta Business Suite</span>
+          <span class="tool v">Google Slides</span>
+          <span class="tool s">Keynote</span>
+          <span class="tool l">Notion</span>
+          <span class="tool e">Premiere Pro</span>
+          <span class="tool v">PowerPoint</span>
+        </div>
+        <div class="hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11V5a2 2 0 1 1 4 0v5"/><path d="M13 10V4a2 2 0 1 1 4 0v8"/><path d="M17 8a2 2 0 1 1 4 0v6a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.5L4 14a2 2 0 0 1 3.2-2.4L9 13.5"/></svg>Перетягніть будь-яку плашку</div>
+      </div>
+      <div class="cell c-ember">
+        <svg class="deco" viewBox="0 0 100 100"><path d="M0 100A50 50 0 0 1 100 100Z" fill="currentColor"/><circle cx="50" cy="30" r="22" fill="currentColor"/></svg>
+        <span class="kicker">Правки</span>
+        <h3>Два кола правок у кожній задачі</h3>
+        <p>Вони вже включені у вартість. Ви знаєте ціну до початку роботи.</p>
+      </div>
+      <div class="cell c-plum">
+        <span class="kicker" style="color:var(--lilac)">Прозорість</span>
+        <h3>Статус кожної задачі видно в спільній дошці</h3>
+        <div class="avatars" aria-hidden="true">
+          <i style="background:var(--cream);color:var(--on-light)">Д</i>
+          <i style="background:var(--sun);color:var(--on-light)">S</i>
+          <i style="background:var(--ember)">К</i>
+          <i style="background:var(--lilac);color:var(--plum)">+3</i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= ФОРМАТИ (горизонтальний скрол) ======= -->
+<section class="works" id="works">
+  <div class="works__pin" id="worksPin">
+    <div class="wrap works__head">
+      <h2 class="h-sec split">Формати</h2>
+      <p data-reveal>З чим ми працюємо щодня. Гортайте далі, а на десктопі сторінка сама повезе вас уздовж.</p>
+    </div>
+    <div class="works__scroller">
+      <div class="works__track" id="worksTrack">
+        <article class="work w1" data-cursor="Гортай">
+          <div class="work__art"><div class="m-grid" data-par>
+            <div class="t1">НОВА<br>КОЛЕКЦІЯ</div><div class="t2"><span class="t-c" style="color:var(--violet)"></span></div><div class="t3">-20%</div>
+            <div class="t5">ЯК ЦЕ<br>ПРАЦЮЄ</div><div class="t4"><span class="t-h" style="color:#fff"></span></div><div class="t6">5 ПОРАД</div>
+            <div class="t2">ВІДГУК</div><div class="t1"><span class="t-c" style="color:var(--sun)"></span></div><div class="t3">ЧЕК-<br>ЛИСТ</div>
+          </div></div>
+          <div class="work__cap"><div><span class="k">Instagram</span><h3>Стрічка в єдиному стилі</h3></div><div class="tags"><span>Сітка</span><span>Каруселі</span><span>Шаблони</span></div></div>
+        </article>
+        <article class="work w2" data-cursor="Гортай">
+          <div class="work__art"><div class="m-deck" data-par>
+            <div class="sl"></div><div class="sl"></div>
+            <div class="sl"><h4>Виручка зросла<br>втричі за рік</h4><div class="m-bars"><i style="height:30%"></i><i style="height:48%"></i><i style="height:66%"></i><i style="height:100%"></i></div></div>
+          </div></div>
+          <div class="work__cap"><div><span class="k">Презентації</span><h3>Pitch-дек для інвесторів</h3></div><div class="tags"><span>Структура</span><span>Інфографіка</span></div></div>
+        </article>
+        <article class="work w3" data-cursor="Гортай">
+          <div class="work__art"><div class="m-phones" data-par>
+            <div class="m-story" style="background:var(--cream);color:var(--on-light)"><div class="bars"><i></i><i></i><i></i></div>ЩО<br>ВСЕРЕДИНІ?</div>
+            <div class="m-story" style="background:var(--night);color:var(--sun)"><div class="bars"><i></i><i></i><i></i></div>ОПИТУВАННЯ<br>ДНЯ</div>
+            <div class="m-story" style="background:var(--sun);color:var(--on-light)"><div class="bars"><i></i><i></i><i></i></div>ЛІНК<br>У БІО ↗</div>
+          </div></div>
+          <div class="work__cap"><div><span class="k">Сторіз</span><h3>Серії сторіз і обкладинки Reels</h3></div><div class="tags"><span>Шаблони</span><span>Анімація</span></div></div>
+        </article>
+        <article class="work w4" data-cursor="Гортай">
+          <div class="work__art"><div class="m-ads" data-par>
+            <div class="m-ad" style="width:clamp(110px,12vw,170px);aspect-ratio:1;background:var(--violet);color:#fff">Знижка<br>на перше<br>замовлення<span class="cta">Купити</span></div>
+            <div class="m-ad" style="width:clamp(110px,12vw,170px);aspect-ratio:4/5;background:var(--ember);color:#fff">Доставка<br>за 1 день<span class="cta">Детальніше</span></div>
+            <div class="m-ad" style="width:clamp(90px,9vw,128px);aspect-ratio:9/16;background:var(--cream);color:var(--on-light)">Новий<br>сезон<span class="cta">Дивитись</span></div>
+          </div></div>
+          <div class="work__cap"><div><span class="k">Реклама</span><h3>Креативи для Meta та Google</h3></div><div class="tags"><span>1:1</span><span>4:5</span><span>9:16</span></div></div>
+        </article>
+        <article class="work w5" data-cursor="Гортай">
+          <div class="work__art"><div class="m-print" data-par>
+            <div class="pg">МЕНЮ<span class="ln"></span><span class="ln s"></span><span class="ln"></span><span class="ln s"></span><span class="ln"></span></div>
+            <div class="pg" style="color:var(--violet)">Сезонні<br>страви<span class="ln"></span><span class="ln s"></span><span class="ln"></span></div>
+          </div></div>
+          <div class="work__cap"><div><span class="k">Друк</span><h3>Меню, буклети, флаєри</h3></div><div class="tags"><span>Препрес</span><span>CMYK</span></div></div>
+        </article>
+      </div>
+    </div>
+    <div class="wrap"><div class="works__bar"><i id="worksBar"></i></div></div>
+  </div>
+</section>
+
+<!-- ======= ПРОЦЕС ======= -->
+<section class="process" id="process">
+  <div class="wrap process__grid">
+    <div class="process__aside">
+      <span class="eyebrow">Чотири кроки</span>
+      <h2 class="h-sec split">Як ми працюємо</h2>
+      <p data-reveal>Від першого дзвінка до перших публікацій зазвичай минає 5–7 робочих днів.</p>
+      <div data-reveal><a href="#contact" class="btn btn--ember" data-magnetic><span class="roll"><span>Записатися на дзвінок</span><span>Записатися на дзвінок</span></span><span class="arr"><svg width="14" height="14"><use href="#arrow"/></svg></span></a></div>
+    </div>
+    <div class="steps" id="steps">
+      <div class="steps__line"><i id="stepsLine"></i></div>
+      <div class="step"><span class="n">01</span><h3>Знайомство і бриф</h3><p>Дзвінок на 30 хвилин: ваші цілі, аудиторія, конкуренти, що вже є з візуалу. Після нього фіксуємо обсяг робіт і вартість.</p><div class="meta"><span class="tag">1 день</span><span class="tag">Безкоштовно</span></div></div>
+      <div class="step"><span class="n">02</span><h3>Концепція і шаблони</h3><p>Показуємо 2–3 напрями стилю на прикладах ваших же постів чи слайдів. Ви обираєте один, ми доводимо його до системи шаблонів.</p><div class="meta"><span class="tag">2–3 дні</span><span class="tag">Figma-бібліотека</span></div></div>
+      <div class="step"><span class="n">03</span><h3>Виробництво</h3><p>Робимо контент за планом у спільній дошці. Ви бачите статус кожної задачі й коментуєте прямо на макетах, без нескінченних листувань.</p><div class="meta"><span class="tag">Щодня</span><span class="tag">Notion або Trello</span></div></div>
+      <div class="step"><span class="n">04</span><h3>Звіт і розвиток</h3><p>Раз на місяць розбираємо цифри: охоплення, збереження, кліки, заявки. Те, що не працює, прибираємо, а те, що працює, посилюємо.</p><div class="meta"><span class="tag">Щомісяця</span><span class="tag">Звіт у PDF</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= ТАРИФИ ======= -->
+<div class="wrap">
+<section class="pricing" id="pricing">
+  <svg class="pricing__deco" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>
+  <div class="wrap" style="padding-left:clamp(0px,2vw,40px);padding-right:clamp(0px,2vw,40px)">
+    <div class="pricing__head">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span class="eyebrow">Тарифи</span>
+        <h2 class="h-sec split">Пакети на місяць</h2>
+      </div>
+      <div class="switch" id="switch" role="group" aria-label="Тип пакета">
+        <span class="knob" id="knob"></span>
+        <button aria-pressed="true" data-mode="design">Тільки дизайн</button>
+        <button aria-pressed="false" data-mode="smm">Дизайн + SMM</button>
+      </div>
+    </div>
+    <div class="plans" id="plans">
+      <div class="plan">
+        <div class="plan__name"><h3>Старт</h3></div>
+        <div class="plan__price"><b data-design="9900" data-smm="19900">9 900</b><span>грн / міс</span></div>
+        <p class="plan__desc">Для невеликого бізнесу, якому потрібна охайна стрічка без зайвих витрат.</p>
+        <ul>
+          <li><svg><use href="#check"/></svg>12 постів і 20 сторіз</li>
+          <li><svg><use href="#check"/></svg>Шаблони в стилі бренду</li>
+          <li><svg><use href="#check"/></svg>2 кола правок на макет</li>
+          <li class="smm-only"><svg><use href="#check"/></svg>Контент-план і тексти</li>
+          <li class="smm-only"><svg><use href="#check"/></svg>Публікації за графіком</li>
+        </ul>
+        <a href="#contact" class="btn btn--dark"><span class="roll"><span>Обрати Старт</span><span>Обрати Старт</span></span></a>
+      </div>
+      <div class="plan plan--hot">
+        <div class="plan__name"><h3>Ріст</h3><span class="flag">Найчастіше обирають</span></div>
+        <div class="plan__price"><b data-design="16900" data-smm="29900">16 900</b><span>грн / міс</span></div>
+        <p class="plan__desc">Коли соцмережі та реклама вже приносять заявки і контенту треба більше.</p>
+        <ul>
+          <li><svg><use href="#check"/></svg>20 постів і 40 сторіз</li>
+          <li><svg><use href="#check"/></svg>8 рекламних креативів з ресайзами</li>
+          <li><svg><use href="#check"/></svg>Банери для сайту й розсилок</li>
+          <li><svg><use href="#check"/></svg>Закріплений дизайнер</li>
+          <li class="smm-only"><svg><use href="#check"/></svg>Стратегія, тексти, модерація</li>
+          <li class="smm-only"><svg><use href="#check"/></svg>Звіт і розбір цифр щомісяця</li>
+        </ul>
+        <a href="#contact" class="btn btn--ember"><span class="roll"><span>Обрати Ріст</span><span>Обрати Ріст</span></span></a>
+      </div>
+      <div class="plan">
+        <div class="plan__name"><h3>Партнер</h3></div>
+        <div class="plan__price"><b data-design="27900" data-smm="44900">27 900</b><span>грн / міс</span></div>
+        <p class="plan__desc">Повноцінний зовнішній відділ дизайну для бренду з кількома каналами.</p>
+        <ul>
+          <li><svg><use href="#check"/></svg>До 60 дизайн-задач на місяць</li>
+          <li><svg><use href="#check"/></svg>Презентації та друк у пакеті</li>
+          <li><svg><use href="#check"/></svg>Анімовані креативи</li>
+          <li><svg><use href="#check"/></svg>Пріоритетна черга</li>
+          <li class="smm-only"><svg><use href="#check"/></svg>До 3 соцмереж на супроводі</li>
+          <li class="smm-only"><svg><use href="#check"/></svg>Зйомки та робота з блогерами</li>
+        </ul>
+        <a href="#contact" class="btn btn--dark"><span class="roll"><span>Обрати Партнер</span><span>Обрати Партнер</span></span></a>
+      </div>
+    </div>
+    <p class="pricing__note">Вартість без бюджету на рекламу. Разові проєкти без підписки рахуємо окремо після брифу.</p>
+  </div>
+</section>
+</div>
+
+<!-- ======= FAQ ======= -->
+<section class="faq" id="faq">
+  <div class="wrap faq__grid">
+    <aside>
+      <span class="eyebrow">Питання</span>
+      <h2 class="h-sec split" style="font-size:clamp(36px,5vw,76px)">Часті питання</h2>
+      <p data-reveal>Не знайшли свого? Напишіть нам у Telegram, відповімо протягом двох годин у робочий час.</p>
+    </aside>
+    <div id="faqList">
+      <div class="qa open"><button aria-expanded="true">Працюєте з громадськими організаціями?<span class="pm"></span></button><div class="a"><div><p>Так. Робимо звіти, посібники, інфографіку й матеріали інформаційних кампаній з урахуванням вимог донорів щодо видимості. Подаємо пропозиції на тендери та конкурсні відбори підрядників.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Скільки часу займає старт?<span class="pm"></span></button><div class="a"><div><p>Від брифу до перших готових макетів зазвичай 5–7 робочих днів. За цей час ми погоджуємо стиль і робимо систему шаблонів.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Що, якщо макет не сподобався?<span class="pm"></span></button><div class="a"><div><p>У кожну задачу входять два кола правок. Якщо після них результат усе ще не той, розбираємося разом, що пішло не так у брифі, і переробляємо.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Кому належать файли?<span class="pm"></span></button><div class="a"><div><p>Вам. Передаємо вихідники у Figma, PSD або AI, а також усі шаблони, щоб ви могли користуватися ними й після завершення співпраці.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Можна почати з одного проєкту?<span class="pm"></span></button><div class="a"><div><p>Так. Багато клієнтів починають із презентації або пакета рекламних креативів і лише потім переходять на щомісячний супровід.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Працюєте з іноземними клієнтами?<span class="pm"></span></button><div class="a"><div><p>Так, робимо контент українською та англійською. Оплата за рахунком у гривнях або в іноземній валюті.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======= ФУТЕР ======= -->
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <div class="fcard" id="fcard">
+      <div class="fcard__top">
+        <h2 class="split">Готові працювати <em>разом</em>?</h2>
+        <span class="fcard__divider"></span>
+        <a href="https://t.me/perseus_agency" target="_blank" rel="noopener" class="cta-big" data-magnetic data-cursor="Пишіть">
+          <span>Почати<br>проєкт</span>
+          <svg class="ast" id="ast" viewBox="0 0 24 24"><g stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1"/></g></svg>
+        </a>
+      </div>
+      <div class="fcard__bottom">
+        <div class="flogo" role="img" aria-label="Персей – знак студії">
+          <svg viewBox="0 0 1439 1190" fill="none" id="fullLogo">
+            <g id="flStatue">
+              <path d="M1080.72 1104.4C1214.25 998.046 1299.86 834.073 1299.86 650.095C1299.86 329.496 1039.97 69.614 719.376 69.614C398.777 69.614 138.895 329.496 138.895 650.095C138.895 834.073 224.503 998.046 358.03 1104.4H1080.69H1080.72Z" fill="#7D71F7"/>
+              <path d="M978.38 703.217C985.306 707.647 993.146 713.342 1000.74 720.374C1029.78 747.304 1042.19 781.547 1035.93 817.232C1035.12 838.678 1023.56 872.78 986.395 897.883C1050.56 910.821 1089.58 934.2 1109.73 949.775C1218.15 927.309 1298.49 960.146 1347.67 992.772C1403.82 1030 1432.26 1075.04 1433.45 1076.94C1441.65 1090.09 1440.42 1107.42 1429.48 1119.37C1422.66 1126.83 1412.71 1130.69 1402.62 1130.69H1338.14C1327.24 1130.69 1316.98 1125.63 1310.33 1117.02C1308.79 1115.05 1267.41 1064.28 1190.52 1062.73C1112.82 1061.22 1084.06 1107 1081.6 1111.25C1075.31 1124.08 1062.3 1130.9 1047.99 1129.89C858.107 1116.31 737.201 1179.25 736.006 1179.88C730.838 1182.62 725.107 1184.03 719.376 1184.03C713.646 1184.03 707.915 1182.62 702.712 1179.84C701.622 1179.25 580.751 1116.35 390.832 1129.89C376.453 1130.9 363.515 1124.08 357.222 1111.25C354.796 1107.07 327.127 1062.7 252.137 1062.7C250.871 1062.7 249.606 1062.7 248.305 1062.73C171.416 1064.28 130.036 1115.05 128.313 1117.23C121.668 1125.84 111.543 1130.69 100.644 1130.69H36.1661C26.0408 1130.69 16.1265 1126.86 9.30596 1119.37C-1.62793 1107.38 -2.89359 1090.09 5.33319 1076.94C6.52854 1075.04 34.9707 1030 91.1168 992.772C140.337 960.146 220.636 927.274 329.096 949.775C349.241 934.2 388.266 910.821 452.428 897.883C415.266 872.816 403.7 838.713 402.891 817.232C396.633 781.547 409.044 747.304 438.083 720.374C445.677 713.342 453.517 707.612 460.443 703.217V617.152C421.173 606.289 397.723 578.655 388.266 559.389C374.273 536.607 369.246 501.837 374.132 465.133C375.117 457.785 376.664 450.542 378.527 443.37C380.496 435.847 382.851 428.428 385.699 421.186C391.359 406.631 399.375 387.47 402.329 380.755C391.746 360.927 386.613 338.602 387.316 315.081C388.336 280.803 402.329 247.228 426.693 220.544C462.693 181.132 495.108 169.109 523.762 164.503C531.848 163.202 549.215 163.026 556.036 166.929C580.576 144.112 610.811 128.291 646.074 119.889C656.867 65.5004 694.52 12.2372 774.116 1.72517C898.889 -14.7987 952.293 91.7628 962.348 134.198L963.086 137.221C965.617 147.698 969.766 164.749 970.082 186.336C971.454 186.969 972.754 187.707 974.055 188.515C987.977 197.34 1000.81 208.098 1012.2 220.544C1036.56 247.193 1050.56 280.768 1051.58 315.046C1052.28 338.566 1047.15 360.891 1036.56 380.72C1040.19 388.876 1044.48 399.178 1048.62 410.779C1050.31 415.526 1051.23 417.811 1053.12 424.104C1055.37 430.714 1056.32 434.757 1057.62 439.573C1071.37 490.34 1068.77 529.822 1050.63 559.354C1041.17 578.62 1017.72 606.254 978.45 617.117" fill="white"/>
+              <path d="M1100.02 988.131C1100.02 988.131 1056.18 938.173 938.336 926.219C951.274 901.082 945.684 879.952 945.684 879.952C1002.78 856.116 1000.78 813.786 1000.78 813.786C1013.68 753.07 943.188 724.1 943.188 724.1V586.6C1000.28 586.6 1019.62 542.443 1019.62 542.443C1036 517.516 1032.1 480.285 1023.24 447.553C1012.38 435.565 998.384 424.068 983.372 421.678C949.797 416.299 908.734 437.358 908.734 437.358C940.445 416.58 951.344 377.38 951.344 377.38V394.431C979.681 394.853 1002.6 411.06 1015.4 422.697C1006.19 396.927 996.275 378.188 996.275 378.188C1012.69 357.375 1016.95 334.945 1016.31 315.855C1015.4 288.502 1003.52 262.908 984.849 242.903C975.251 232.637 965.231 224.622 955.176 218.293C951.59 239.177 943.258 251.939 943.258 251.939C988.329 283.651 978.802 352.805 965.759 354.527C968.642 334.664 954.684 281.471 934.644 269.166C927.367 290.998 918.753 296.975 918.753 296.975C945.86 361.348 885.46 406.841 871.783 402.271C914.007 360.715 899.593 321.163 899.593 321.163C830.192 417.6 694.415 413.592 656.059 361.137C594.323 276.619 729.889 227.118 727.533 296.272C710.341 275.74 685.837 282.385 685.837 282.385C652.297 295.639 664.672 327.386 664.672 327.386C686.505 375.692 748.065 366.481 748.065 366.481C840.353 367.711 926.875 285.057 933.73 207.043C937.492 177.687 931.129 155.292 928.07 142.318C923.605 123.474 887.358 22.2214 778.687 36.6007C688.896 48.4839 678.7 124.037 677.891 149.948C673.286 239.88 818.731 285.479 829.313 173.749C829.313 173.749 849.599 224.692 804.457 253.486C786.773 264.771 765.151 268.463 744.584 264.455C726.76 260.974 704.365 251.939 686.364 229.684C645.301 233.059 583.318 284.705 616.366 373.126C590.279 355.301 558.568 243.571 669.981 206.621C669.981 206.621 656.023 183.312 655.145 153.92C629.55 159.897 600.405 172.097 575.971 196.531C550.939 226.626 544.786 256.755 544.786 256.755C483.437 273.103 468.46 332.414 468.46 332.414C456.682 270.185 520.949 241.427 520.949 241.427C524.078 224.516 531.637 209.047 538.598 197.55C513.988 201.488 481.187 213.055 452.604 244.345C434.533 264.138 423.212 289.451 422.404 316.206C421.841 335.191 426.095 357.516 442.443 378.188C442.443 378.188 431.791 398.333 422.333 425.545C475.737 378.153 510.016 401.251 558.427 374.673C542.641 430.994 453.905 398.79 411.329 465.554C405.915 493.293 405.704 522.052 419.134 542.478C419.134 542.478 438.506 586.635 495.566 586.635V724.135C495.566 724.135 425.076 753.105 437.978 813.821C437.978 813.821 436.01 856.151 493.07 879.987C493.07 879.987 487.48 901.117 500.418 926.254C382.571 938.243 338.73 988.166 338.73 988.166C134.958 935.501 35.147 1095.61 35.147 1095.61H100.645C100.645 1095.61 151.658 1029.58 247.602 1027.68C352.265 1025.61 388.301 1094.9 388.301 1094.9C592.073 1080.35 719.377 1148.98 719.377 1148.98C719.377 1148.98 846.681 1080.35 1050.45 1094.9C1050.45 1094.9 1086.49 1025.57 1191.15 1027.68C1287.1 1029.58 1338.11 1095.61 1338.11 1095.61H1403.61C1403.61 1095.61 1303.8 935.501 1100.02 988.166V988.131ZM792.187 111.204C741.034 106.985 726.936 183.769 786.633 186.476C786.633 186.476 749.401 210.313 726.092 161.163C698.318 90.9538 849.494 29.9208 886.233 153.534C894.425 181.062 899.663 237.805 857.756 263.822C868.76 243.255 881.522 115.353 792.223 111.204H792.187ZM933.977 470.406C975.075 431.733 1019.34 500.992 984.357 537.591C965.934 552.427 937.281 551.127 923.043 524.935C975.673 555.627 998.701 475.011 933.941 470.406H933.977ZM954.789 851.58C966.673 768.258 848.896 779.613 878.006 702.021C867.424 761.507 1008.83 754.792 954.789 851.58ZM893.264 623.234C893.264 623.234 881.346 649.708 844.29 660.958L819.153 726.491L784.066 707.963H735.76C735.76 707.963 735.76 698.682 765.538 692.74V576.932C765.538 576.932 790.676 596.128 818.485 588.182C846.294 580.237 848.931 557.068 848.931 557.068L893.264 596.128V623.269V623.234ZM624.277 402.201C624.277 402.201 660.313 447.202 719.377 447.202C778.441 447.202 814.477 402.201 814.477 402.201C832.337 469.035 878.674 521.313 878.674 521.313C843.587 512.032 814.477 508.727 788.004 518.677C761.53 528.591 729.537 529.927 729.537 529.927C732.596 550.459 739.698 548.455 739.698 548.455V680.154L719.377 692.74L699.056 680.154V548.455C699.056 548.455 706.158 550.424 709.216 529.927C709.216 529.927 677.223 528.591 650.75 518.677C624.277 508.762 595.166 512.067 560.079 521.313C560.079 521.313 606.417 469.035 624.277 402.201ZM703.029 707.963H654.723L619.636 726.491L594.498 660.958C557.443 649.708 545.524 623.234 545.524 623.234V596.093L589.858 557.033C589.858 557.033 592.494 580.202 620.304 588.147C648.113 596.093 673.251 576.897 673.251 576.897V692.705C703.029 698.646 703.029 707.928 703.029 707.928V707.963ZM504.566 366.446H490.257C490.257 366.446 483.085 288.397 577.166 275.775V299.295C577.166 299.295 510.719 306.468 504.566 366.446ZM450.741 508.411C449.299 433.526 569.22 466.187 590.104 411.412C580.787 503.313 474.19 456.343 474.893 506.161C475.245 542.302 518.875 530.7 518.875 530.7C483.718 568.283 453.096 537.802 450.741 508.411ZM483.964 851.58C429.927 754.792 571.295 761.507 560.747 702.021C589.893 779.613 472.081 768.258 483.964 851.58ZM522.074 1052.57H418.115C418.115 1052.57 400.22 1026.24 377.262 1016.54C377.262 1016.54 413.263 975.65 522.074 969.392V1052.57ZM556.107 806.579C587.994 791.567 605.749 768.187 605.749 768.187C587.221 842.158 519.332 825.212 548.829 928.328C499.187 868.772 533.606 817.161 556.107 806.544V806.579ZM708.302 940.915C651.383 926.184 657.359 883.925 657.359 883.925C657.359 841.033 711.642 823.103 711.642 823.103C676.977 860.581 675.641 902.418 708.337 940.915H708.302ZM730.451 940.915C763.112 902.418 761.812 860.616 727.147 823.103C727.147 823.103 781.429 841.033 781.429 883.925C781.429 883.925 787.371 926.184 730.486 940.915H730.451ZM790.043 981.943C805.688 974.525 866.861 904.492 813.668 845.955C776.718 806.298 790.605 777.293 732.069 779.297C723.596 779.578 715.123 779.578 706.65 779.297C648.148 777.293 662.035 806.298 625.05 845.955C571.857 904.492 633.066 974.525 648.676 981.943C579.381 971.255 553.575 874.96 606.557 836.955C667.59 777.82 623.398 748.288 710.482 750.644C716.388 750.82 722.26 750.82 728.166 750.644C815.251 748.288 771.058 777.82 832.091 836.955C885.108 874.96 859.267 971.255 789.972 981.943H790.043ZM889.96 928.328C919.457 825.212 851.568 842.158 833.04 768.187C833.04 768.187 850.794 791.567 882.682 806.579C905.183 817.161 939.602 868.772 889.96 928.364V928.328ZM1020.67 1052.57H916.714V969.392C1025.53 975.615 1061.53 1016.54 1061.53 1016.54C1038.6 1026.24 1020.67 1052.57 1020.67 1052.57Z" fill="#0A1B22"/>
+            </g>
+          </svg>
+        </div>
+        <div class="fcol">
+          <h4>Навігація</h4>
+          <ul><li><a href="#about">Студія</a></li><li><a href="#services">Послуги</a></li><li><a href="#works">Формати</a></li><li><a href="#process">Процес</a></li><li><a href="#pricing">Тарифи</a></li></ul>
+        </div>
+        <div class="fcol">
+          <h4>Пишіть</h4>
+          <ul>
+            <li class="copyrow"><code id="mail">hello@perseus.studio</code><button class="copybtn" id="copyMail" type="button">Копіювати</button></li>
+            <li><a href="https://t.me/perseus_agency" target="_blank" rel="noopener">Telegram: @perseus_agency</a></li>
+          </ul>
+        </div>
+        <div class="fcol">
+          <h4>Соцмережі</h4>
+          <div class="socials">
+            <a href="https://www.instagram.com/perseus_agency" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+            <a href="https://t.me/perseus_agency" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 3.6 2.9 10.8c-1.3.5-1.2 1.3-.2 1.6l4.8 1.5 1.8 5.6c.2.7.4.9.9.9s.7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.6-1.4ZM9.4 13.6l9-5.7c.4-.3.8-.1.5.2l-7.4 6.7-.3 3.2-1.8-4.4Z"/></svg></a>
+            <a href="https://www.linkedin.com/company/perseus-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3V9.5Zm6.5 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2.1 1.4-2.1 2.8V21h-4V9.5Z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="giant-foot" aria-hidden="true"><svg viewBox="0 0 1346 272" id="footWm"><use href="#wm" fill="url(#gFoot)"/></svg></div>
+    </div>
+    <div class="legal"><span>© 2026 Perseus Digital Studio</span><span><a href="#top">Політика конфіденційності</a></span></div>
+  </div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Нагору">
+  <svg class="ring" viewBox="0 0 54 54"><circle cx="27" cy="27" r="25" stroke="rgba(244,239,249,.15)"/><circle id="totopRing" cx="27" cy="27" r="25" stroke="#FF6016" stroke-dasharray="157.08" stroke-dashoffset="157.08" stroke-linecap="round"/></svg>
+  <svg width="18" height="18" style="transform:rotate(-45deg)"><use href="#arrow"/></svg>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  const hasGSAP = typeof window.gsap !== 'undefined';
+  const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0');
+
+  /* ---------- контент, що генерується ---------- */
+  // стрічка в телефоні
+  const feedItems = [
+    ['t1','НОВИЙ<br>СЕЗОН'],['t2','<span class="t-c" style="color:#8A31EF"></span>'],['t3','-15%'],
+    ['t5','5 ПОРАД'],['t4','<span class="t-h" style="color:#fff"></span>'],['t6','ДО / ПІСЛЯ'],
+    ['t2','ВІДГУК'],['t1','<span class="t-c" style="color:#FFC94A"></span>'],['t3','ЧЕК-ЛИСТ'],
+    ['t4','ЗАПУСК'],['t6','<span class="t-h" style="color:#8A31EF"></span>'],['t5','FAQ'],
+    ['t3','<span class="t-c" style="color:#131D1E"></span>'],['t2','КЕЙС'],['t1','LIVE<br>18:00'],
+    ['t6','ГАЙД'],['t5','<span class="t-c" style="color:#FF6016"></span>'],['t4','АКЦІЯ']
+  ];
+  const feed = $('#feed');
+  const html = feedItems.map(([c,t]) => `<div class="${c}">${t}</div>`).join('');
+  feed.innerHTML = html + html;
+
+  // стрічки
+  const ribA = ['Дизайн постів','Сторіз','Презентації','SMM-супровід','Рекламні креативи','Pitch-деки'];
+  const ribB = ['Контент-план','Обкладинки Reels','Банери','Інфографіка','Друк','Каруселі'];
+  const star = '<svg viewBox="0 0 24 24"><use href="#star4"/></svg>';
+  $$('.ribbon__track').forEach((tr, i) => {
+    const words = i === 0 ? ribB : ribA;
+    const grp = `<div class="ribbon__group">${words.map(w => `<span>${w}</span>${star}`).join('')}</div>`;
+    tr.innerHTML = grp + grp + grp + grp;
+  });
+
+  // розбивка заголовків на слова
+  $$('.split').forEach(el => {
+    const walk = node => {
+      Array.from(node.childNodes).forEach(ch => {
+        if (ch.nodeType === 3) {
+          const parts = ch.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          parts.forEach(p => {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const w = document.createElement('span'); w.className = 'w';
+            const wi = document.createElement('span'); wi.className = 'wi'; wi.textContent = p;
+            w.appendChild(wi); frag.appendChild(w);
+          });
+          ch.replaceWith(frag);
+        } else if (ch.nodeType === 1) walk(ch);
+      });
+    };
+    walk(el);
+  });
+
+  // маніфест: слова для поступового підсвічування
+  const manifest = $('#manifest');
+  (function wrapWords(node){
+    Array.from(node.childNodes).forEach(ch => {
+      if (ch.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        ch.textContent.split(/(\s+)/).forEach(p => {
+          if (!p) return;
+          if (/^\s+$/.test(p)) frag.appendChild(document.createTextNode(' '));
+          else { const s = document.createElement('span'); s.className = 'mw'; s.textContent = p; frag.appendChild(s); }
+        });
+        ch.replaceWith(frag);
+      } else if (ch.nodeType === 1) wrapWords(ch);
+    });
+  })(manifest);
+
+  /* ---------- акордеони (працюють і без GSAP) ---------- */
+  function accordion(items, single = true) {
+    items.forEach(it => {
+      const btn = it.querySelector('button');
+      btn.addEventListener('click', () => {
+        const willOpen = !it.classList.contains('open');
+        if (single) items.forEach(o => { o.classList.remove('open'); o.querySelector('button').setAttribute('aria-expanded','false'); });
+        it.classList.toggle('open', willOpen);
+        btn.setAttribute('aria-expanded', String(willOpen));
+        if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 650);
+      });
+    });
+  }
+  accordion($$('.stat'));
+  accordion($$('.svc'));
+  accordion($$('.qa'));
+
+  /* ---------- перемикач тарифів ---------- */
+  const sw = $('#switch'), knob = $('#knob');
+  const placeKnob = () => {
+    const on = sw.querySelector('[aria-pressed="true"]');
+    knob.style.width = on.offsetWidth + 'px';
+    knob.style.transform = `translateX(${on.offsetLeft - 6}px)`;
+  };
+  placeKnob(); window.addEventListener('resize', placeKnob);
+  sw.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || b.getAttribute('aria-pressed') === 'true') return;
+    $$('button', sw).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    placeKnob();
+    const mode = b.dataset.mode;
+    $('#plans').classList.toggle('mode-smm', mode === 'smm');
+    $$('.plan__price b').forEach(el => {
+      const to = +el.dataset[mode];
+      const from = +el.textContent.replace(/\D/g,'');
+      if (hasGSAP && !reduce) {
+        const o = { v: from };
+        gsap.to(o, { v: to, duration: .9, ease: 'power3.out', onUpdate: () => el.textContent = fmt(o.v) });
+      } else el.textContent = fmt(to);
+    });
+    if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 100);
+  });
+
+  /* ---------- копіювання email ---------- */
+  $('#copyMail').addEventListener('click', e => {
+    const t = $('#mail').textContent, btn = e.currentTarget;
+    const done = ok => { btn.textContent = ok ? 'Скопійовано' : 'Виділено'; setTimeout(() => btn.textContent = 'Копіювати', 1800); };
+    const sel = () => { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done(false); };
+    try { navigator.clipboard.writeText(t).then(() => done(true), sel); } catch (_) { sel(); }
+  });
+
+  /* ---------- мобільне меню ---------- */
+  const burger = $('#burger');
+  const toggleMenu = (force) => {
+    const open = force !== undefined ? force : !document.body.classList.contains('menu-open');
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+    if (window.__lenis) open ? window.__lenis.stop() : window.__lenis.start();
+    if (open && hasGSAP && !reduce) gsap.fromTo('.mmenu .mm, .mmenu small', { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .06, duration: .7, delay: .2, ease: 'power3.out' });
+  };
+  burger.addEventListener('click', () => toggleMenu());
+
+  /* ---------- якорі ---------- */
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href'); if (id.length < 2) return;
+    const target = $(id); if (!target) return;
+    e.preventDefault();
+    toggleMenu(false);
+    if (window.__lenis) window.__lenis.scrollTo(target, { offset: id === '#top' ? 0 : -70, duration: 1.4 });
+    else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  }));
+
+  const preloader = $('#preloader');
+  if (!hasGSAP) { preloader.remove(); return; }
+
+  gsap.registerPlugin(ScrollTrigger, Draggable);
+
+  /* ---------- плавний скрол ---------- */
+  let lenis = null;
+  if (!reduce && typeof window.Lenis !== 'undefined') {
+    lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    window.__lenis = lenis;
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop();
+  }
+
+  /* ---------- прелоадер → інтро ---------- */
+  const heroIntro = () => {
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    tl.from('#orbit .disc', { scale: .4, opacity: 0, duration: 1.6 }, 0.05)
+      .from('#orbit .ring', { scale: .7, opacity: 0, duration: 1.6, stagger: .1 }, 0.1)
+      .from('#statue .s-in', { yPercent: 18, opacity: 0, duration: 1.8 }, 0.15)
+      .from('.hero h1 .ln > span', { yPercent: 110, duration: 1.3, stagger: .09 }, 0.3)
+      .from('[data-hero]', { y: 30, opacity: 0, duration: 1.1, stagger: .08 }, 0.55)
+      .from('.chip', { scale: 0, opacity: 0, duration: 1, stagger: .1, ease: 'back.out(2)' }, 0.8)
+      .from('.header__bar', { yPercent: -150, opacity: 0, duration: 1.1 }, 0.4);
+    return tl;
+  };
+
+  const counter = { v: 0 };
+  const plTl = gsap.timeline({
+    onComplete: () => {
+      gsap.to(preloader, { yPercent: -100, duration: 1, ease: 'expo.inOut', onComplete: () => preloader.remove() });
+      gsap.delayedCall(.35, () => { if (!reduce) heroIntro(); lenis && lenis.start(); });
+    }
+  });
+  plTl.to(counter, { v: 100, duration: reduce ? .1 : 1.3, ease: 'power2.inOut', onUpdate: () => {
+      $('#plCount').textContent = Math.round(counter.v);
+      $('#plFill').style.clipPath = `inset(${100 - counter.v}% 0 0 0)`;
+    } });
+
+  /* ---------- шапка ---------- */
+  const header = $('#header');
+  let lastY = window.scrollY, hidden = false;
+  const onScroll = () => {
+    const y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 40);
+    let want = hidden;
+    if (y > 300 && y > lastY + 4 && !document.body.classList.contains('menu-open')) want = true;
+    else if (y < lastY - 4 || y < 300) want = false;
+    if (want !== hidden) { hidden = want; gsap.to(header, { yPercent: hidden ? -130 : 0, duration: .5, ease: 'power3.out', overwrite: true }); }
+    lastY = y;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    $('#totop').classList.toggle('show', y > 800);
+    $('#totopRing').style.strokeDashoffset = 157.08 * (1 - (max > 0 ? y / max : 0));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  // refresh тимчасово скидає скрол для вимірів: після нього беремо реальну позицію без анімацій
+  ScrollTrigger.addEventListener('refresh', () => requestAnimationFrame(() => { lastY = window.scrollY; header.classList.toggle('is-scrolled', lastY > 40); }));
+  onScroll();
+  $('#totop').addEventListener('click', () => lenis ? lenis.scrollTo(0, { duration: 1.6 }) : window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  if (reduce) return; // далі тільки рух
+
+  const mm = gsap.matchMedia();
+
+  /* ---------- безкінечні обертання ---------- */
+  gsap.to('#ringRot', { rotation: 360, duration: 18, repeat: -1, ease: 'none' });
+  gsap.to('#orbit .ring:not(.r2)', { rotation: -360, duration: 60, repeat: -1, ease: 'none' });
+  gsap.to('#badgeTxt', { rotation: 360, duration: 16, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
+  gsap.to('.shapes-pill .spin', { rotation: 360, duration: 6, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
+  gsap.to('#ast', { rotation: 360, duration: 8, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
+  gsap.to('.chip', { yPercent: 22, duration: 2.4, ease: 'sine.inOut', repeat: -1, yoyo: true, stagger: { each: .5 } });
+  gsap.to('#flStatue', { y: -40, duration: 3, ease: 'sine.inOut', repeat: -1, yoyo: true });
+
+
+  /* ---------- декор навколо статуї ---------- */
+  gsap.from('.hx:not(.hx-spark)', { scale: 0, opacity: 0, duration: 1, stagger: .06, ease: 'back.out(2)', delay: 2.4 });
+  $$('.hx-spark').forEach((el, i) => gsap.to(el, { scale: .35, opacity: .35, rotation: 90, duration: 1.4 + i * .3, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: i * .4 }));
+
+  /* ---------- hero: паралакс від мишки ---------- */
+  if (fine) {
+    const layers = $$('#hero [data-depth]').map(el => ({
+      d: parseFloat(el.dataset.depth),
+      x: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power3.out' }),
+      y: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power3.out' })
+    }));
+    $('#hero').addEventListener('mousemove', e => {
+      const nx = e.clientX / innerWidth - .5, ny = e.clientY / innerHeight - .5;
+      layers.forEach(l => { l.x(nx * 40 * l.d); l.y(ny * 30 * l.d); });
+    });
+  }
+
+  /* ---------- hero: скрол ---------- */
+  const heroST = { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true };
+  gsap.to('#statue img', { yPercent: 12, scale: 1.06, ease: 'none', scrollTrigger: heroST });
+  gsap.to('.hero__copy', { y: -80, opacity: .2, ease: 'none', scrollTrigger: heroST });
+  gsap.to('#orbit', { opacity: .35, ease: 'none', scrollTrigger: heroST });
+
+  /* ---------- стрічки: безкінечний рух + швидкість скролу ---------- */
+  const ribbonTweens = $$('.ribbon__track').map(tr => {
+    const dir = +tr.dataset.dir;
+    const t = gsap.fromTo(tr, { xPercent: dir > 0 ? -50 : 0 }, { xPercent: dir > 0 ? 0 : -50, duration: 38, ease: 'none', repeat: -1 });
+    t.totalTime(38 * 400); // запас, щоб стрічка могла крутитись і назад
+    return t;
+  });
+  const tracks = $$('.ribbon__track');
+  let vel = 0, ts = 1, dirSign = 1, skew = 0, ribbonsOn = false;
+  ScrollTrigger.create({
+    trigger: '.ribbons', start: 'top bottom', end: 'bottom top',
+    onToggle: self => ribbonsOn = self.isActive,
+    onUpdate: self => { vel = self.getVelocity(); }
+  });
+  gsap.ticker.add(() => {
+    if (!ribbonsOn) return;
+    if (Math.abs(vel) > 20) dirSign = vel < 0 ? -1 : 1;
+    const target = (1 + Math.min(Math.abs(vel) / 450, 5)) * dirSign;
+    ts += (target - ts) * .08;
+    ribbonTweens.forEach(t => t.timeScale(ts));
+    skew += (gsap.utils.clamp(-10, 10, -vel / 160) - skew) * .12;
+    gsap.set(tracks, { skewX: skew });
+    vel *= .9;
+  });
+  gsap.fromTo('.ribbon--a', { rotation: -4, yPercent: -62, y: 0 }, { rotation: -2, ease: 'none', scrollTrigger: { trigger: '.ribbons', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.fromTo('.ribbon--b', { rotation: 3.5, yPercent: -30, y: 0 }, { rotation: 1.5, ease: 'none', scrollTrigger: { trigger: '.ribbons', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+  /* ---------- заголовки по словах ---------- */
+  $$('.split').forEach(el => {
+    gsap.from(el.querySelectorAll('.wi'), {
+      yPercent: 115, rotate: 6, duration: 1.1, stagger: .06, ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  /* ---------- загальні появи ---------- */
+  gsap.set('[data-reveal]', { y: 50, opacity: 0 });
+  ScrollTrigger.batch('[data-reveal]', {
+    start: 'top 90%', once: true,
+    onEnter: els => gsap.to(els, { y: 0, opacity: 1, duration: 1, stagger: .1, ease: 'power3.out', overwrite: true })
+  });
+
+  /* ---------- маніфест: слова підсвічуються під час скролу ---------- */
+  gsap.fromTo('#manifest .mw', { opacity: .16 }, {
+    opacity: 1, stagger: .06, ease: 'none',
+    scrollTrigger: { trigger: '#manifest', start: 'top 82%', end: 'bottom 45%', scrub: .6 }
+  });
+
+  /* ---------- лічильники ---------- */
+  $$('[data-count]').forEach(el => {
+    const to = +el.dataset.count, o = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 92%', once: true,
+      onEnter: () => gsap.to(o, { v: to, duration: 2, ease: 'power3.out', onUpdate: () => el.textContent = fmt(o.v) })
+    });
+  });
+
+  /* ---------- послуги ---------- */
+  gsap.from('.svc', { y: 70, opacity: 0, duration: 1, stagger: .08, ease: 'power3.out',
+    scrollTrigger: { trigger: '.svc-list', start: 'top 85%', once: true } });
+  gsap.to('.services__lines', { yPercent: -20, ease: 'none', scrollTrigger: { trigger: '.services', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.from('.services', { borderRadius: '120px 120px 0 0', ease: 'none', scrollTrigger: { trigger: '.services', start: 'top bottom', end: 'top 30%', scrub: true } });
+
+
+  /* ---------- бізнес і ГО ---------- */
+  gsap.from('#spWrap .sp', { y: 100, rotateX: -14, opacity: 0, duration: 1.3, stagger: .15, ease: 'expo.out', transformOrigin: '50% 100%',
+    scrollTrigger: { trigger: '#spWrap', start: 'top 82%', once: true } });
+  gsap.from('.biz-card', { y: 160, rotate: 0, opacity: 0, duration: 1.2, stagger: .12, ease: 'back.out(1.6)',
+    scrollTrigger: { trigger: '.sp--biz .sp__art', start: 'top 92%', once: true } });
+  gsap.from('.biz-card--c .bars i', { scaleY: 0, duration: 1, stagger: .08, ease: 'power3.out', delay: .5,
+    scrollTrigger: { trigger: '.sp--biz .sp__art', start: 'top 92%', once: true } });
+  gsap.from('.doc', { y: 200, rotate: 0, opacity: 0, duration: 1.2, stagger: .12, ease: 'back.out(1.4)',
+    scrollTrigger: { trigger: '.sp--ngo .sp__art', start: 'top 92%', once: true } });
+  gsap.from('.stamp', { scale: 2.4, rotate: -40, opacity: 0, duration: .7, ease: 'power4.in', delay: .9,
+    scrollTrigger: { trigger: '.sp--ngo .sp__art', start: 'top 92%', once: true },
+    onComplete: () => gsap.fromTo('.sp--ngo', { x: -6 }, { x: 0, duration: .5, ease: 'elastic.out(1.2,.3)' }) });
+  gsap.to('#stampTxt', { rotation: 360, duration: 20, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
+  gsap.to('#tenderLine', { scaleX: 1, scaleY: 1, ease: 'none', scrollTrigger: { trigger: '#tender', start: 'top 80%', end: 'bottom 55%', scrub: true } });
+  gsap.from('.ts', { y: 30, opacity: 0, duration: .9, stagger: .15, ease: 'power3.out', scrollTrigger: { trigger: '#tender', start: 'top 85%', once: true } });
+  if (fine) {
+    $$('[data-tilt]').forEach(card => {
+      const rx = gsap.quickTo(card, 'rotationX', { duration: .8, ease: 'power3.out' });
+      const ry = gsap.quickTo(card, 'rotationY', { duration: .8, ease: 'power3.out' });
+      const art = card.querySelectorAll('.biz-card, .doc');
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+        rx(-ny * 6); ry(nx * 8);
+        gsap.to(art, { x: (i) => nx * (14 + i * 10), y: (i) => ny * (10 + i * 6), duration: .8, ease: 'power3.out', overwrite: 'auto' });
+      });
+      card.addEventListener('mouseenter', () => {
+        if (card.classList.contains('sp--ngo')) gsap.to('.doc--1', { rotate: -20, x: -24, duration: .8, ease: 'power3.out' }), gsap.to('.doc--3', { rotate: 20, duration: .8, ease: 'power3.out' });
+        else gsap.to('.biz-card--a', { rotate: -12, duration: .8, ease: 'power3.out' }), gsap.to('.biz-card--c', { rotate: 3, duration: .8, ease: 'power3.out' });
+      });
+      card.addEventListener('mouseleave', () => {
+        rx(0); ry(0);
+        gsap.to(art, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1,.5)' });
+        gsap.to('.doc--1', { rotate: -12, duration: .8 }); gsap.to('.doc--3', { rotate: 12, duration: .8 });
+        gsap.to('.biz-card--a', { rotate: -7, duration: .8 }); gsap.to('.biz-card--c', { rotate: -3, duration: .8 });
+      });
+    });
+  }
+
+  /* ---------- бенто ---------- */
+  gsap.from('#bento .cell', { y: 80, scale: .94, opacity: 0, duration: 1.1, stagger: .08, ease: 'expo.out',
+    scrollTrigger: { trigger: '#bento', start: 'top 82%', once: true } });
+
+  // плашки інструментів: падіння + перетягування
+  const zone = $('#pillsZone');
+  const tools = $$('.tool', zone);
+  const layoutTools = () => {
+    const zw = zone.clientWidth, zh = zone.clientHeight;
+    const cols = zw < 520 ? 2 : 3;
+    tools.forEach((t, i) => {
+      const col = i % cols, row = Math.floor(i / cols);
+      const x = 24 + col * ((zw - 48) / cols) + (row % 2 ? 30 : 0);
+      const y = zh - 118 - row * 56;
+      gsap.set(t, { x: Math.min(x, zw - t.offsetWidth - 16), y: Math.max(y, 150), rotation: gsap.utils.random(-14, 14) });
+    });
+  };
+  layoutTools();
+  Draggable.create(tools, { bounds: zone, type: 'x,y', zIndexBoost: true,
+    onPress() { gsap.to(this.target, { scale: 1.08, rotation: 0, duration: .25 }); },
+    onRelease() { gsap.to(this.target, { scale: 1, rotation: gsap.utils.random(-10, 10), duration: .6, ease: 'elastic.out(1,.4)' }); }
+  });
+  gsap.from(tools, { y: -420, opacity: 0, duration: 1.4, ease: 'bounce.out', stagger: { each: .07, from: 'random' },
+    scrollTrigger: { trigger: zone, start: 'top 70%', once: true } });
+  let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(layoutTools, 200); });
+
+  /* ---------- формати: горизонтальний скрол на десктопі ---------- */
+  mm.add('(min-width: 901px)', () => {
+    const track = $('#worksTrack');
+    const dist = () => track.scrollWidth - innerWidth;
+    const tween = gsap.to(track, {
+      x: () => -dist(), ease: 'none',
+      scrollTrigger: {
+        trigger: '#worksPin', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1,
+        onUpdate: self => gsap.set('#worksBar', { scaleX: self.progress })
+      }
+    });
+    $$('[data-par]').forEach(el => {
+      gsap.fromTo(el, { xPercent: 18, rotate: -4 }, { xPercent: -18, rotate: 2, ease: 'none',
+        scrollTrigger: { trigger: el.closest('.work'), containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } });
+    });
+    $$('.work').forEach(w => gsap.from(w, { scale: .86, opacity: .4, ease: 'none',
+      scrollTrigger: { trigger: w, containerAnimation: tween, start: 'left 105%', end: 'left 55%', scrub: true } }));
+  });
+  mm.add('(max-width: 900px)', () => {
+    gsap.from('.work', { x: 80, opacity: 0, duration: 1, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '#worksTrack', start: 'top 85%', once: true } });
+  });
+
+  /* ---------- процес ---------- */
+  gsap.to('#stepsLine', { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '#steps', start: 'top 60%', end: 'bottom 60%', scrub: true } });
+  $$('.step').forEach(s => {
+    ScrollTrigger.create({ trigger: s, start: 'top 62%', end: 'bottom 40%', toggleClass: 'is-on' });
+    gsap.from(s, { y: 60, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: s, start: 'top 88%', once: true } });
+  });
+
+  /* ---------- тарифи ---------- */
+  gsap.from('.pricing', { scale: .94, ease: 'none', scrollTrigger: { trigger: '.pricing', start: 'top bottom', end: 'top 40%', scrub: true } });
+  gsap.from('.plan', { y: 90, opacity: 0, duration: 1.1, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: '#plans', start: 'top 85%', once: true } });
+  gsap.to('.pricing__deco', { rotation: 180, ease: 'none', scrollTrigger: { trigger: '.pricing', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+  /* ---------- FAQ ---------- */
+  gsap.from('.qa', { y: 40, opacity: 0, duration: .9, stagger: .07, ease: 'power3.out', scrollTrigger: { trigger: '#faqList', start: 'top 85%', once: true } });
+
+  /* ---------- футер ---------- */
+  gsap.from('#fcard', { y: 120, scale: .92, borderRadius: 120, ease: 'none', scrollTrigger: { trigger: '#fcard', start: 'top bottom', end: 'top 45%', scrub: true } });
+  gsap.fromTo('#footWm', { yPercent: 80 }, { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.giant-foot', start: 'top bottom', end: 'bottom bottom', scrub: true } });
+  gsap.from('.cta-big', { scale: .6, rotate: -8, duration: 1.2, ease: 'elastic.out(1,.5)', scrollTrigger: { trigger: '.cta-big', start: 'top 90%', once: true } });
+
+  /* ---------- курсор і магнітні елементи ---------- */
+  if (fine) {
+    const cur = $('#cursor'), dot = $('.cursor__dot'), ring = $('.cursor__ring'), label = $('#cursorLabel');
+    const dx = gsap.quickTo(dot, 'x', { duration: .12 }), dy = gsap.quickTo(dot, 'y', { duration: .12 });
+    const rx = gsap.quickTo(ring, 'x', { duration: .45, ease: 'power3.out' }), ry = gsap.quickTo(ring, 'y', { duration: .45, ease: 'power3.out' });
+    let shown = false;
+    window.addEventListener('mousemove', e => { if (!shown) { shown = true; gsap.set([dot, ring], { x: e.clientX, y: e.clientY }); gsap.to(cur, { opacity: 1, duration: .3 }); } dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
+    document.addEventListener('mouseover', e => {
+      const lab = e.target.closest('[data-cursor]');
+      const link = e.target.closest('a, button');
+      cur.classList.toggle('is-label', !!lab);
+      if (lab) label.textContent = lab.dataset.cursor;
+      cur.classList.toggle('is-link', !lab && !!link);
+    });
+    document.addEventListener('mouseleave', () => gsap.to(cur, { opacity: 0, duration: .2 }));
+    document.addEventListener('mouseenter', () => shown && gsap.to(cur, { opacity: 1, duration: .2 }));
+
+    $$('[data-magnetic]').forEach(el => {
+      const mx = gsap.quickTo(el, 'x', { duration: .6, ease: 'elastic.out(1,.4)' });
+      const my = gsap.quickTo(el, 'y', { duration: .6, ease: 'elastic.out(1,.4)' });
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        mx((e.clientX - r.left - r.width / 2) * .3); my((e.clientY - r.top - r.height / 2) * .3);
+      });
+      el.addEventListener('mouseleave', () => { mx(0); my(0); });
+    });
+  }
+
+  // після завантаження шрифтів перераховуємо позиції
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { ScrollTrigger.refresh(); placeKnob(); layoutTools(); });
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+})();
+</script>
+
+</body>
+</html>
