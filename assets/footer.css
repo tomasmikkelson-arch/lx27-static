@@ -1,0 +1,47 @@
+/* Футер – той самий, що на головній (стилі скопійовано з index.html, щоб усі сторінки виглядали однаково) */
+.footer{padding-block:0 calc(20px + env(safe-area-inset-bottom,0px))}
+.fcard{position:relative;background:var(--night);border:1px solid var(--line);border-radius:clamp(28px,4vw,56px);padding:clamp(28px,4vw,56px);overflow:hidden;isolation:isolate}
+.fcard::before{content:"";position:absolute;right:-10%;top:-30%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(138,49,239,.35),transparent 65%);z-index:-1}
+.fcard__top{display:grid;grid-template-columns:minmax(0,1.4fr) 1px minmax(0,.8fr);gap:clamp(24px,4vw,60px);align-items:center;padding-block:clamp(10px,2vw,30px) clamp(28px,4vw,56px);border-top:1px solid var(--line);padding-top:clamp(28px,4vw,56px)}
+.fcard__top h2{font-family:var(--f-display);font-weight:600;font-size:clamp(36px,5.4vw,84px);line-height:1;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.fcard__top h2 em{font-style:normal;color:var(--ember)}
+.fcard__divider{align-self:stretch;background:var(--line)}
+.cta-big{justify-self:center;position:relative;display:flex;align-items:center;justify-content:center;width:min(100%,300px);aspect-ratio:2.1/1;border-radius:999px;background:var(--ember);color:#fff;font-family:var(--f-display);font-weight:600;font-size:clamp(20px,2vw,28px);line-height:1.05;text-align:left;padding:0 34px;box-shadow:0 0 0 8px rgba(255,96,22,.16);isolation:isolate;overflow:hidden}
+.cta-big::before{content:"";position:absolute;inset:0;background:var(--violet);border-radius:inherit;transform:scale(0);transition:transform .6s var(--ease);z-index:-1}
+.cta-big:hover::before{transform:scale(1.02)}
+.cta-big .ast{position:absolute;right:28px;top:22px;width:28px;height:28px}
+.fcard__bottom{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px);padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line)}
+.flogo{display:grid;place-items:center;max-width:260px;align-self:start}
+.flogo svg{width:100%;height:auto;display:block;overflow:visible}
+.fcol h4{font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--ember);margin:0 0 16px}
+.fcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.fcol a{color:var(--fg-dim);transition:color .3s}
+.fcol a:hover{color:var(--fg)}
+.copyrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.copyrow code{font-family:var(--f-body);font-size:15px;color:var(--fg);user-select:all}
+.copybtn{height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--fg-dim)}
+.copybtn:hover{border-color:var(--lilac);color:var(--fg)}
+.socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.socials a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(244,239,249,.06);border:1px solid var(--line);transition:background .3s,transform .4s var(--ease)}
+.socials a:hover{background:var(--violet);transform:translateY(-3px)}
+.socials svg{width:18px;height:18px}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:22px 8px 0;font-size:14px;color:var(--fg-faint)}
+.legal a:hover{color:var(--fg)}
+.fcard{padding-bottom:0}
+.giant-foot{position:relative;margin-top:clamp(24px,3vw,44px);margin-inline:calc(-1 * clamp(28px,4vw,56px));padding-inline:clamp(20px,3vw,44px);height:clamp(80px,11vw,170px);overflow:hidden;isolation:isolate}
+.giant-foot::before{content:none}
+.giant-foot svg{width:100%;height:auto;display:block;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 20%,rgba(0,0,0,.55) 36%,transparent 54%);mask-image:linear-gradient(180deg,#000 0%,#000 20%,rgba(0,0,0,.55) 36%,transparent 54%)}
+@media (max-width:900px){
+  .fcard__top{grid-template-columns:1fr}
+  .fcard__divider{display:none}
+  .cta-big{justify-self:start}
+  .fcard__bottom{grid-template-columns:1fr 1fr}
+  .flogo{grid-column:1/-1;max-width:200px}
+}
+@media (max-width:520px){ .fcard__bottom{grid-template-columns:1fr} }
+/* лише для внутрішніх сторінок */
+.footer{padding-top:clamp(40px,6vw,80px)}
+.giant-foot svg{transform:translateY(12%)}
+#flStatue{animation:fl-statue 6s ease-in-out infinite alternate}
+@keyframes fl-statue{from{transform:translateY(0)}to{transform:translateY(-40px)}}
+@media (prefers-reduced-motion:reduce){#flStatue{animation:none}}

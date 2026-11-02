@@ -16,7 +16,7 @@
   - `tools/privacy_body.html` – текст політики конфіденційності.
   - `tools/patch_index.py` – одноразовий скрипт, уже застосований; повторно не запускати.
 - Не редагуйте згенеровані `*/index.html` вручну – правте джерело в `tools/` і перезбирайте.
-- Спільні стилі/скрипти: `assets/site.css`, `assets/site.js`; pop-up заявки: `assets/lead.css`, `assets/lead.js` (атрибут `data-lead="контекст"` на будь-якій кнопці); відгуки: `assets/reviews.css`.
+- Спільні стилі/скрипти: `assets/site.css`, `assets/site.js`; pop-up заявки: `assets/lead.css`, `assets/lead.js` (атрибут `data-lead="контекст"` на будь-якій кнопці); відгуки: `assets/reviews.css`; футер: `assets/footer.css` (копія стилів футера головної – футер внутрішніх сторінок береться з `index.html` автоматично, тож правте його лише на головній і перезбирайте).
 - Адмінка: Pages CMS (`.pages.yml`), вхід на https://app.pagescms.org через GitHub – колекції «Блог» і «Відгуки». Workflow `.github/workflows/build-site.yml` перезбирає сайт при змінах у `content/` або `tools/` і щодня (для відкладених статей).
 - Мова сайту – українська. Реквізити: ФОП Ісиченко Ігор Володимирович.
 - Після зміни текстів статичних сторінок оновіть `SITE_UPDATED` у `tools/build.py` (дата для sitemap).

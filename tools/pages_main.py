@@ -86,8 +86,8 @@ def ngo():
 def about():
     path = "/about/"
     crumbs = [("Про нас", path)]
-    img = '''<picture><source type="image/webp" srcset="/assets/ihor-isychenko-560.webp 560w, /assets/ihor-isychenko-960.webp 960w" sizes="(max-width:860px) 92vw, 60vw">
-<img src="/assets/ihor-isychenko.jpg" width="560" height="700" alt="Ігор Ісиченко, засновник і керівник Perseus Digital Studio, у кріслі під лампою" fetchpriority="high"></picture>'''
+    img = '''<picture><source type="image/webp" srcset="/assets/ihor-isychenko-720.webp 720w, /assets/ihor-isychenko-1122.webp 1122w" sizes="(max-width:860px) 92vw, 54vw">
+<img src="/assets/ihor-isychenko.jpg" width="1122" height="1402" alt="Ігор Ісиченко, засновник і керівник Perseus Digital Studio, у кріслі під лампою" fetchpriority="high"></picture>'''
     values = [("chat", "Відповідаємо швидко", "До 2 годин у робочий час. Без «подивлюсь завтра»."),
               ("folder", "Файли належать вам", "Вихідники у Figma, PSD, AI та всі шаблони лишаються у вас."),
               ("target", "Дивимося на результат", "Оцінюємо дизайн за заявками, продажами й охопленнями, а не за лайками колег."),
@@ -103,6 +103,12 @@ def about():
   <div class="intro">
     <div class="intro__card" data-r>
       <p>Perseus – digital-студія графічного дизайну та SMM. Ми – повноцінний дизайн-підрядник для малого й середнього бізнесу та громадських організацій: від логотипа й соцмереж до звітів для донорів і презентацій для інвесторів.</p>
+      <ul class="checks">
+        <li><span><strong>Малий і середній бізнес</strong> – соцмережі, реклама, презентації, друк</span></li>
+        <li><span><strong>Громадські організації</strong> – звіти, посібники, кампанії за правилами донорів</span></li>
+        <li><span><strong>Аутсорс-підрядник</strong> – беремо дизайн-частину проєктів і тендерів</span></li>
+        <li><span><strong>Договір, рахунки, акти</strong> – прозоро для бухгалтерії та донорів</span></li>
+      </ul>
       {btn("Познайомитися", TG, ext=True, lead="Сторінка «Про нас»")}
     </div>
     <figure class="intro__photo" data-r="2" style="margin:0">{img}
@@ -118,7 +124,7 @@ def about():
       <p>Студія задумувалася як відповідь на просту проблему, з якою стикався майже кожен клієнт: дизайн потрібен постійно, а надійного виконавця немає. Фрилансер зникає посеред задачі, великі агенції – задорогі й повільні для малого бізнесу, а штатний дизайнер не закриває все – від сторіз до верстки звіту. Так з'явилася Perseus: команда, яка працює як ваш внутрішній відділ дизайну, але без витрат на найм.</p>
       <p>Сьогодні ми беремо проєкти на аутсорс і супроводжуємо бренди щомісяця. Наш орієнтир – <strong>малий і середній бізнес</strong> та <strong>громадські організації</strong>: компанії, яким важливо продавати, і організації, яким важливо звітувати перед донорами й доносити свої ідеї до людей.</p>
       <blockquote class="quote">Хороший дизайн – це не про «красиво». Це про те, щоб вас зрозуміли з першого погляду і захотіли написати.</blockquote>
-      <div class="sign"><img src="/assets/ihor-isychenko-560.webp" alt="" width="48" height="48" loading="lazy"><span>Ігор Ісиченко, засновник Perseus</span></div>
+      <div class="sign"><img src="/assets/ihor-face-160.webp" srcset="/assets/ihor-face-160.webp 1x, /assets/ihor-face-320.webp 2x" alt="Ігор Ісиченко" width="88" height="88" loading="lazy"><span><b>Ігор Ісиченко</b>Засновник і керівник Perseus Digital Studio</span></div>
     </div>
   </div>
 </div></section>
@@ -161,7 +167,7 @@ def about():
 '''
     person = {"@type": "Person", "@id": SITE + "/about/#ihor", "name": "Ігор Ісиченко", "alternateName": "Ihor Isychenko",
               "givenName": "Ігор", "familyName": "Ісиченко", "jobTitle": "Засновник і керівник Perseus Digital Studio",
-              "image": SITE + "/assets/ihor-isychenko-960.webp", "worksFor": {"@id": ORG_ID}, "url": SITE + "/about/",
+              "image": SITE + "/assets/ihor-isychenko-1122.webp", "worksFor": {"@id": ORG_ID}, "url": SITE + "/about/",
               "knowsAbout": ["Графічний дизайн", "SMM", "Брендинг", "Дизайн презентацій", "Дизайн для громадських організацій"]}
     about_page = {"@type": "AboutPage", "url": SITE + path, "mainEntity": {"@id": ORG_ID}}
     register(path, page(path, "Про студію Perseus і засновника Ігоря Ісиченка | Perseus Digital Studio",

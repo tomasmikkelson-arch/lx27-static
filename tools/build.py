@@ -112,41 +112,10 @@ def header(active):
 </div>'''
 
 def footer():
-    svc = "".join(f'<li><a href="/services/{s}/">{n}</a></li>' for s, n, *_ in SERVICES)
-    return f'''<footer class="footer">
-  <div class="wrap">
-    <div class="fcard">
-      <div class="fcard__top">
-        <h2>Готові працювати <em>разом</em>?</h2>
-        <div class="btns">{btn("Обговорити проєкт", TG, ext=True, lead="")}{btn("Усі контакти", "/contacts/", "ghost")}</div>
-      </div>
-      <div class="fcols">
-        <div class="fabout">
-          <a href="/" class="logo" aria-label="Perseus – на головну"><svg viewBox="0 0 1346 272" aria-hidden="true"><use href="#wm" fill="currentColor"/></svg></a>
-          <p>Digital-студія графічного дизайну та SMM. Повноцінний дизайн-підрядник для малого й середнього бізнесу та громадських організацій.</p>
-          <div class="socials">
-            <a href="{IG}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
-            <a href="{TG}" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 3.6 2.9 10.8c-1.3.5-1.2 1.3-.2 1.6l4.8 1.5 1.8 5.6c.2.7.4.9.9.9s.7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.6-1.4ZM9.4 13.6l9-5.7c.4-.3.8-.1.5.2l-7.4 6.7-.3 3.2-1.8-4.4Z"/></svg></a>
-            <a href="{LI}" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3V9.5Zm6.5 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2.1 1.4-2.1 2.8V21h-4V9.5Z"/></svg></a>
-          </div>
-        </div>
-        <div><h3>Послуги</h3><ul>{svc}</ul></div>
-        <div><h3>Студія</h3><ul>
-          <li><a href="/about/">Про нас</a></li><li><a href="/ngo/">Для громадських організацій</a></li>
-          <li><a href="/portfolio/">Портфоліо</a></li><li><a href="/prices/">Ціни</a></li>
-          <li><a href="/blog/">Блог</a></li><li><a href="/#faq">Часті питання</a></li></ul></div>
-        <div><h3>Контакти</h3><ul>
-          <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
-          <li><a href="{TG}" target="_blank" rel="noopener">Telegram: @perseus_agency</a></li>
-          <li><a href="{IG}" target="_blank" rel="noopener">Instagram: @perseus_agency</a></li>
-          <li><a href="/contacts/">Як почати співпрацю</a></li></ul></div>
-      </div>
-      <div class="giant-foot" aria-hidden="true"><svg viewBox="0 0 1346 272"><use href="#wm" fill="url(#gFoot)"/></svg></div>
-    </div>
-    <div class="legal"><span>© {date.today().year} {BRAND} · {LEGAL}</span><span><a href="/privacy/">Політика конфіденційності</a><a href="#" data-cookie-settings>Налаштування cookie</a></span></div>
-  </div>
-</footer>
-<button class="totop" id="totop" aria-label="Нагору">{ARR}</button>'''
+    """Футер беремо з головної сторінки без змін, щоб він був однаковим на всьому сайті."""
+    m = re.search(r'<footer class="footer".*?</footer>', _src, re.S)
+    f = m.group(0).replace('id="copyMail" type="button"', f'id="copyMail" type="button" data-copy="{EMAIL}"')
+    return f + f'\n<button class="totop" id="totop" aria-label="Нагору">{ARR}</button>'
 
 SPRITE = f'''<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 {WM}
@@ -217,6 +186,7 @@ def page(path, title, desc, body, active=None, crumbs=None, schema=None, og_type
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700&family=Unbounded:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v={_ver("assets/site.css")}">
 <link rel="stylesheet" href="/assets/lead.css?v={_ver("assets/lead.css")}">
+<link rel="stylesheet" href="/assets/footer.css?v={_ver("assets/footer.css")}">
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
