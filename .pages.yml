@@ -66,3 +66,48 @@ content:
         type: rich-text
         options:
           format: markdown
+
+  - name: reviews
+    label: Відгуки
+    type: file
+    path: content/reviews.json
+    format: json
+    fields:
+      - name: reviews
+        label: Відгуки клієнтів (лише реальні, за згодою клієнта)
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Імʼя та прізвище
+            type: string
+            required: true
+          - name: role
+            label: Посада
+            type: string
+          - name: org
+            label: Компанія або організація
+            type: string
+          - name: org_type
+            label: Тип клієнта
+            type: select
+            options:
+              values: [Бізнес, ГО]
+          - name: service
+            label: Послуга (наприклад, «Звіт для донора»)
+            type: string
+          - name: text
+            label: Текст відгуку (як написав клієнт)
+            type: text
+            required: true
+          - name: rating
+            label: Оцінка (1–5)
+            type: number
+            default: 5
+          - name: photo
+            label: Фото клієнта (квадратне, за згодою)
+            type: image
+          - name: allowed
+            label: Клієнт погодився на публікацію (без цього відгук не показується)
+            type: boolean
+            default: false

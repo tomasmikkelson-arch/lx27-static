@@ -277,7 +277,7 @@ def finish():
     sm += "</urlset>\n"
     open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(sm)
     open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8").write(
-        f"User-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /content/\n\nSitemap: {SITE}/sitemap.xml\n")
+        f"User-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /content/\nDisallow: /reviews-preview/\n\nSitemap: {SITE}/sitemap.xml\n")
     print(f"OK: {len(urls)} URL у sitemap")
 
 if __name__ == "__main__":
@@ -285,4 +285,6 @@ if __name__ == "__main__":
     import build as B  # той самий модуль, у який реєструють сторінки
     pages_services.build()
     pages_main.build()
+    import reviews
+    reviews.build()
     B.finish()

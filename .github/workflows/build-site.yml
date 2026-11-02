@@ -8,6 +8,7 @@ on:
     paths:
       - "content/**"
       - "tools/**"
+      - "assets/reviews.css"
       - ".github/workflows/build-site.yml"
   schedule:
     - cron: "17 5 * * *"

@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /tools/
 Disallow: /content/
+Disallow: /reviews-preview/
 
 Sitemap: https://perseus.company/sitemap.xml
