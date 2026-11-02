@@ -9,6 +9,8 @@
 .cta-big{justify-self:center;position:relative;display:flex;align-items:center;justify-content:center;width:min(100%,300px);aspect-ratio:2.1/1;border-radius:999px;background:var(--ember);color:#fff;font-family:var(--f-display);font-weight:600;font-size:clamp(20px,2vw,28px);line-height:1.05;text-align:left;padding:0 34px;box-shadow:0 0 0 8px rgba(255,96,22,.16);isolation:isolate;overflow:hidden}
 .cta-big::before{content:"";position:absolute;inset:0;background:var(--violet);border-radius:inherit;transform:scale(0);transition:transform .6s var(--ease);z-index:-1}
 .cta-big:hover::before{transform:scale(1.02)}
+.cta-big{transition:box-shadow .6s var(--ease)}
+.cta-big:hover{box-shadow:0 0 0 8px rgba(205,176,255,.45)}
 .cta-big .ast{position:absolute;right:28px;top:22px;width:28px;height:28px}
 .fcard__bottom{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px);padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line)}
 .flogo{display:grid;place-items:center;max-width:260px;align-self:start}

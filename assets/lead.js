@@ -4,7 +4,9 @@
    Без JS посилання веде у Telegram (href лишається робочим).
    Під Google Ads / Meta: при надсиланні пушиться подія lead_submit у dataLayer і fbq('track','Lead'), якщо їх підключено. */
 (function(){
-  var TG='https://t.me/perseus_agency', TG_USER='perseus_agency', MAIL='hello@perseus.studio';
+  var TG='https://t.me/perseus_agency', MAIL='hello@perseus.studio';
+  // Заявки надсилаються на пошту через FormSubmit (formsubmit.co). Першу заявку сервіс надішле як лист з кнопкою активації.
+  var ENDPOINT='https://formsubmit.co/ajax/tomas.mikkelson@gmail.com';
   var SERVICES=['Дизайн-супровід','Логотип і айдентика','Дизайн для соцмереж','SMM-ведення','Презентація','Рекламні креативи','Поліграфія / верстка','Дизайн сайту','Ще не знаю'];
   var MAP=[[/супровід|design-support|підписк/i,'Дизайн-супровід'],[/логотип|айдентик|фірмов|бренд|branding/i,'Логотип і айдентика'],[/smm-|ведення|дизайн \+ smm/i,'SMM-ведення'],[/соцмереж|пост|сторіз|instagram/i,'Дизайн для соцмереж'],[/презентац|pitch|деки/i,'Презентація'],[/реклам|креатив|банер/i,'Рекламні креативи'],[/поліграф|верстк|друк|каталог|брошур|звіт/i,'Поліграфія / верстка'],[/сайт|лендінг|web/i,'Дизайн сайту'],[/пакет|старт|ріст|партнер/i,'Дизайн-супровід']];
   var ORG=['Бізнес','Громадська організація / фонд','Приватна особа','Інше'];
@@ -34,11 +36,12 @@
           '<div class="lm__row"><div><label class="lm__lbl" for="lmName">Ім’я</label><input type="text" id="lmName" name="name" autocomplete="name" placeholder="Як до вас звертатися"></div>'+
           '<div><label class="lm__lbl" for="lmContact">Телефон, Telegram або email</label><input type="text" id="lmContact" name="contact" autocomplete="tel" placeholder="+380… або @нік"></div></div>'+
           '<div class="lm__err" id="lmErr" role="alert"></div>'+
-          '<div class="lm__actions"><button class="lm__btn lm__btn--tg" type="submit" data-via="telegram">'+ic.tg+'Надіслати в Telegram</button><button class="lm__btn lm__btn--mail" type="submit" data-via="email">'+ic.mail+'Надіслати на email</button></div>'+
+          '<input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">'+
+          '<div class="lm__actions"><button class="lm__btn lm__btn--send" type="submit">Надіслати</button></div>'+
           '<p class="lm__fine">Надсилаючи заявку, ви погоджуєтеся з <a href="/privacy/" target="_blank">Політикою конфіденційності</a>. Ми використаємо контакти лише для відповіді.</p>'+
         '</form>'+
-        '<div class="lm__ok" role="status"><div class="big">'+ic.ok+'</div><h3 id="lmOkT">Майже готово!</h3><p id="lmOkP"></p>'+
-          '<div class="lm__actions"><a class="lm__btn lm__btn--tg" href="'+TG+'" target="_blank" rel="noopener">'+ic.tg+'Відкрити Telegram</a><button class="lm__btn lm__btn--mail" type="button" data-copy-again>Скопіювати ще раз</button></div></div>'+
+        '<div class="lm__ok" role="status"><div class="big">'+ic.ok+'</div><h3 id="lmOkT">Заявку надіслано</h3><p id="lmOkP">Дякуємо! Відповімо протягом 2 годин у робочий час на контакт, який ви вказали.</p>'+
+          '<div class="lm__actions"><button class="lm__btn lm__btn--send" type="button" data-close>Закрити</button></div></div>'+
       '</div>'+
     '</div>';
     d.body.appendChild(root);
@@ -48,52 +51,45 @@
       if(e.key==='Tab'){var f=root.querySelectorAll('button,a,input,textarea');f=Array.prototype.filter.call(f,function(x){return x.offsetParent!==null});if(!f.length)return;var a=f[0],z=f[f.length-1];
         if(e.shiftKey&&d.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&d.activeElement===z){e.preventDefault();a.focus()}}
     });
-    var form=root.querySelector('form'),via='telegram';
-    form.querySelectorAll('[data-via]').forEach(function(b){b.addEventListener('click',function(){via=b.getAttribute('data-via')})});
-    form.addEventListener('submit',function(e){e.preventDefault();send(via)});
-    root.querySelector('[data-copy-again]').addEventListener('click',function(){copy(root._msg||'')});
+    var form=root.querySelector('form');
+    form.addEventListener('submit',function(e){e.preventDefault();send()});
     root.querySelectorAll('[data-direct]').forEach(function(a){a.addEventListener('click',function(){track(a.getAttribute('data-direct')+'_direct')})});
   }
   function val(n){var f=root.querySelector('form');return Array.prototype.map.call(f.querySelectorAll('[name="'+n+'"]:checked'),function(x){return x.value})}
-  function compose(){
-    var f=root.querySelector('form'),L=[];
-    L.push('Вітаю! Хочу обговорити проєкт.');
-    if(root._ctx)L.push('Звідки: '+root._ctx);
-    var s=val('svc');if(s.length)L.push('Послуги: '+s.join(', '));
-    var o=val('org');if(o.length)L.push('Хто: '+o[0]);
-    var b=val('bud');if(b.length)L.push('Бюджет: '+b[0]);
-    if(f.task.value.trim())L.push('Задача: '+f.task.value.trim());
-    if(f.name.value.trim())L.push('Ім’я: '+f.name.value.trim());
-    if(f.contact.value.trim())L.push('Контакт: '+f.contact.value.trim());
-    return L.join('\n');
-  }
-  function copy(t){try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t);return true}}catch(e){}
-    try{var ta=d.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';d.body.appendChild(ta);ta.select();d.execCommand('copy');ta.remove();return true}catch(e){return false}}
   function track(method){
     try{(window.dataLayer=window.dataLayer||[]).push({event:'lead_submit',lead_method:method,lead_context:root._ctx||''})}catch(e){}
     try{if(typeof window.fbq==='function')window.fbq('track','Lead',{content_name:root._ctx||'',method:method})}catch(e){}
     try{if(typeof window.gtag==='function')window.gtag('event','generate_lead',{method:method})}catch(e){}
   }
-  function send(via){
-    var f=root.querySelector('form'),err=root.querySelector('#lmErr');
+  function send(){
+    var f=root.querySelector('form'),err=root.querySelector('#lmErr'),btn=f.querySelector('.lm__btn--send');
     if(!val('svc').length&&!f.task.value.trim()){err.textContent='Оберіть послугу або коротко опишіть задачу.';return}
+    if(!f.contact.value.trim()){err.textContent='Вкажіть телефон, Telegram або email, щоб ми могли відповісти.';f.contact.focus();return}
+    if(f._honey.value)return; // бот
     err.textContent='';
-    var msg=compose();root._msg=msg;track(via);
-    if(via==='email'){
-      location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Заявка з сайту'+(root._ctx?' – '+root._ctx:''))+'&body='+encodeURIComponent(msg);
-      root.querySelector('#lmOkT').textContent='Лист відкрито у вашій пошті';
-      root.querySelector('#lmOkP').textContent='Перевірте текст і натисніть «Надіслати». Якщо поштова програма не відкрилася, напишіть нам у Telegram – текст заявки ми вже скопіювали.';
-      copy(msg);
-    }else{
-      var ok=copy(msg);
-      window.open('https://t.me/'+TG_USER+'?text='+encodeURIComponent(msg),'_blank','noopener');
-      root.querySelector('#lmOkT').textContent='Відкриваємо Telegram';
-      root.querySelector('#lmOkP').textContent=ok?'Текст заявки вже скопійовано. Якщо він не з’явився в чаті автоматично, просто вставте його (Ctrl+V або довге натискання → «Вставити») і надішліть.':'Напишіть нам у чат @perseus_agency – відповімо протягом 2 годин у робочий час.';
-    }
-    root.classList.add('done');
+    var data={
+      _subject:'Заявка з сайту'+(root._ctx?' – '+root._ctx:''),
+      _template:'table',
+      _captcha:'false',
+      'Звідки':root._ctx||'Головна кнопка',
+      'Послуги':val('svc').join(', ')||'–',
+      'Хто':val('org')[0]||'–',
+      'Бюджет':val('bud')[0]||'–',
+      'Задача':f.task.value.trim()||'–',
+      "Ім'я":f.name.value.trim()||'–',
+      'Контакт':f.contact.value.trim(),
+      'Сторінка':location.href
+    };
+    var c=f.contact.value.trim();if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c))data._replyto=c;
+    btn.disabled=true;btn.textContent='Надсилаємо…';
+    fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||j.success===false||j.success==='false')throw new Error(j.message||r.status);return j})})
+      .then(function(){track('form');root.classList.add('done')})
+      .catch(function(){err.innerHTML='Не вдалося надіслати заявку. Спробуйте ще раз або напишіть нам: <a href="mailto:'+MAIL+'" style="color:inherit;text-decoration:underline">'+MAIL+'</a>.'})
+      .then(function(){btn.disabled=false;btn.textContent='Надіслати'});
   }
   function preselect(ctx){
-    var f=root.querySelector('form');f.reset();root.classList.remove('done');
+    var f=root.querySelector('form');f.reset();root.classList.remove('done');root.querySelector('#lmErr').textContent='';
     if(!ctx)return;
     for(var i=0;i<MAP.length;i++){if(MAP[i][0].test(ctx)){var inp=f.querySelector('input[name="svc"][value="'+MAP[i][1]+'"]');if(inp)inp.checked=true;break}}
     if(/\bГО\b|громадськ|фонд|донор|грант/i.test(ctx)){var o=f.querySelector('input[name="org"][value^="Громадська"]');if(o)o.checked=true}

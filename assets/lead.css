@@ -67,3 +67,7 @@ html.lm-lock,html.lm-lock body{overflow:hidden}
   .lm__row{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){.lm__box,.lm__bg{transition:none}}
+.lm__btn--send{background:var(--lm-v);color:#fff;padding:0 34px;box-shadow:0 10px 30px rgba(138,49,239,.35)}
+.lm__btn--send:hover{background:var(--lm-v2)}
+.lm__btn--send:disabled{opacity:.7;cursor:wait}
+.lm__err a{color:inherit}
