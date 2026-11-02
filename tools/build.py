@@ -12,7 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 SITE = "https://perseus.company"
-BRAND = "Perseus Digital Studio"
+BRAND = "Perseus Agency"
 EMAIL = "hello@perseus.studio"
 TG = "https://t.me/perseus_agency"
 IG = "https://www.instagram.com/perseus_agency"
@@ -85,12 +85,12 @@ NAV = [("Послуги", "/services/"), ("Для ГО", "/ngo/"), ("Портф�
 
 SERVICES = [  # slug, назва, коротко, іконка, ціна
  ("design-support", "Дизайн-супровід бренду", "Дизайнер на аутсорсі за щомісячною підпискою", "pen", "від 4 900 грн/міс"),
- ("branding", "Логотип і фірмовий стиль", "Айдентика, брендбук, ребрендинг", "palette", "від 4 000 грн"),
+ ("branding", "Логотип, айдентика, упаковка", "Фірмовий стиль, брендбук, упаковка й етикетки", "palette", "від 4 000 грн"),
  ("smm", "SMM і дизайн для соцмереж", "Пости, сторіз, Reels-обкладинки, ведення акаунтів", "grid", "від 350 грн/пост"),
  ("presentations", "Презентації та pitch-деки", "Для продажів, інвесторів, донорів і конференцій", "slides", "від 400 грн/слайд"),
  ("ad-creatives", "Рекламні креативи", "Банери для Meta Ads і Google Ads", "mega", "від 600 грн/креатив"),
  ("print-layout", "Поліграфія та верстка", "Каталоги, брошури, звіти, книги, меню", "print", "від 1 200 грн"),
- ("web-design", "Дизайн сайтів і лендінгів", "Лендінги, корпоративні сайти, UI у Figma", "web", "після брифу"),
+ ("web-design", "Сайти під ключ", "Лендінги, сайти-візитки, корпоративні сайти, веб-застосунки", "web", "після брифу"),
 ]
 
 def header(active):
@@ -127,11 +127,11 @@ ORG_ID = SITE + "/#org"
 def org_schema():
     return {
         "@type": ["Organization", "ProfessionalService"], "@id": ORG_ID,
-        "name": BRAND, "alternateName": ["Perseus", "Персей", "Perseus Agency", "Perseus Digital"],
+        "name": BRAND, "alternateName": ["Perseus", "Персей", "Perseus Digital Studio", "Агенція візуальної комунікації Perseus"],
         "legalName": LEGAL, "url": SITE + "/", "email": EMAIL,
         "logo": {"@type": "ImageObject", "url": SITE + "/assets/icons/icon-512.png", "width": 512, "height": 512},
         "image": OG_IMG,
-        "description": "Digital-студія графічного дизайну та SMM для малого й середнього бізнесу та громадських організацій: дизайн-супровід, айдентика, соцмережі, презентації, рекламні креативи, поліграфія, дизайн сайтів.",
+        "description": "Агенція візуальної комунікації: логотипи, айдентика, упаковка, SMM, презентації, реклама, поліграфія й сайти для бізнесу, NGO та освітніх проєктів.",
         "founder": {"@id": SITE + "/about/#ihor"},
         "address": {"@type": "PostalAddress", "addressCountry": "UA"},
         "areaServed": [{"@type": "Country", "name": "Україна"}, {"@type": "Place", "name": "Європа"}],

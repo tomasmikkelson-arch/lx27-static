@@ -22,7 +22,7 @@
     root.innerHTML='<div class="lm__bg" data-close></div>'+
     '<div class="lm__box" role="dialog" aria-modal="true" aria-labelledby="lmTitle" data-lenis-prevent>'+
       '<button class="lm__close" type="button" data-close aria-label="Закрити">'+ic.x+'</button>'+
-      '<aside class="lm__side"><span class="lm__eyebrow">Perseus Digital Studio</span>'+
+      '<aside class="lm__side"><span class="lm__eyebrow">Perseus Agency</span>'+
         '<h2 class="lm__title" id="lmTitle">Обговорімо ваш проєкт</h2><span class="lm__ctx" id="lmCtx"></span>'+
         '<ul class="lm__pts"><li>Відповідаємо протягом 2 годин у робочий час</li><li>Перший дзвінок і оцінка – безкоштовно</li><li>Фіксуємо обсяг і ціну до старту</li><li>Працюємо за договором з ФОП, є акти для бухгалтерії та донорів</li></ul>'+
         '<div class="lm__direct"><a href="'+TG+'" target="_blank" rel="noopener" data-direct="telegram">Telegram <span>@perseus_agency</span></a><a href="mailto:'+MAIL+'" data-direct="email">Email <span>'+MAIL+'</span></a></div>'+

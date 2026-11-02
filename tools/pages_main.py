@@ -87,7 +87,7 @@ def about():
     path = "/about/"
     crumbs = [("Про нас", path)]
     img = '''<picture><source type="image/webp" srcset="/assets/ihor-isychenko-720.webp 720w, /assets/ihor-isychenko-1122.webp 1122w" sizes="(max-width:860px) 92vw, 54vw">
-<img src="/assets/ihor-isychenko.jpg" width="1122" height="1402" alt="Ігор Ісиченко, засновник і керівник Perseus Digital Studio, у кріслі під лампою" fetchpriority="high"></picture>'''
+<img src="/assets/ihor-isychenko.jpg" width="1122" height="1402" alt="Ігор Ісиченко, засновник і керівник Perseus Agency, у кріслі під лампою" fetchpriority="high"></picture>'''
     values = [("chat", "Відповідаємо швидко", "До 2 годин у робочий час. Без «подивлюсь завтра»."),
               ("folder", "Файли належать вам", "Вихідники у Figma, PSD, AI та всі шаблони лишаються у вас."),
               ("target", "Дивимося на результат", "Оцінюємо дизайн за заявками, продажами й охопленнями."),
@@ -98,11 +98,11 @@ def about():
     body = f'''
 <section class="hero" style="padding-bottom:clamp(30px,4vw,50px)"><div class="wrap">
   {crumbs_html(crumbs)}
-  <h1 class="giant" data-r>Perseus<br><em>studio</em></h1>
-  <p class="lead" style="margin-top:22px;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.02em;color:var(--fg)">Digital-студія, яка стає вашим відділом дизайну</p>
+  <h1 class="giant" data-r>Perseus<br><em>agency</em></h1>
+  <p class="lead" style="margin-top:22px;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.02em;color:var(--fg)">Агенція візуальної комунікації</p>
   <div class="intro">
     <div class="intro__card" data-r>
-      <p>Perseus – digital-студія графічного дизайну та SMM. Робимо дизайн для малого й середнього бізнесу та громадських організацій: логотипи, соцмережі, звіти для донорів, презентації для інвесторів.</p>
+      <p>Perseus Agency – агенція візуальної комунікації. Робимо дизайн для малого й середнього бізнесу та громадських організацій: логотипи, соцмережі, звіти для донорів, презентації для інвесторів.</p>
       <ul class="checks">
         <li><span><strong>Малий і середній бізнес</strong> – соцмережі, реклама, презентації, друк</span></li>
         <li><span><strong>Громадські організації</strong> – звіти, посібники, кампанії за правилами донорів</span></li>
@@ -112,7 +112,7 @@ def about():
       {btn("Познайомитися", TG, ext=True, lead="Сторінка «Про нас»")}
     </div>
     <figure class="intro__photo" data-r="2" style="margin:0">{img}
-      <figcaption><span>Ігор Ісиченко</span><span>Засновник і керівник студії</span></figcaption></figure>
+      <figcaption><span>Ігор Ісиченко</span><span>Засновник і керівник агенції</span></figcaption></figure>
   </div>
 </div></section>
 
@@ -120,11 +120,11 @@ def about():
   <div class="split2">
     <h2 class="d2" data-r>Про засновника</h2>
     <div class="prose" data-r="2">
-      <p><strong>Ігор Ісиченко</strong> – засновник і керівник Perseus Digital Studio. Понад 10 років у графічному дизайні та соцмережах: починав як дизайнер на фрилансі, працював з ресторанами, освітніми проєктами, меблевими брендами, IT-компаніями й громадськими організаціями.</p>
-      <p>Майже кожен клієнт Ігоря стикався з тим самим: дизайн потрібен постійно, а надійного виконавця немає. Фрилансер може зникнути посеред задачі, агенція для малого бізнесу задорога й надто довго погоджує, а штатний дизайнер – це зарплата й податки навіть у місяці, коли задач мало. Тому Ігор заснував студію: клієнт отримує постійного дизайнера за договором і без найму в штат.</p>
-      <p>Зараз студія бере разові проєкти й щомісяця веде клієнтів на супроводі. Працюємо переважно з <strong>малим і середнім бізнесом</strong> та <strong>громадськими організаціями</strong>: першим треба продавати, другим – звітувати перед донорами й пояснювати людям, чим вони займаються.</p>
+      <p><strong>Ігор Ісиченко</strong> – засновник і керівник Perseus Agency. Понад 10 років у графічному дизайні та соцмережах: починав як дизайнер на фрилансі, працював з ресторанами, освітніми проєктами, меблевими брендами, IT-компаніями й громадськими організаціями.</p>
+      <p>Майже кожен клієнт Ігоря стикався з тим самим: дизайн потрібен постійно, а надійного виконавця немає. Фрилансер може зникнути посеред задачі, агенція для малого бізнесу задорога й надто довго погоджує, а штатний дизайнер – це зарплата й податки навіть у місяці, коли задач мало. Тому Ігор заснував агенцію: клієнт отримує постійного дизайнера за договором і без найму в штат.</p>
+      <p>Зараз агенція бере разові проєкти й щомісяця веде клієнтів на супроводі. Працюємо переважно з <strong>малим і середнім бізнесом</strong> та <strong>громадськими організаціями</strong>: першим треба продавати, другим – звітувати перед донорами й пояснювати людям, чим вони займаються.</p>
       <blockquote class="quote">Я перевіряю дизайн двома питаннями: чи зрозуміла людина з першого погляду, хто ви, і чи захотіла вам написати.</blockquote>
-      <div class="sign"><img src="/assets/ihor-face-160.webp" srcset="/assets/ihor-face-160.webp 1x, /assets/ihor-face-320.webp 2x" alt="Ігор Ісиченко" width="88" height="88" loading="lazy"><span><b>Ігор Ісиченко</b>Засновник і керівник Perseus Digital Studio</span></div>
+      <div class="sign"><img src="/assets/ihor-face-160.webp" srcset="/assets/ihor-face-160.webp 1x, /assets/ihor-face-320.webp 2x" alt="Ігор Ісиченко" width="88" height="88" loading="lazy"><span><b>Ігор Ісиченко</b>Засновник і керівник Perseus Agency</span></div>
     </div>
   </div>
 </div></section>
@@ -166,12 +166,12 @@ def about():
 {cta("Давайте знайомитися", "Розкажіть про ваш бізнес чи організацію – запропонуємо, з чого почати, і порахуємо бюджет.", lead="Сторінка «Про нас»")}
 '''
     person = {"@type": "Person", "@id": SITE + "/about/#ihor", "name": "Ігор Ісиченко", "alternateName": "Ihor Isychenko",
-              "givenName": "Ігор", "familyName": "Ісиченко", "jobTitle": "Засновник і керівник Perseus Digital Studio",
+              "givenName": "Ігор", "familyName": "Ісиченко", "jobTitle": "Засновник і керівник Perseus Agency",
               "image": SITE + "/assets/ihor-isychenko-1122.webp", "worksFor": {"@id": ORG_ID}, "url": SITE + "/about/",
               "knowsAbout": ["Графічний дизайн", "SMM", "Брендинг", "Дизайн презентацій", "Дизайн для громадських організацій"]}
     about_page = {"@type": "AboutPage", "url": SITE + path, "mainEntity": {"@id": ORG_ID}}
-    register(path, page(path, "Про студію Perseus і засновника Ігоря Ісиченка",
-                        "Perseus – студія графічного дизайну та SMM для малого й середнього бізнесу та ГО. Засновник і керівник – Ігор Ісиченко. Історія та принципи.",
+    register(path, page(path, "Про агенцію Perseus і засновника Ігоря Ісиченка",
+                        "Perseus Agency – агенція візуальної комунікації для малого й середнього бізнесу, ГО та освітніх проєктів. Засновник і керівник – Ігор Ісиченко. Історія та принципи.",
                         body, active="/about/", crumbs=crumbs, schema=[person, about_page],
                         image=None), "0.8")
 
@@ -198,7 +198,7 @@ def portfolio():
 <section class="hero" style="padding-bottom:30px"><div class="wrap">
   {crumbs_html(crumbs)}
   <span class="eyebrow">Портфоліо</span>
-  <h1 class="d1" data-split style="margin-top:18px">Роботи <em>студії</em></h1>
+  <h1 class="d1" data-split style="margin-top:18px">Роботи <em>агенції</em></h1>
   <p class="lead" style="margin-top:22px">Айдентика, соцмережі, презентації, креативи, поліграфія та матеріали для громадських організацій. Ми оновлюємо розділ: частина кейсів під NDA, тому повні добірки надсилаємо за запитом під вашу задачу.</p>
   <div class="btns" style="margin-top:26px">{btn("Отримати добірку робіт", TG, ext=True, lead="Добірка робіт під мою задачу")}</div>
 </div></section>
@@ -209,7 +209,7 @@ def portfolio():
 {cta("Хочете приклади під вашу нішу?", "Надішлемо добірку релевантних робіт і розповімо, як вирішували схожі задачі.", lead="Добірка робіт під мою задачу")}
 '''
     register(path, page(path, "Портфоліо Perseus: айдентика, соцмережі, презентації, поліграфія",
-                        "Роботи digital-студії Perseus: логотипи та фірмові стилі, дизайн соцмереж, презентації, рекламні креативи, каталоги та звіти для громадських організацій.",
+                        "Роботи агенції Perseus: логотипи та фірмові стилі, дизайн соцмереж, презентації, рекламні креативи, каталоги та звіти для громадських організацій.",
                         body, active="/portfolio/", crumbs=crumbs, schema=[{"@type": "CollectionPage", "url": SITE + path, "about": {"@id": ORG_ID}}]), "0.7")
 
 # ---------------- Ціни ----------------
@@ -358,7 +358,7 @@ def contacts():
 {cta("Не любите писати?", "Заповніть короткий бриф з кількох кліків – ми самі уточнимо деталі.", lead="Сторінка контактів", secondary=("Ціни", "/prices/"))}
 '''
     cp = {"@type": "ContactPage", "url": SITE + path, "mainEntity": {"@id": ORG_ID}}
-    register(path, page(path, "Контакти Perseus Digital Studio: Telegram, email, Instagram",
+    register(path, page(path, "Контакти Perseus Agency: Telegram, email, Instagram",
                         "Зв'яжіться з Perseus: Telegram @perseus_agency, email hello@perseus.studio. Відповідаємо протягом 2 годин у робочий час. Безкоштовна консультація та оцінка проєкту.",
                         body, active="/contacts/", crumbs=crumbs, schema=[cp]), "0.7")
 
@@ -378,7 +378,7 @@ def privacy():
 </div></section>
 <div class="wrap legal-layout">{art}</div>
 '''
-    register(path, page(path, "Політика конфіденційності – Perseus Digital Studio",
+    register(path, page(path, "Політика конфіденційності – Perseus Agency",
                         "Політика конфіденційності та cookie сайту perseus.company: які дані ми збираємо, навіщо, як довго зберігаємо та які у вас права.",
                         body, crumbs=crumbs), "0.3")
 
