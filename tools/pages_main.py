@@ -78,7 +78,7 @@ def ngo():
 '''
     svc = {"@type": "Service", "name": "Дизайн для громадських організацій і благодійних фондів", "serviceType": "Графічний дизайн для неприбуткових організацій",
            "provider": {"@id": ORG_ID}, "areaServed": "UA", "audience": {"@type": "Audience", "audienceType": "Громадські організації, благодійні фонди, міжнародні донорські програми"}}
-    register(path, page(path, "Дизайн для громадських організацій, благодійних фондів і грантових проєктів | Perseus",
+    register(path, page(path, "Дизайн для ГО та благодійних фондів | Perseus",
                         "Дизайн звітів, посібників, інфографіки, інформаційних кампаній та айдентики для ГО і фондів з урахуванням вимог видимості донорів. Тендери, договір, акти.",
                         body, active="/ngo/", crumbs=crumbs, schema=[svc, faq_schema(faq)]), "0.9")
 
@@ -170,8 +170,8 @@ def about():
               "image": SITE + "/assets/ihor-isychenko-1122.webp", "worksFor": {"@id": ORG_ID}, "url": SITE + "/about/",
               "knowsAbout": ["Графічний дизайн", "SMM", "Брендинг", "Дизайн презентацій", "Дизайн для громадських організацій"]}
     about_page = {"@type": "AboutPage", "url": SITE + path, "mainEntity": {"@id": ORG_ID}}
-    register(path, page(path, "Про студію Perseus і засновника Ігоря Ісиченка | Perseus Digital Studio",
-                        "Perseus – digital-студія графічного дизайну та SMM для малого й середнього бізнесу та громадських організацій. Засновник і керівник – Ігор Ісиченко. Історія, принципи, команда.",
+    register(path, page(path, "Про студію Perseus і засновника Ігоря Ісиченка",
+                        "Perseus – студія графічного дизайну та SMM для малого й середнього бізнесу та ГО. Засновник і керівник – Ігор Ісиченко. Історія та принципи.",
                         body, active="/about/", crumbs=crumbs, schema=[person, about_page],
                         image=None), "0.8")
 
@@ -314,7 +314,7 @@ def prices():
 '''
     offers = [{"@type": "Offer", "name": f"Пакет «{n}» (дизайн)", "price": dz, "priceCurrency": "UAH", "url": SITE + path + "#plans"} for n, dz, *_ in plans]
     offers += [{"@type": "Offer", "name": f"Пакет «{n}» (дизайн + SMM)", "price": sm, "priceCurrency": "UAH", "url": SITE + path + "#plans"} for n, dz, sm, *_ in plans]
-    register(path, page(path, "Ціни на графічний дизайн і SMM: пакети, калькулятор, разові задачі | Perseus",
+    register(path, page(path, "Ціни на дизайн і SMM: пакети та калькулятор | Perseus",
                         "Скільки коштує дизайн-супровід, ведення соцмереж, логотип, презентація, креативи. Пакети від 9 900 грн/міс, калькулятор індивідуального пакета, ціни на разові задачі.",
                         body, active="/prices/", crumbs=crumbs,
                         schema=[{"@type": "OfferCatalog", "name": "Пакети дизайну та SMM", "itemListElement": offers}, faq_schema(faq)]), "0.9")
@@ -379,7 +379,7 @@ def privacy():
 <div class="wrap legal-layout">{art}</div>
 '''
     register(path, page(path, "Політика конфіденційності – Perseus Digital Studio",
-                        "Політика конфіденційності та використання файлів cookie сайту Perseus Digital Studio (perseus.company): які дані ми збираємо, навіщо, як довго зберігаємо та які у вас права.",
+                        "Політика конфіденційності та cookie сайту perseus.company: які дані ми збираємо, навіщо, як довго зберігаємо та які у вас права.",
                         body, crumbs=crumbs), "0.3")
 
 # ---------------- 404 ----------------

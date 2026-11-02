@@ -42,6 +42,13 @@
     els.forEach(function(el){io.observe(el)});
   }else{els.forEach(function(el){el.classList.add('in')})}
 
+  // анімований напис PERSEUS у футері
+  var gf=d.querySelector('.giant-foot');
+  if(gf){
+    if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(en){if(en[0].isIntersecting){gf.classList.add('in');gio.disconnect()}},{threshold:.35});gio.observe(gf)}
+    else gf.classList.add('in');
+  }
+
   // кнопка нагору
   var tt=d.getElementById('totop');
   if(tt){

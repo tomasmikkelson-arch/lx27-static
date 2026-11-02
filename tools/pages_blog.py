@@ -184,7 +184,7 @@ def post_page(p, posts):
            "mainEntityOfPage": SITE + path, "image": img, "keywords": ", ".join(p["tags"]),
            "author": {"@type": "Person", "@id": SITE + "/about/#ihor", "name": "Ігор Ісиченко", "url": SITE + "/about/"},
            "publisher": {"@id": ORG_ID}, "wordCount": len(re.sub(r"<[^>]+>", " ", p["html"]).split())}
-    register(path, page(path, f'{p["title"]} | Блог Perseus', p["desc"], body, active="/blog/", crumbs=crumbs,
+    register(path, page(path, (f'{p["title"]} | Perseus' if len(p["title"]) <= 52 else p["title"]), p["desc"], body, active="/blog/", crumbs=crumbs,
                         schema=[art], og_type="article", image=img, lastmod=p["updated"].isoformat()), "0.6", lastmod=p["updated"].isoformat())
 
 def index(posts):
