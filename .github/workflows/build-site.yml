@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pyyaml
-      - run: python3 tools/build.py
+      - run: python3 -B tools/build.py
       - name: Commit generated pages
         id: commit
         run: |
