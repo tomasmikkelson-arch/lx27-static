@@ -19,6 +19,15 @@ IG = "https://www.instagram.com/perseus_agency"
 LI = "https://www.linkedin.com/company/perseus-agency/"
 LEGAL = "ФОП Ісиченко Ігор Володимирович"
 TODAY = date.today().isoformat()
+# Дата останнього оновлення статичних сторінок (змінюйте вручну при правках текстів).
+SITE_UPDATED = "2026-11-02"
+import hashlib as _h
+def _ver(*files):
+    m = _h.md5()
+    for f in files:
+        try: m.update(open(os.path.join(ROOT, f), "rb").read())
+        except OSError: pass
+    return m.hexdigest()[:8]
 OG_IMG = SITE + "/assets/og-image.jpg"
 
 _src = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
@@ -162,12 +171,12 @@ def org_schema():
         "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "email": EMAIL, "url": TG, "availableLanguage": ["Ukrainian", "English"]},
     }
 
-def page(path, title, desc, body, active=None, crumbs=None, schema=None, og_type="website", noindex=False, image=None):
+def page(path, title, desc, body, active=None, crumbs=None, schema=None, og_type="website", noindex=False, image=None, lastmod=None):
     url = SITE + path
     crumbs = crumbs or []
     graph = [org_schema(), {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/", "name": BRAND, "inLanguage": "uk-UA", "publisher": {"@id": ORG_ID}},
              {"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": title, "description": desc, "inLanguage": "uk-UA",
-              "isPartOf": {"@id": SITE + "/#website"}, "about": {"@id": ORG_ID}, "dateModified": TODAY}]
+              "isPartOf": {"@id": SITE + "/#website"}, "about": {"@id": ORG_ID}, "dateModified": lastmod or SITE_UPDATED}]
     if crumbs:
         items = [{"@type": "ListItem", "position": 1, "name": "Головна", "item": SITE + "/"}]
         for i, (n, u) in enumerate(crumbs, 2):
@@ -206,8 +215,8 @@ def page(path, title, desc, body, active=None, crumbs=None, schema=None, og_type
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700&family=Unbounded:wght@600;700;800;900&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v={TODAY}">
-<link rel="stylesheet" href="/assets/lead.css?v={TODAY}">
+<link rel="stylesheet" href="/assets/site.css?v={_ver("assets/site.css")}">
+<link rel="stylesheet" href="/assets/lead.css?v={_ver("assets/lead.css")}">
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
@@ -217,8 +226,8 @@ def page(path, title, desc, body, active=None, crumbs=None, schema=None, og_type
 {body}
 </main>
 {footer()}
-<script src="/assets/site.js?v={TODAY}" defer></script>
-<script src="/assets/lead.js?v={TODAY}" defer></script>
+<script src="/assets/site.js?v={_ver("assets/site.js")}" defer></script>
+<script src="/assets/lead.js?v={_ver("assets/lead.js")}" defer></script>
 </body>
 </html>
 '''
@@ -255,16 +264,16 @@ def write(path, content):
 
 PAGES = []  # (path, priority) для sitemap
 
-def register(path, html_text, priority="0.8", sitemap=True):
+def register(path, html_text, priority="0.8", sitemap=True, lastmod=None):
     write(path, html_text)
     if sitemap:
-        PAGES.append((path, priority))
+        PAGES.append((path, priority, lastmod or SITE_UPDATED))
 
 def finish():
-    urls = [("/", "1.0")] + PAGES
+    urls = [("/", "1.0", SITE_UPDATED)] + PAGES
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for p, pr in urls:
-        sm += f"  <url><loc>{SITE}{p}</loc><lastmod>{TODAY}</lastmod><priority>{pr}</priority></url>\n"
+    for p, pr, lm in urls:
+        sm += f"  <url><loc>{SITE}{p}</loc><lastmod>{lm}</lastmod><priority>{pr}</priority></url>\n"
     sm += "</urlset>\n"
     open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(sm)
     open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8").write(

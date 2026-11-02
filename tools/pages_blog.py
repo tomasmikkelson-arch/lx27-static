@@ -185,9 +185,11 @@ def post_page(p, posts):
            "author": {"@type": "Person", "@id": SITE + "/about/#ihor", "name": "Ігор Ісиченко", "url": SITE + "/about/"},
            "publisher": {"@id": ORG_ID}, "wordCount": len(re.sub(r"<[^>]+>", " ", p["html"]).split())}
     register(path, page(path, f'{p["title"]} | Блог Perseus', p["desc"], body, active="/blog/", crumbs=crumbs,
-                        schema=[art], og_type="article", image=img), "0.6")
+                        schema=[art], og_type="article", image=img, lastmod=p["updated"].isoformat()), "0.6", lastmod=p["updated"].isoformat())
 
 def index(posts):
+    from build import SITE_UPDATED
+    newest = max([p["updated"].isoformat() for p in posts] + [SITE_UPDATED])
     path = "/blog/"
     crumbs = [("Блог", path)]
     cards = "".join(card(p, i) for i, p in enumerate(posts)) or '<p class="muted">Статті скоро з\'являться.</p>'
@@ -205,7 +207,7 @@ def index(posts):
            "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f'{SITE}/blog/{p["slug"]}/', "datePublished": p["date"].isoformat()} for p in posts]}
     register(path, page(path, "Блог Perseus: графічний дизайн, SMM і брендинг для бізнесу та ГО",
                         "Статті про графічний дизайн, SMM, брендинг і рекламу для малого й середнього бізнесу та громадських організацій. Ціни, поради, чек-листи.",
-                        body, active="/blog/", crumbs=crumbs, schema=[lst]), "0.7")
+                        body, active="/blog/", crumbs=crumbs, schema=[lst], lastmod=newest), "0.7", lastmod=newest)
 
 def build():
     posts = load()
