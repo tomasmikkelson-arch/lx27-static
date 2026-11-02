@@ -9,6 +9,7 @@ on:
       - "content/**"
       - "tools/**"
       - "assets/reviews.css"
+      - "index.html"
       - ".github/workflows/build-site.yml"
   schedule:
     - cron: "17 5 * * *"
