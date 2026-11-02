@@ -11,7 +11,7 @@
   - `tools/pages_services.py` – /services/ і 7 сторінок послуг (тексти, FAQ, ціни).
   - `tools/pages_main.py` – /ngo/, /about/, /portfolio/, /prices/ (калькулятор), /contacts/, /privacy/, 404.
   - `tools/pages_blog.py` – блог із `content/blog/*.md` (front matter + Markdown), RSS.
-  - `tools/reviews.py` – розділ «Відгуки» з `content/reviews.json`, вставляється в `index.html` між маркерами `<!-- REVIEWS:START -->` / `<!-- REVIEWS:END -->`. Показуються лише відгуки з `allowed: true`; якщо таких немає, розділ прихований. Демо дизайну: `/reviews-preview/` (noindex).
+  - `tools/reviews.py` – розділ «Відгуки» з `content/reviews.json`, вставляється в `index.html` між маркерами `<!-- REVIEWS:START -->` / `<!-- REVIEWS:END -->`. Показуються лише відгуки з `allowed: true`; поки таких немає, на головній показуються заглушки з позначкою «Приклад» (без фото, посад, організацій, зірок і рейтингу – за погодженням із власником сайту); перший реальний відгук автоматично їх замінює. Демо дизайну: `/reviews-preview/` (noindex).
   - `tools/scenes.py` – CSS-ілюстрації для перших екранів і превʼю портфоліо.
   - `tools/privacy_body.html` – текст політики конфіденційності.
   - `tools/patch_index.py` – одноразовий скрипт, уже застосований; повторно не запускати.

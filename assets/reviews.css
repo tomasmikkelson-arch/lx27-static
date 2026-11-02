@@ -42,3 +42,7 @@
 @media (min-width:900px){.rv-card{width:clamp(320px,30vw,420px)}}
 .rv__sum{flex:none}
 .rv__sum b{flex:none}
+.rv__note{max-width:420px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.rv__note p{margin:0;color:var(--fg-dim);font-size:15.5px}
+.rv-demo-badge{background:rgba(244,239,249,.14);color:var(--fg);backdrop-filter:blur(6px)}
+.rv-card:nth-child(4n+3) .rv-demo-badge{background:#131D1E;color:#F3E6D8}

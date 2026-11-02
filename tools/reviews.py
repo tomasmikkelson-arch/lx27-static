@@ -47,8 +47,11 @@ def card(r, demo=False):
     tag = "ГО" if r.get("org_type") == "ГО" else "Бізнес"
     rating = int(r.get("rating") or 5)
     svc = f'<span class="rv-card__svc">{e(str(r["service"]))}</span>' if r.get("service") else ""
-    badge = '<span class="rv-demo-badge">Демо</span>' if demo else ""
-    return f'''<figure class="rv-card">{badge}<div class="rv-card__top"><span class="rv-card__q" aria-hidden="true">“</span><span class="rv-card__tag">{tag}</span></div>
+    if demo:  # заглушка: без аватарки, посади, організації та оцінки
+        return f'''<figure class="rv-card"><span class="rv-demo-badge">Приклад</span><div class="rv-card__top"><span class="rv-card__q" aria-hidden="true">“</span><span class="rv-card__tag">{tag}</span></div>
+<blockquote class="rv-card__text">{e(str(r["text"]))}</blockquote>
+<figcaption class="rv-card__who"><span><b>{e(name)}</b></span></figcaption></figure>'''
+    return f'''<figure class="rv-card"><div class="rv-card__top"><span class="rv-card__q" aria-hidden="true">“</span><span class="rv-card__tag">{tag}</span></div>
 <blockquote class="rv-card__text">{e(str(r["text"]))}</blockquote>
 <figcaption class="rv-card__who">{ava}<span><b>{e(name)}</b><small>{e(who)}</small>{svc}<span class="rv__stars" aria-label="Оцінка {rating} з 5">{"★" * rating}</span></span></figcaption></figure>'''
 
@@ -67,16 +70,21 @@ def section(reviews, demo=False):
         rows = (f'<div class="rv__row"><div class="rv__track" style="--rv-dur:{max(40, len(a) * 12)}s">{"".join(a * 2)}</div></div>'
                 f'<div class="rv__row rv__row--rev"><div class="rv__track" style="--rv-dur:{max(40, len(b) * 12)}s">{"".join(b * 2)}</div></div>')
     avg = sum(int(r.get("rating") or 5) for r in reviews) / n
+    if demo:
+        side = f'''<div class="rv__note"><p>Розділ наповнюється: зараз тут приклади формату. Працювали з нами? Поділіться враженнями – ваш відгук зʼявиться тут.</p>
+<a href="{TG}" class="btn btn--ghost" target="_blank" rel="noopener" data-lead="Хочу залишити відгук"><span class="roll"><span>Залишити відгук</span><span>Залишити відгук</span></span><span class="arr"><svg width="14" height="14"><use href="#arrow"/></svg></span></a></div>'''
+    else:
+        side = f'''<div class="rv__sum"><b>{avg:.1f}</b><div><span class="rv__stars" aria-hidden="true">★★★★★</span><small>{n} {"відгук" if n % 10 == 1 and n % 100 != 11 else ("відгуки" if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14) else "відгуків")} від бізнесу та ГО</small></div></div>'''
     return f'''<link rel="stylesheet" href="/assets/reviews.css">
 <section class="rv{' rv--static' if static else ''}" id="reviews" aria-labelledby="rvTitle">
   <div class="wrap">
     <div class="rv__head">
       <div><span class="eyebrow">Відгуки</span><h2 class="rv__title" id="rvTitle">Що кажуть <em>клієнти</em></h2></div>
-      <div class="rv__sum"><b>{avg:.1f}</b><div><span class="rv__stars" aria-hidden="true">★★★★★</span><small>{n} {"відгук" if n % 10 == 1 and n % 100 != 11 else ("відгуки" if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14) else "відгуків")} від бізнесу та ГО</small></div></div>
+      {side}
     </div>
   </div>
   <div class="rv__rows">{rows}</div>
-  <div class="wrap"><p class="rv__foot">Працювали з нами? Будемо вдячні за ваш відгук – <a href="{TG}" target="_blank" rel="noopener" style="text-decoration:underline">напишіть у Telegram</a>.</p></div>
+  {"" if demo else f'''<div class="wrap"><p class="rv__foot">Працювали з нами? Будемо вдячні за ваш відгук – <a href="{TG}" target="_blank" rel="noopener" style="text-decoration:underline">напишіть у Telegram</a>.</p></div>'''}
 </section>'''
 
 def inject_index():
@@ -85,18 +93,23 @@ def inject_index():
     m = re.search(r"<!-- REVIEWS:START -->.*?<!-- REVIEWS:END -->", s, re.S)
     if not m:
         return
-    html = section(load())
+    real = load()
+    # поки немає реальних відгуків – показуємо явно позначені заглушки (без фото, посад, організацій і оцінок)
+    html = section(real) if real else section(demo_items(), demo=True)
     new = f"<!-- REVIEWS:START -->\n{html}\n<!-- REVIEWS:END -->" if html else "<!-- REVIEWS:START --><!-- REVIEWS:END -->"
     if new != m.group(0):
         s = s[:m.start()] + new + s[m.end():]
         open(p, "w", encoding="utf-8").write(s)
 
+def demo_items():
+    return [dict(name=n, role=r, org="", org_type=t, service=sv, text=x, rating=5) for n, r, t, sv, x in DEMO]
+
 def preview():
-    demo = [dict(name=n, role=r, org="", org_type=t, service=sv, text=x, rating=5) for n, r, t, sv, x in DEMO]
+    demo = demo_items()
     body = f'''<section class="hero" style="padding-bottom:0"><div class="wrap">
 <span class="eyebrow">Службова сторінка</span>
 <h1 class="d1" style="margin-top:16px;font-size:clamp(28px,4vw,52px)">Демо розділу «Відгуки»</h1>
-<p class="lead" style="margin-top:18px">Це приклад дизайну з вигаданими текстами – він не показується відвідувачам і не індексується. На головній розділ зʼявиться автоматично, щойно в адмінці буде додано реальний відгук з позначкою «Клієнт погодився на публікацію».</p>
+<p class="lead" style="margin-top:18px">Службова сторінка (не індексується). Поки реальних відгуків немає, на головній показуються ці ж заглушки з позначкою «Приклад». Щойно в адмінці зʼявиться реальний відгук з позначкою «Клієнт погодився на публікацію», заглушки автоматично зміняться на справжні відгуки.</p>
 </div></section>
 {section(demo, demo=True)}'''
     write("/reviews-preview/", page("/reviews-preview/", "Демо: відгуки – Perseus", "Службова сторінка.", body, noindex=True))
