@@ -239,6 +239,15 @@ def register(path, html_text, priority="0.8", sitemap=True, lastmod=None):
     if sitemap:
         PAGES.append((path, priority, lastmod or SITE_UPDATED))
 
+def stamp_index():
+    """Додає ?v=<хеш> до спільних файлів на головній, щоб браузер не брав застарілу версію з кешу."""
+    p = os.path.join(ROOT, "index.html")
+    s = open(p, encoding="utf-8").read()
+    new = re.sub(r'/assets/(lead\.css|lead\.js|reviews\.css)(\?v=[0-9a-f]+)?"',
+                 lambda m: f'/assets/{m.group(1)}?v={_ver("assets/" + m.group(1))}"', s)
+    if new != s:
+        open(p, "w", encoding="utf-8").write(new)
+
 def finish():
     urls = [("/", "1.0", SITE_UPDATED)] + PAGES
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -257,4 +266,5 @@ if __name__ == "__main__":
     pages_main.build()
     import reviews
     reviews.build()
+    B.stamp_index()
     B.finish()
