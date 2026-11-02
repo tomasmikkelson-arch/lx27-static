@@ -453,3 +453,21 @@ body.menu-open{overflow:hidden}
 .card p,.step p,.card ul,.lead,.faq .a,.checks li,.prose p,.prose li{line-height:1.72}
 .plan p,.plan ul{line-height:1.6}
 .giant{line-height:.92}
+
+/* ===== типографіка: вирівнювання, інтервали, розрядка ===== */
+body{line-height:1.75;letter-spacing:.012em}
+.d1,.d2,.d3,.card h3,.prose h2,.doc h2,.quote{letter-spacing:.004em}
+.giant{letter-spacing:-.01em}
+.stat-card .n,.plan .sum,.calc__sum .total{letter-spacing:-.005em}
+.d2{line-height:1.12}
+.card h3,.step h3{line-height:1.32}
+.card p,.step p,.card ul,.lead,.faq .a,.checks li,.prose p,.prose li,.doc p,.doc li{line-height:1.8}
+.prose p,.prose ul,.prose ol,.prose blockquote{margin-top:0;margin-bottom:1.1em}
+/* заголовок і текст у двох колонках починаються з одного рівня */
+.prose>:first-child,.doc section>:first-child{margin-top:0}
+.split2{align-items:start}
+.split2>.d2{margin-top:.18em}
+/* друга (прозора) кнопка на фіолетовому фоні */
+.cta .btn--ghost,.sec--violet .btn--ghost{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5);color:#fff}
+.cta .btn--ghost .arr,.sec--violet .btn--ghost .arr{background:#fff;color:var(--violet)}
+.cta .btn--ghost:hover,.sec--violet .btn--ghost:hover{background:rgba(255,255,255,.24);border-color:#fff}

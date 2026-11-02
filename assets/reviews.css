@@ -46,3 +46,5 @@
 .rv__note p{margin:0;color:var(--fg-dim);font-size:15.5px}
 .rv-demo-badge{background:rgba(244,239,249,.14);color:var(--fg);backdrop-filter:blur(6px)}
 .rv-card:nth-child(4n+3) .rv-demo-badge{background:#131D1E;color:#F3E6D8}
+.rv-card__text{line-height:1.75;letter-spacing:.01em}
+.rv__title{letter-spacing:.004em;line-height:1.02}
