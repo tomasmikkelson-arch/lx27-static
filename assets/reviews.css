@@ -48,3 +48,15 @@
 .rv-card:nth-child(4n+3) .rv-demo-badge{background:#131D1E;color:#F3E6D8}
 .rv-card__text{line-height:1.75;letter-spacing:.01em}
 .rv__title{letter-spacing:.004em;line-height:1.02}
+/* 1–3 відгуки: рівна сітка замість стрічки */
+.rv--static .rv__rows{max-width:1360px;margin-inline:auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.rv--static .rv__track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:auto}
+.rv--static .rv-card{width:auto}
+.rv--static .rv-card:hover{transform:translateY(-6px)}
+.rv--static .rv-card__text{-webkit-line-clamp:unset;display:block}
+@media (max-width:980px){.rv--static .rv__track{grid-template-columns:minmax(0,1fr)}}
+.rv-card__ava--empty{background:rgba(244,239,249,.08);border:1.5px dashed rgba(244,239,249,.3);color:rgba(244,239,249,.35)}
+.rv-card__ava--empty svg{width:26px;height:26px}
+.rv-card:nth-child(4n+3) .rv-card__ava--empty{background:rgba(19,29,30,.06);border-color:rgba(19,29,30,.25);color:rgba(19,29,30,.35)}
+.rv-card__ava{width:60px;height:60px}
+.rv-card{margin:0}

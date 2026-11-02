@@ -11,15 +11,13 @@ from build import ROOT, TG, e, page, write
 
 DATA = os.path.join(ROOT, "content", "reviews.json")
 
-DEMO = [
-    ("Ім'я Прізвище", "Власниця кав'ярні", "Бізнес", "Соцмережі", "Приклад відгуку: стрічка нарешті виглядає як один бренд, а шаблони дозволяють нам самим робити швидкі анонси."),
-    ("Ім'я Прізвище", "Керівниця громадської організації", "ГО", "Звіт для донора", "Приклад відгуку: команда врахувала всі вимоги видимості донора, звіт погодили з першого разу."),
-    ("Ім'я Прізвище", "Маркетолог, виробнича компанія", "Бізнес", "Каталог", "Приклад відгуку: каталог на 48 сторінок зверстали за два тижні, друкарня прийняла файли без жодного зауваження."),
-    ("Ім'я Прізвище", "Засновник стартапу", "Бізнес", "Pitch deck", "Приклад відгуку: презентація стала зрозумілою за п'ять хвилин читання – саме те, що потрібно інвесторам."),
-    ("Ім'я Прізвище", "Комунікаційниця благодійного фонду", "ГО", "Інформаційна кампанія", "Приклад відгуку: візуал кампанії зібрали в одну систему, а шаблони команда використовує досі."),
-    ("Ім'я Прізвище", "Власник інтернет-магазину", "Бізнес", "Рекламні креативи", "Приклад відгуку: нові креативи щотижня – і таргетологу є що тестувати."),
-    ("Ім'я Прізвище", "Менеджерка проєкту ГО", "ГО", "Посібник", "Приклад відгуку: посібник верстали в дедлайн, з українською та англійською версіями."),
-    ("Ім'я Прізвище", "Директорка ресторану", "Бізнес", "Меню і POS", "Приклад відгуку: меню, флаєри та сторіз тепер в одному стилі."),
+DEMO = [  # (імʼя, посада, організація, тип, послуга, текст) – заглушки до появи реальних відгуків
+    ("Ім'я Прізвище", "Посада", "Назва компанії", "Бізнес", "Дизайн-супровід",
+     "Приклад відгуку: дизайн для соцмереж і реклами замовляємо щомісяця. Задачі пишемо в чат, макети отримуємо в погоджений день, правки роблять того ж дня. Шаблони лишилися в нас, тож дрібні анонси збираємо самі."),
+    ("Ім'я Прізвище", "Посада", "Назва організації", "Міжнародна організація", "Звіт і інфографіка",
+     "Приклад відгуку: потрібно було зверстати звіт за проєктом з урахуванням вимог донора щодо видимості. Логотипи партнерів і дисклеймер розмістили за брендбуком програми, звіт погодили з першого разу."),
+    ("Ім'я Прізвище", "Посада", "Назва компанії", "Бізнес", "Логотип і презентація",
+     "Приклад відгуку: зробили логотип, фірмовий стиль і презентацію для партнерів. На старті отримали кошторис і терміни, усе здали вчасно, а вихідні файли передали разом з короткою інструкцією."),
 ]
 
 def load():
@@ -44,13 +42,13 @@ def card(r, demo=False):
     photo = r.get("photo")
     ava = (f'<img class="rv-card__ava" src="{e(photo)}" alt="{e(name)}" width="52" height="52" loading="lazy">' if photo
            else f'<span class="rv-card__ava" aria-hidden="true">{e(initials(name))}</span>')
-    tag = "ГО" if r.get("org_type") == "ГО" else "Бізнес"
+    tag = str(r.get("org_type") or "Бізнес")
     rating = int(r.get("rating") or 5)
     svc = f'<span class="rv-card__svc">{e(str(r["service"]))}</span>' if r.get("service") else ""
-    if demo:  # заглушка: без аватарки, посади, організації та оцінки
-        return f'''<figure class="rv-card"><div class="rv-card__top"><span class="rv-card__q" aria-hidden="true">“</span><span class="rv-card__tag">{tag}</span></div>
+    if demo:  # заглушка: порожнє кругле місце під фото, без зірок і рейтингу
+        return f'''<figure class="rv-card"><div class="rv-card__top"><span class="rv-card__q" aria-hidden="true">“</span><span class="rv-card__tag">{e(tag)}</span></div>
 <blockquote class="rv-card__text">{e(str(r["text"]))}</blockquote>
-<figcaption class="rv-card__who"><span><b>{e(name)}</b></span></figcaption></figure>'''
+<figcaption class="rv-card__who"><span class="rv-card__ava rv-card__ava--empty" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span><span><b>{e(name)}</b><small>{e(who)}</small>{svc}</span></figcaption></figure>'''
     return f'''<figure class="rv-card"><div class="rv-card__top"><span class="rv-card__q" aria-hidden="true">“</span><span class="rv-card__tag">{tag}</span></div>
 <blockquote class="rv-card__text">{e(str(r["text"]))}</blockquote>
 <figcaption class="rv-card__who">{ava}<span><b>{e(name)}</b><small>{e(who)}</small>{svc}<span class="rv__stars" aria-label="Оцінка {rating} з 5">{"★" * rating}</span></span></figcaption></figure>'''
@@ -101,7 +99,7 @@ def inject_index():
         open(p, "w", encoding="utf-8").write(s)
 
 def demo_items():
-    return [dict(name=n, role=r, org="", org_type=t, service=sv, text=x, rating=5) for n, r, t, sv, x in DEMO]
+    return [dict(name=n, role=r, org=o, org_type=t, service=sv, text=x, rating=5) for n, r, o, t, sv, x in DEMO]
 
 def preview():
     demo = demo_items()

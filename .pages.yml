@@ -92,7 +92,7 @@ content:
             label: Тип клієнта
             type: select
             options:
-              values: [Бізнес, ГО]
+              values: [Бізнес, ГО, Міжнародна організація]
           - name: service
             label: Послуга (наприклад, «Звіт для донора»)
             type: string
