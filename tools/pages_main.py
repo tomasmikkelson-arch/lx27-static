@@ -133,8 +133,8 @@ def about():
   <div class="grid g4">
     <div class="card stat-card" data-r="1"><div class="n">10<sup>+</sup></div><p>років у графічному дизайні та соцмережах</p></div>
     <div class="card stat-card" data-r="2"><div class="n">340</div><p>завершених проєктів: презентації, креативи, запуски акаунтів</p></div>
-    <div class="card stat-card" data-r="3"><div class="n">13</div><p>клієнтів на щомісячному дизайн- та SMM-супроводі</p></div>
-    <div class="card stat-card" data-r="4"><div class="n">1200</div><p>макетів на місяць: пости, сторіз, банери, слайди</p></div>
+    <div class="card stat-card" data-r="3"><div class="n">7</div><p>напрямів: логотипи, пости, презентації, SMM, реклама, друк і сайти</p></div>
+    <div class="card stat-card" data-r="4"><div class="n">3</div><p>типи клієнтів: бізнес, громадські організації та освітні проєкти</p></div>
   </div>
 </div></section>
 

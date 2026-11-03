@@ -9,7 +9,7 @@
 .lm__side{position:relative;overflow:hidden;isolation:isolate;background:var(--lm-v);padding:34px 30px;display:flex;flex-direction:column;gap:18px}
 .lm__side::before{content:"";position:absolute;right:-40%;bottom:-30%;width:120%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,96,22,.6),transparent 62%);z-index:-1}
 .lm__side::after{content:"";position:absolute;left:-30%;top:-30%;width:90%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(205,176,255,.45),transparent 65%);z-index:-1}
-.lm__eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.lm__eyebrow{font-size:13px;font-weight:500;letter-spacing:.01em;opacity:.85}
 .lm__title{font-family:"Unbounded","Arial Black",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1;font-size:clamp(26px,3.2vw,38px);margin:0}
 .lm__ctx{display:inline-flex;align-self:flex-start;gap:8px;align-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
 .lm__ctx:empty{display:none}
@@ -25,7 +25,7 @@
 .lm__close:hover{transform:rotate(90deg);background:var(--lm-e);border-color:var(--lm-e)}
 .lm__close svg{width:16px;height:16px}
 .lm fieldset{border:0;margin:0;padding:0;min-width:0}
-.lm legend,.lm label.lm__lbl{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lm-dim);margin-bottom:10px;padding:0}
+.lm legend,.lm label.lm__lbl{display:block;font-size:14px;font-weight:600;letter-spacing:.01em;color:var(--lm-dim);margin-bottom:10px;padding:0}
 .lm__chips{display:flex;flex-wrap:wrap;gap:8px}
 .lm__chips label{position:relative;cursor:pointer}
 .lm__chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
