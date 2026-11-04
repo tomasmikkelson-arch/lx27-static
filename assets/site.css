@@ -487,3 +487,30 @@ body{line-height:1.75;letter-spacing:.012em}
 .calc__sum .hint__t{margin:0;font-size:15px;line-height:1.45;color:#fff;text-wrap:pretty}
 .calc__sum .hint__save{margin:0;justify-self:start;font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--on-light);background:var(--sun);border-radius:999px;padding:5px 12px;white-space:nowrap}
 .calc__sum .hint .calc__plan{margin-top:8px;justify-self:stretch;justify-content:center}
+/* /about/: абзац біля фото */
+.intro__card .intro__lead{font-size:22px;line-height:1.45;color:var(--fg);text-wrap:pretty}
+@media (max-width:640px){.intro__card .intro__lead{font-size:18px}}
+/* великий текст із проявленням під час прокручування (як маніфест на головній) */
+.manifest{font-family:var(--f-display);font-weight:500;font-size:clamp(24px,3.2vw,48px);line-height:1.2;letter-spacing:.004em;max-width:1200px;margin:0}
+.manifest p{margin:0}
+.manifest p+p{margin-top:.8em}
+.manifest .mw{opacity:1}
+@media (max-width:640px){.manifest{line-height:1.3}}
+/* /about/: чотири картки з цифрами */
+.stats4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:start}
+.stats4 .stat-card{height:100%;display:flex;flex-direction:column;justify-content:flex-start}
+.stats4 .stat-card .n{line-height:1}
+.stats4 .stat-card p{margin:12px 0 0}
+@media (max-width:860px){.stats4{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:32px}}
+/* /about/: дві аудиторії */
+.aud{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.aud__card{position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--line);border-radius:var(--r-md);padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:16px}
+.aud__card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55}
+.aud__card--ngo::before{background:linear-gradient(120deg,#2b1748,#8A31EF)}
+.aud__card--biz::before{background:linear-gradient(120deg,#3a1a0c,#FF6016)}
+.aud__card h3{margin:0;font-family:var(--f-display);font-size:clamp(22px,2.4vw,32px);line-height:1.15}
+.aud__card p{margin:0;color:rgba(244,239,249,.85)}
+.aud__card .link-arr{margin-top:auto;align-self:flex-start;color:#fff}
+@media (max-width:640px){.aud{grid-template-columns:minmax(0,1fr)}}
+.intro__card:has(.intro__lead:only-child){background:none;border:0;padding:0 clamp(0px,2vw,24px) 0 0;justify-content:flex-end}
+@media (max-width:860px){.intro__card:has(.intro__lead:only-child){padding:0}}

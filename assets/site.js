@@ -83,3 +83,35 @@
     });
   });
 })();
+
+/* Великий текст, що проявляється під час прокручування (той самий прийом, що й маніфест на головній):
+   слова отримують повну непрозорість у порядку читання. Без JS або з reduced motion текст видно одразу. */
+(function(){
+  var boxes=document.querySelectorAll('[data-scrub-words]');
+  if(!boxes.length||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+  function wrap(node){
+    Array.prototype.slice.call(node.childNodes).forEach(function(ch){
+      if(ch.nodeType===3){var f=document.createDocumentFragment();
+        ch.textContent.split(/(\s+)/).forEach(function(p){if(!p)return;
+          if(/^\s+$/.test(p))f.appendChild(document.createTextNode(' '));
+          else{var s=document.createElement('span');s.className='mw';s.textContent=p;f.appendChild(s)}});
+        ch.replaceWith(f)}
+      else if(ch.nodeType===1)wrap(ch);
+    });
+  }
+  var items=[];
+  boxes.forEach(function(b){wrap(b);items.push({el:b,w:b.querySelectorAll('.mw')})});
+  function upd(){
+    var vh=window.innerHeight;
+    items.forEach(function(it){
+      var r=it.el.getBoundingClientRect(),start=vh*.85,end=vh*.6;
+      // 0 – верх тексту на 85% висоти екрана, 1 – низ тексту на 60%: останній рядок видно повністю раніше, ніж з'являться цифри
+      var p=(start-r.top)/((start-end)+r.height);p=Math.max(0,Math.min(1,p));
+      var n=it.w.length,x=p*n;
+      for(var i=0;i<n;i++){var o=Math.max(0,Math.min(1,x-i));it.w[i].style.opacity=(.16+.84*o).toFixed(3)}
+    });
+  }
+  var ticking=false;
+  function on(){if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;upd()})}}
+  window.addEventListener('scroll',on,{passive:true});window.addEventListener('resize',on);upd();
+})();

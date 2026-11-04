@@ -20,7 +20,7 @@ LI = "https://www.linkedin.com/company/perseus-agency/"
 LEGAL = "ФОП Ісиченко Ігор Володимирович"
 TODAY = date.today().isoformat()
 # Дата останнього оновлення статичних сторінок (змінюйте вручну при правках текстів).
-SITE_UPDATED = "2026-11-04"
+SITE_UPDATED = "2026-11-05"
 import hashlib as _h
 def _ver(*files):
     m = _h.md5()
