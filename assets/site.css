@@ -480,3 +480,10 @@ body{line-height:1.75;letter-spacing:.012em}
 .switch2--dark button[aria-pressed="true"]{background:var(--violet);color:#fff}
 .calc__plan{margin-top:10px;height:44px;padding:0 18px;color:#fff;border-color:rgba(255,255,255,.55)}
 .calc__sum [hidden]{display:none!important}
+/* калькулятор: перемикач над сіткою, відступ між колонками, підказка про пакет */
+#calc .switch2--dark{display:inline-flex;margin-bottom:20px}
+.calc{gap:clamp(20px,3vw,40px)}
+.calc__sum .hint{display:grid;gap:6px;padding:16px 18px}
+.calc__sum .hint__t{margin:0;font-size:15px;line-height:1.45;color:#fff;text-wrap:pretty}
+.calc__sum .hint__save{margin:0;justify-self:start;font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--on-light);background:var(--sun);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.calc__sum .hint .calc__plan{margin-top:8px;justify-self:stretch;justify-content:center}

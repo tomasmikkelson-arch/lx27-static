@@ -229,7 +229,7 @@ CALC_JS = r'''
   });
   var mode='design',ms=document.getElementById('calcMode'),rows=document.querySelectorAll('.qty'),
       tot=document.getElementById('calcTotal'),totW=document.getElementById('calcTotalWrap'),line=document.getElementById('calcLine'),list=document.getElementById('calcList'),
-      hint=document.getElementById('calcHint'),hintT=document.getElementById('calcHintText'),pb=document.getElementById('calcPlanBtn'),cb=document.getElementById('calcBtn');
+      hint=document.getElementById('calcHint'),hintT=document.getElementById('calcHintText'),hintS=document.getElementById('calcHintSave'),pb=document.getElementById('calcPlanBtn'),cb=document.getElementById('calcBtn');
   // лише цілі невід'ємні кількості
   function qty(inp){var v=String(inp.value).trim();if(!/^\d+$/.test(v))return 0;var n=parseInt(v,10);return isFinite(n)&&n>=0?n:0}
   function setTxt(t){pb.querySelectorAll('.roll span').forEach(function(s){s.textContent=t})}
@@ -238,7 +238,7 @@ CALC_JS = r'''
     rows.forEach(function(r){var n=qty(r.querySelector('input'));q[r.dataset.k]=n;
       if(n>0){d+=n*(+r.dataset.p);parts.push(r.parentNode.querySelector('b').textContent+' × '+n)}});
     var extra={'Режим':D.modes[mode],'Позиції':parts.join('; ')||'–','Сума дизайну':fmt(d)+' грн','Пакет':'індивідуальна оцінка'};
-    hint.hidden=true;pb.setAttribute('data-lead','');pb.removeAttribute('data-lead-extra');
+    hint.hidden=true;hintS.hidden=true;pb.setAttribute('data-lead','');pb.removeAttribute('data-lead-extra');
     cb.setAttribute('data-lead-extra',JSON.stringify(extra));
     if(!d){totW.hidden=true;line.textContent='Оберіть матеріали для розрахунку';list.textContent='';
       cb.setAttribute('data-lead','Індивідуальний розрахунок');return}
@@ -251,7 +251,7 @@ CALC_JS = r'''
     var offer=null;
     if(mode==='design'){
       tot.textContent=fmt(d);line.textContent='Вибрані матеріали – '+fmt(d)+' грн';
-      if(best&&best.pr<d){offer=best;hintT.textContent='Пакет «'+best.p.name+'» охоплює вибраний обсяг. Економія – '+fmt(d-best.pr)+' грн.'}
+      if(best&&best.pr<d){offer=best;hintT.textContent='Пакет «'+best.p.name+'» за '+fmt(best.pr)+'\u00a0грн охоплює вибраний обсяг';hintS.hidden=false;hintS.textContent='Економія '+fmt(d-best.pr)+'\u00a0грн'}
     }else if(best){
       tot.textContent=fmt(best.pr);line.textContent='Дизайн і ведення за пакетом «'+best.p.name+'» – '+fmt(best.pr)+' грн/міс';offer=best;
       hintT.textContent='Готовий пакет передається за повною фіксованою ціною.';
@@ -259,7 +259,7 @@ CALC_JS = r'''
       tot.textContent=fmt(d);line.textContent='Дизайн – '+fmt(d)+' грн. Вартість ведення погодимо окремо';
     }
     if(offer){
-      hint.hidden=false;setTxt('Обрати пакет «'+offer.p.name+'»');
+      hint.hidden=false;setTxt('Обрати «'+offer.p.name+'»');
       var ex=Object.assign({},extra,{'Пакет':offer.p.name+' – '+fmt(offer.pr)+' грн/міс ('+D.modes[mode]+')'});
       pb.setAttribute('data-lead','Пакет «'+offer.p.name+'» ('+D.modes[mode]+')');pb.setAttribute('data-lead-extra',JSON.stringify(ex));
     }
@@ -330,9 +330,9 @@ def prices():
 
 <section class="sec" id="calc"><div class="wrap">
   <div class="sec__head"><div><span class="eyebrow">Калькулятор</span><h2 class="d2">Порахуйте свій обсяг</h2></div><p class="muted">Вкажіть, скільки матеріалів потрібно на місяць. Покажемо суму й підкажемо, чи охоплює цей обсяг готовий пакет.</p></div>
+  <div class="switch2 switch2--dark" role="group" aria-label="Режим розрахунку" id="calcMode">{sw}</div>
   <div class="calc">
     <div class="calc__items">
-      <div class="switch2 switch2--dark" role="group" aria-label="Режим розрахунку" id="calcMode">{sw}</div>
       {rows}
       <p class="muted" style="font-size:14px;margin:6px 4px 0">Логотип, верстку видань і нестандартні роботи рахуємо окремо, ціни в таблиці нижче.</p>
     </div>
@@ -341,7 +341,7 @@ def prices():
       <div class="total" id="calcTotalWrap" hidden><span id="calcTotal">0</span> грн</div>
       <p id="calcLine" style="font-weight:600;color:#fff">Оберіть матеріали для розрахунку</p>
       <p id="calcList" style="font-size:14px"></p>
-      <div class="hint" id="calcHint" hidden><span id="calcHintText"></span>
+      <div class="hint" id="calcHint" hidden><p class="hint__t" id="calcHintText"></p><p class="hint__save" id="calcHintSave" hidden></p>
         <a href="{TG}" target="_blank" rel="noopener" class="btn btn--ghost calc__plan" id="calcPlanBtn" data-lead=""><span class="roll"><span>Обрати пакет</span><span aria-hidden="true">Обрати пакет</span></span></a></div>
       <a href="{TG}" target="_blank" rel="noopener" class="btn btn--ember" id="calcBtn" data-lead="Індивідуальний розрахунок"><span class="roll"><span>Обговорити цей пакет</span><span aria-hidden="true">Обговорити цей пакет</span></span><span class="arr">{ARROW}</span></a>
       <p style="font-size:13px;opacity:.75">Розрахунок орієнтовний. Фінальну ціну фіксуємо до початку роботи.</p>
