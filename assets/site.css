@@ -514,3 +514,7 @@ body{line-height:1.75;letter-spacing:.012em}
 @media (max-width:640px){.aud{grid-template-columns:minmax(0,1fr)}}
 .intro__card:has(.intro__lead:only-child){background:none;border:0;padding:0 clamp(0px,2vw,24px) 0 0;justify-content:flex-end}
 @media (max-width:860px){.intro__card:has(.intro__lead:only-child){padding:0}}
+/* перемикач у заголовку секції: без загального відступу між дочірніми елементами */
+.sec__head .switch2>button{margin-top:0}
+/* плюс у FAQ малюємо лініями, щоб він стояв точно по центру кола */
+.faq summary::after{content:"";background:linear-gradient(var(--lilac),var(--lilac)) center/12px 2px no-repeat,linear-gradient(var(--lilac),var(--lilac)) center/2px 12px no-repeat,rgba(138,49,239,.25)}

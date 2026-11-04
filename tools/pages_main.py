@@ -91,7 +91,7 @@ def about():
     crumbs = [("Про нас", path)]
     img = '''<picture><source type="image/webp" srcset="/assets/ihor-isychenko-720.webp 720w, /assets/ihor-isychenko-1122.webp 1122w" sizes="(max-width:860px) 92vw, 54vw">
 <img src="/assets/ihor-isychenko.jpg" width="1122" height="1402" alt="Ігор Ісиченко, засновник і керівник Perseus Agency, у кріслі під лампою" fetchpriority="high"></picture>'''
-    values = [("chat", "Відповідаємо швидко", "До 2 годин у робочий час. Без «подивлюсь завтра»."),
+    values = [("chat", "Відповідаємо швидко", "До 2 годин у робочий час, у Telegram або поштою."),
               ("folder", "Файли належать вам", "Вихідники у Figma, PSD, AI та всі шаблони лишаються у вас."),
               ("target", "Обсяг погоджено заздалегідь", "Ви знаєте, які матеріали отримаєте та в якому форматі."),
               ("shield", "Прозорі умови", "Ціна й терміни фіксуються до старту. Договір, рахунки й акти.")]
@@ -360,7 +360,7 @@ def contacts():
   <div class="hero__grid">
     <div class="hero__text">
       <span class="eyebrow">Контакти</span>
-      <h1 class="d1" data-split>Напишіть <em>нам</em></h1>
+      <h1 class="d1" data-split>Контакти <em>агенції</em></h1>
       <p class="lead">Напишіть нам про вашу задачу. Якщо у вас уже є технічне завдання чи приклади матеріалів, їх можна надіслати електронною поштою.</p>
       <div class="btns">{btn("Обговорити задачу", TG, ext=True, lead="Сторінка контактів")}{btn("Написати в Telegram", TG, "ghost", ext=True)}</div>
     </div>
