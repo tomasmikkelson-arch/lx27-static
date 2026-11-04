@@ -71,3 +71,14 @@ html.lm-lock,html.lm-lock body{overflow:hidden}
 .lm__btn--send:hover{background:var(--lm-v2)}
 .lm__btn--send:disabled{opacity:.7;cursor:wait}
 .lm__err a{color:inherit}
+.lm__intro{margin:0;font-size:15px;line-height:1.55;color:rgba(255,255,255,.85)}
+.lm__ctx[hidden]{display:none}
+.lm__ctx-x{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:16px;line-height:1;color:#fff;background:rgba(11,17,18,.3);border:0;cursor:pointer;padding:0}
+.lm__ctx-x:hover{background:rgba(11,17,18,.55)}
+.lm__more{border:1px solid rgba(244,239,249,.14);border-radius:16px;padding:0 16px}
+.lm__more summary{cursor:pointer;padding:14px 0;font-size:14px;font-weight:600;color:var(--lm-dim);list-style:none}
+.lm__more summary::-webkit-details-marker{display:none}
+.lm__more summary::after{content:"+";float:right;font-size:18px;line-height:1}
+.lm__more[open] summary::after{content:"–"}
+.lm__more[open]{padding-bottom:16px}
+.lm__more>*+*{margin-top:16px}

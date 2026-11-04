@@ -32,9 +32,15 @@ content:
           regex: "^[a-z0-9-]+$"
           message: Лише малі латинські літери, цифри та дефіс
       - name: description
-        label: Опис для Google (до 160 символів)
+        label: Анонс (показується в картці й під заголовком, до 160 символів)
         type: text
         required: true
+      - name: seo_title
+        label: Заголовок для Google, title (необовʼязково, до 60 символів; без двокрапок)
+        type: string
+      - name: seo_description
+        label: Опис для Google (необовʼязково; якщо порожньо, береться анонс)
+        type: text
       - name: date
         label: Дата публікації (майбутня дата = відкладена публікація)
         type: date
@@ -46,7 +52,7 @@ content:
         label: Рубрика
         type: select
         options:
-          values: [Ціни, Бізнес, Для ГО, Брендинг, SMM, Презентації, Реклама, Поліграфія, Кейси, Новини студії]
+          values: [Ціни, Бізнес, Для ГО, Брендинг, SMM, Презентації, Реклама, Поліграфія, Кейси, Новини агенції]
       - name: tags
         label: Теги / ключові слова
         type: string

@@ -1,7 +1,9 @@
 """Сторінки: Для ГО, Про нас, Портфоліо, Ціни, Контакти, Політика конфіденційності, 404."""
 import os
+import json
 from build import (ROOT, SITE, TG, IG, LI, EMAIL, LEGAL, BRAND, ORG_ID, SERVICES, page, register, write, crumbs_html,
-                   faq_html, faq_schema, cta, btn, btn_back, link_arr, icon, marquee, e, ARR)
+                   faq_html, faq_schema, cta, btn, btn_back, link_arr, icon, marquee, e, ARR,
+                   PLANS, UNITS, UNIT, ONEOFF, MODE_DESIGN, MODE_SMM, money, plan_limits)
 from scenes import scene, cover
 from pages_services import svc_card
 
@@ -13,16 +15,17 @@ def ngo():
     crumbs = [("Для громадських організацій", path)]
     faq = [("Ви працюєте з громадськими організаціями та благодійними фондами?", "Так, це один із двох наших основних напрямів. Робимо звіти, посібники, інфографіку, айдентику, матеріали інформаційних кампаній і заходів."),
            ("Чи знаєте ви вимоги донорів щодо видимості?", "Так. Перед стартом вивчаємо брендбук програми чи донора (visibility guidelines) і розміщуємо логотипи, дисклеймери, шрифти та кольори відповідно до них. Якщо вимоги суперечливі, допомагаємо узгодити з програмним офіцером."),
-           ("Чи берете участь у тендерах і конкурсних відборах?", "Так, подаємо комерційні пропозиції на тендери й відбори підрядників, готуємо кошторис і портфоліо під вимоги закупівлі."),
+           ("Чи берете участь у тендерах і конкурсних відборах?", "Так, подаємо комерційні пропозиції на тендери й відбори підрядників. Якщо вам потрібна цінова пропозиція, надішліть ТЗ і дату подання. Підготуємо кошторис за вказаними позиціями."),
            ("Які документи ви надаєте?", "Договір, рахунки та акти виконаних робіт від ФОП. За потреби – цінову пропозицію, кошторис у потрібній валюті й інші документи для звітності перед донором."),
            ("Як скласти бюджет на дизайн у грантовій заявці?", "Напишіть нам на етапі підготовки заявки: розпишемо перелік матеріалів і орієнтовну вартість кожної позиції, щоб бюджет був реалістичним."),
            ("Чи можна працювати англійською?", "Так, готуємо матеріали українською та англійською, комунікуємо з міжнародними партнерами англійською.")]
     inc = [("chart", "Звіти та інфографіка", "Річні звіти, звіти для донорів, факт-шити, дашборди з результатами."),
            ("book", "Посібники й методички", "Верстка багатосторінкових видань, навчальних матеріалів, збірників."),
-           ("mega", "Інформаційні кампанії", "Концепція кампанії, соцмережі, банери, плакати, відео-обкладинки."),
+           ("mega", "Інформаційні кампанії", "Концепція кампанії, соцмережі, банери, плакати, обкладинки відео."),
            ("users", "Матеріали для заходів", "Бейджі, ролапи, банери, програми, презентації для форумів і тренінгів."),
            ("palette", "Айдентика ГО та проєкту", "Логотип і стиль організації чи окремого проєкту, сумісний з логотипами донорів."),
-           ("slides", "Презентації для донорів", "Презентація організації, результатів і заявки, pitch для фандрейзингу.")]
+           ("slides", "Презентації для донорів", "Презентація організації, результатів і заявки для фандрейзингу."),
+           ("web", "Сайти", "Сайт організації або окремого проєкту з новинами, звітами й формою звернення.")]
     rules = [("shield", "Вимоги видимості", "Логотипи партнерів, дисклеймери, шрифти й кольори – як прописано в брендбуку донора чи програми."),
              ("clock", "Терміни під проєкт", "Плануємо роботу під дедлайни звітів, заходів і запусків кампаній."),
              ("file", "Документи для звіту", "Договір, рахунки й акти, які приймуть бухгалтерія та донор."),
@@ -35,10 +38,10 @@ def ngo():
   <div class="hero__grid">
     <div class="hero__text">
       <span class="eyebrow">Громадський сектор</span>
-      <h1 class="d1" data-split>Дизайн для <em>громадських</em> організацій і фондів</h1>
-      <p class="lead">Звіти, посібники, інформаційні кампанії та айдентика для ГО, благодійних фондів і грантових проєктів – з урахуванням вимог донорів щодо видимості та звітності.</p>
+      <h1 class="d1" data-split>Дизайн для <em>громадських</em> організацій, фондів і донорських програм</h1>
+      <p class="lead">Розробляємо айдентику, шаблони для соцмереж, презентації та сайти. Оформлюємо видання й готуємо матеріали для подій та інформаційних кампаній. Якщо проєкт має вимоги до оформлення або погодження, врахуємо їх у роботі.</p>
       <div class="hero__facts"><span>Вимоги видимості донорів</span><span>Тендери й відбори підрядників</span><span>Договір, рахунки, акти</span></div>
-      <div class="btns">{btn("Обговорити проєкт", TG, ext=True, lead="Дизайн для ГО")}{btn("Що ми робимо", "#what", "ghost")}</div>
+      <div class="btns">{btn("Обговорити задачу", TG, ext=True, lead="Дизайн для ГО")}{btn("Переглянути послуги", "#what", "ghost")}</div>
     </div>
     {scene("ngo")}
   </div>
@@ -71,14 +74,14 @@ def ngo():
 <h2>Дизайн для грантових проєктів: що важливо знати</h2>
 <p>Більшість міжнародних донорів мають власні правила візуальної ідентифікації: як розміщувати логотип донора поряд з логотипом організації, який дисклеймер додавати до публікацій, які матеріали потребують попереднього погодження. Помилка у видимості може коштувати передрукованого тиражу або зауважень під час звіту.</p>
 <p>Ми робимо для громадських організацій і фондів матеріали, які добре виглядають і проходять перевірку донора. Дизайн звітів, посібників, інфографіки, соцмереж і заходів беремо на себе, а ваша команда займається самим проєктом.</p>
-<p>Також ми допомагаємо ще на етапі заявки: розписуємо бюджет на комунікаційні матеріали, щоб кошторис був реалістичним, і готуємо цінові пропозиції для відборів підрядників.</p>
+<p>Також ми допомагаємо ще на етапі заявки: розписуємо бюджет на комунікаційні матеріали, щоб кошторис був реалістичним. Якщо вам потрібна цінова пропозиція, надішліть ТЗ і дату подання. Підготуємо кошторис за вказаними позиціями.</p>
 </div></section>
 <section class="sec"><div class="wrap"><div class="sec__head"><div><span class="eyebrow">FAQ</span><h2 class="d2">Питання від ГО</h2></div></div>{faq_html(faq)}</div></section>
 {cta("Плануєте проєкт або звіт?", "Надішліть ТЗ чи опис проєкту – підготуємо кошторис під бюджет гранту і графік робіт під ваші дедлайни.", lead="Дизайн для ГО")}
 '''
     svc = {"@type": "Service", "name": "Дизайн для громадських організацій і благодійних фондів", "serviceType": "Графічний дизайн для неприбуткових організацій",
            "provider": {"@id": ORG_ID}, "areaServed": "UA", "audience": {"@type": "Audience", "audienceType": "Громадські організації, благодійні фонди, міжнародні донорські програми"}}
-    register(path, page(path, "Дизайн для ГО та благодійних фондів | Perseus",
+    register(path, page(path, "Дизайн для громадських організацій і фондів | Perseus",
                         "Дизайн звітів, посібників, інфографіки, інформаційних кампаній та айдентики для ГО і фондів з урахуванням вимог видимості донорів. Тендери, договір, акти.",
                         body, active="/ngo/", crumbs=crumbs, schema=[svc, faq_schema(faq)]), "0.9")
 
@@ -90,7 +93,7 @@ def about():
 <img src="/assets/ihor-isychenko.jpg" width="1122" height="1402" alt="Ігор Ісиченко, засновник і керівник Perseus Agency, у кріслі під лампою" fetchpriority="high"></picture>'''
     values = [("chat", "Відповідаємо швидко", "До 2 годин у робочий час. Без «подивлюсь завтра»."),
               ("folder", "Файли належать вам", "Вихідники у Figma, PSD, AI та всі шаблони лишаються у вас."),
-              ("target", "Дивимося на результат", "Оцінюємо дизайн за заявками, продажами й охопленнями."),
+              ("target", "Обсяг погоджено заздалегідь", "Ви знаєте, які матеріали отримаєте та в якому форматі."),
               ("shield", "Прозорі умови", "Ціна й терміни фіксуються до старту. Договір, рахунки й акти.")]
     works = [("smm", "linear-gradient(140deg,#2b1748,#8A31EF)", "Соцмережі"), ("branding", "linear-gradient(140deg,#3a1a0c,#FF6016)", "Айдентика"),
              ("slides", "linear-gradient(140deg,#1A2729,#7D71F7)", "Презентації")]
@@ -121,7 +124,7 @@ def about():
     <h2 class="d2" data-r>Про засновника</h2>
     <div class="prose" data-r="2">
       <p><strong>Ігор Ісиченко</strong> – засновник і керівник Perseus Agency. Понад 10 років у графічному дизайні та соцмережах: починав як дизайнер на фрилансі, працював з ресторанами, освітніми проєктами, меблевими брендами, IT-компаніями й громадськими організаціями.</p>
-      <p>Майже кожен клієнт Ігоря стикався з тим самим: дизайн потрібен постійно, а надійного виконавця немає. Фрилансер може зникнути посеред задачі, агенція для малого бізнесу задорога й надто довго погоджує, а штатний дизайнер – це зарплата й податки навіть у місяці, коли задач мало. Тому Ігор заснував агенцію: клієнт отримує постійного дизайнера за договором і без найму в штат.</p>
+      <p>Ігор заснував Perseus, щоб клієнти могли замовляти дизайн за договором і без найму дизайнера в штат. До початку роботи погоджуємо обсяг, строки й вартість. Ви знаєте, які матеріали отримаєте та в якому форматі.</p>
       <p>Зараз агенція бере разові проєкти й щомісяця веде клієнтів на супроводі. Працюємо переважно з <strong>малим і середнім бізнесом</strong> та <strong>громадськими організаціями</strong>: першим треба продавати, другим – звітувати перед донорами й пояснювати людям, чим вони займаються.</p>
       <blockquote class="quote">Я перевіряю дизайн двома питаннями: чи зрозуміла людина з першого погляду, хто ви, і чи захотіла вам написати.</blockquote>
       <div class="sign"><img src="/assets/ihor-face-160.webp" srcset="/assets/ihor-face-160.webp 1x, /assets/ihor-face-320.webp 2x" alt="Ігор Ісиченко" width="88" height="88" loading="lazy"><span><b>Ігор Ісиченко</b>Засновник і керівник Perseus Agency</span></div>
@@ -131,8 +134,8 @@ def about():
 
 <section class="sec sec--tight"><div class="wrap">
   <div class="grid g4">
-    <div class="card stat-card" data-r="1"><div class="n">10<sup>+</sup></div><p>років у графічному дизайні та соцмережах</p></div>
-    <div class="card stat-card" data-r="2"><div class="n">340</div><p>завершених проєктів: презентації, креативи, запуски акаунтів</p></div>
+    <div class="card stat-card" data-r="1"><div class="n">10<sup>+</sup></div><p>років засновник працює в графічному дизайні та соцмережах</p></div>
+    <div class="card stat-card" data-r="2"><div class="n">340</div><p>завершених проєктів агенції: презентації, креативи, запуски акаунтів</p></div>
     <div class="card stat-card" data-r="3"><div class="n">7</div><p>напрямів: логотипи, пости, презентації, SMM, реклама, друк і сайти</p></div>
     <div class="card stat-card" data-r="4"><div class="n">3</div><p>типи клієнтів: бізнес, громадські організації та освітні проєкти</p></div>
   </div>
@@ -170,7 +173,7 @@ def about():
               "image": SITE + "/assets/ihor-isychenko-1122.webp", "worksFor": {"@id": ORG_ID}, "url": SITE + "/about/",
               "knowsAbout": ["Графічний дизайн", "SMM", "Брендинг", "Дизайн презентацій", "Дизайн для громадських організацій"]}
     about_page = {"@type": "AboutPage", "url": SITE + path, "mainEntity": {"@id": ORG_ID}}
-    register(path, page(path, "Про агенцію Perseus і засновника Ігоря Ісиченка",
+    register(path, page(path, "Про агенцію Perseus і засновника Ігоря Ісиченка | Perseus",
                         "Perseus Agency – агенція візуальної комунікації для малого й середнього бізнесу, ГО та освітніх проєктів. Засновник і керівник – Ігор Ісиченко. Історія та принципи.",
                         body, active="/about/", crumbs=crumbs, schema=[person, about_page],
                         image=None), "0.8")
@@ -208,116 +211,158 @@ def portfolio():
 </div></section>
 {cta("Хочете приклади під вашу нішу?", "Надішлемо добірку релевантних робіт і розповімо, як вирішували схожі задачі.", lead="Добірка робіт під мою задачу")}
 '''
-    register(path, page(path, "Портфоліо Perseus: айдентика, соцмережі, презентації, поліграфія",
+    register(path, page(path, "Портфоліо Perseus, айдентика, соцмережі й презентації",
                         "Роботи агенції Perseus: логотипи та фірмові стилі, дизайн соцмереж, презентації, рекламні креативи, каталоги та звіти для громадських організацій.",
                         body, active="/portfolio/", crumbs=crumbs, schema=[{"@type": "CollectionPage", "url": SITE + path, "about": {"@id": ORG_ID}}]), "0.7")
 
 # ---------------- Ціни ----------------
+CALC_JS = r'''
+(function(){
+  var D=__DATA__;
+  var fmt=function(n){return (+n).toLocaleString('uk-UA')};
+  var sw=document.querySelector('#plans .switch2'),grid=document.getElementById('plansGrid');
+  sw.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var m=b.getAttribute('data-mode');
+    sw.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    grid.classList.toggle('mode-smm',m==='smm');
+    grid.querySelectorAll('[data-design]').forEach(function(s){s.textContent=fmt(s.getAttribute('data-'+m))});
+    grid.querySelectorAll('[data-plan]').forEach(function(a){a.setAttribute('data-lead','Пакет «'+a.getAttribute('data-plan')+'» ('+D.modes[m]+')')});
+  });
+  var mode='design',ms=document.getElementById('calcMode'),rows=document.querySelectorAll('.qty'),
+      tot=document.getElementById('calcTotal'),totW=document.getElementById('calcTotalWrap'),line=document.getElementById('calcLine'),list=document.getElementById('calcList'),
+      hint=document.getElementById('calcHint'),hintT=document.getElementById('calcHintText'),pb=document.getElementById('calcPlanBtn'),cb=document.getElementById('calcBtn');
+  // лише цілі невід'ємні кількості
+  function qty(inp){var v=String(inp.value).trim();if(!/^\d+$/.test(v))return 0;var n=parseInt(v,10);return isFinite(n)&&n>=0?n:0}
+  function setTxt(t){pb.querySelectorAll('.roll span').forEach(function(s){s.textContent=t})}
+  function calc(){
+    var q={},d=0,parts=[];
+    rows.forEach(function(r){var n=qty(r.querySelector('input'));q[r.dataset.k]=n;
+      if(n>0){d+=n*(+r.dataset.p);parts.push(r.parentNode.querySelector('b').textContent+' × '+n)}});
+    var extra={'Режим':D.modes[mode],'Позиції':parts.join('; ')||'–','Сума дизайну':fmt(d)+' грн','Пакет':'індивідуальна оцінка'};
+    hint.hidden=true;pb.setAttribute('data-lead','');pb.removeAttribute('data-lead-extra');
+    cb.setAttribute('data-lead-extra',JSON.stringify(extra));
+    if(!d){totW.hidden=true;line.textContent='Оберіть матеріали для розрахунку';list.textContent='';
+      cb.setAttribute('data-lead','Індивідуальний розрахунок');return}
+    totW.hidden=false;list.textContent=parts.join(', ');
+    cb.setAttribute('data-lead','Індивідуальний розрахунок ('+D.modes[mode]+')');
+    // пакет охоплює обсяг, лише якщо покрито всі три ліміти й немає банерів, обкладинок чи слайдів
+    var outside=q.banner+q.cover+q.slide_tpl+q.slide_custom>0,best=null;
+    if(!outside)D.plans.forEach(function(p){
+      if(q.post<=p.posts&&q.story<=p.stories&&q.creative<=p.creatives){var pr=mode==='smm'?p.smm:p.design;if(!best||pr<best.pr)best={p:p,pr:pr}}});
+    var offer=null;
+    if(mode==='design'){
+      tot.textContent=fmt(d);line.textContent='Вибрані матеріали – '+fmt(d)+' грн';
+      if(best&&best.pr<d){offer=best;hintT.textContent='Пакет «'+best.p.name+'» охоплює вибраний обсяг. Економія – '+fmt(d-best.pr)+' грн.'}
+    }else if(best){
+      tot.textContent=fmt(best.pr);line.textContent='Дизайн і ведення за пакетом «'+best.p.name+'» – '+fmt(best.pr)+' грн/міс';offer=best;
+      hintT.textContent='Готовий пакет передається за повною фіксованою ціною.';
+    }else{
+      tot.textContent=fmt(d);line.textContent='Дизайн – '+fmt(d)+' грн. Вартість ведення погодимо окремо';
+    }
+    if(offer){
+      hint.hidden=false;setTxt('Обрати пакет «'+offer.p.name+'»');
+      var ex=Object.assign({},extra,{'Пакет':offer.p.name+' – '+fmt(offer.pr)+' грн/міс ('+D.modes[mode]+')'});
+      pb.setAttribute('data-lead','Пакет «'+offer.p.name+'» ('+D.modes[mode]+')');pb.setAttribute('data-lead-extra',JSON.stringify(ex));
+    }
+  }
+  ms.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;mode=b.getAttribute('data-mode');
+    ms.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});calc()});
+  rows.forEach(function(r){var inp=r.querySelector('input'),b=r.querySelectorAll('button');
+    b[0].addEventListener('click',function(){inp.value=Math.max(0,qty(inp)-1);calc()});
+    b[1].addEventListener('click',function(){inp.value=qty(inp)+1;calc()});
+    inp.addEventListener('input',calc);inp.addEventListener('change',function(){inp.value=qty(inp);calc()});});
+  calc();
+})();
+'''
+
 def prices():
     path = "/prices/"
     crumbs = [("Ціни", path)]
-    plans = [("Старт", "4900", "9900", "Для невеликого бізнесу, якому потрібна охайна стрічка без зайвих витрат.",
-              ["8 постів і 12 сторіз", "Шаблони в стилі бренду", "2 кола правок на макет"], ["Контент-план і тексти", "Публікації за графіком"], False),
-             ("Ріст", "8900", "14900", "Коли соцмережі та реклама вже приносять заявки і контенту треба більше.",
-              ["12 постів і 20 сторіз", "4 рекламні креативи з ресайзами", "Банери для сайту й розсилок", "Відповідь до 2 годин у робочий час"], ["Тексти й відповіді на коментарі", "Звіт і розбір цифр щомісяця"], True),
-             ("Партнер", "14900", "22900", "Для компаній і ГО, які ведуть кілька каналів і регулярно запускають рекламу.",
-              ["20 постів і 30 сторіз", "8 рекламних креативів", "До 5 задач з презентацій і друку", "Пріоритетна черга"], ["До 2 соцмереж на супроводі", "План на наступний місяць"], False)]
-    def fmt(n): return f"{int(n):,}".replace(",", " ")
     pl = ""
-    for n, dz, sm, desc, inc, smm, hot in plans:
-        li = "".join(f"<li>{x}</li>" for x in inc) + "".join(f'<li class="smm-only">{x}</li>' for x in smm)
-        pl += f'''<div class="plan{' plan--hot' if hot else ''}" data-r>{'<span class="badge">Найчастіше обирають</span>' if hot else ''}<h3>{n}</h3>
-<div class="sum"><span data-design="{dz}" data-smm="{sm}">{fmt(dz)}</span> <small>грн / міс</small></div><p>{desc}</p><ul>{li}</ul>
-<a href="{TG}" target="_blank" rel="noopener" class="btn btn--{'ember' if hot else 'ghost'}" data-lead="Пакет «{n}»" data-plan="{n}" style="{'' if hot else 'color:var(--on-light);border-color:rgba(19,29,30,.25)'}"><span class="roll"><span>Обрати {n}</span><span aria-hidden="true">Обрати {n}</span></span><span class="arr">{ARROW}</span></a></div>'''
-    units = [("post", "Пост або слайд каруселі", "за шаблоном бренду", 350, 8), ("story", "Сторіз", "статичні, серіями", 200, 12),
-             ("creative", "Рекламний креатив", "з ресайзами 1:1, 4:5, 9:16", 600, 0), ("banner", "Банер для сайту чи розсилки", "", 500, 0),
-             ("reels", "Обкладинка Reels / YouTube", "", 200, 0), ("slide", "Слайд презентації", "за вашим текстом", 400, 0)]
-    rows = "".join(f'''<div class="calc__row"><div><b>{n}</b><small>{s + " · " if s else ""}{fmt(p)} грн</small></div>
-<div class="qty" data-k="{k}" data-p="{p}"><button type="button" aria-label="Менше: {n}">−</button><output aria-live="polite">{q}</output><button type="button" aria-label="Більше: {n}">+</button></div></div>''' for k, n, s, p, q in units)
-    single = [("Дизайн поста", "від 350 грн"), ("Рекламний креатив з ресайзами", "від 600 грн"), ("Слайд презентації", "від 400 грн"),
-              ("Флаєр, листівка, меню", "від 1 200 грн"), ("Логотип", "від 4 000 грн"), ("Логотип і фірмовий стиль", "від 10 000 грн"), ("Верстка каталогу, брошури, звіту", "після брифу"),
-              ("Дизайн лендінгу чи сайту", "після брифу"), ("Матеріали для ГО за грантом", "за кошторисом проєкту")]
+    for p in PLANS:
+        n, hot = p["name"], p["hot"]
+        li = "".join(f"<li>{x}</li>" for x in plan_limits(p) + p["extra"]) + "".join(f'<li class="smm-only">{x}</li>' for x in p["smm_extra"])
+        style = "" if hot else "color:var(--on-light);border-color:rgba(19,29,30,.25)"
+        pl += (f'<div class="plan{" plan--hot" if hot else ""}" data-r>{"<span class=\"badge\">Найчастіше обирають</span>" if hot else ""}<h3>{n}</h3>\n'
+               f'<div class="sum"><span data-design="{p["design"]}" data-smm="{p["smm"]}">{money(p["design"])}</span> <small>грн / міс</small></div><p>{p["desc"]}</p><ul>{li}</ul>\n'
+               f'<a href="{TG}" target="_blank" rel="noopener" class="btn btn--{"ember" if hot else "ghost"}" data-lead="Пакет «{n}» ({MODE_DESIGN})" data-plan="{n}" style="{style}">'
+               f'<span class="roll"><span>Обрати пакет</span><span aria-hidden="true">Обрати пакет</span></span><span class="arr">{ARROW}</span></a></div>')
+    rows = "".join(
+        f'<div class="calc__row"><div><b>{n}</b><small>{s + " · " if s else ""}{money(pr)} грн</small></div>\n'
+        f'<div class="qty" data-k="{k}" data-p="{pr}"><button type="button" aria-label="Менше: {n}">−</button>'
+        f'<input type="text" value="0" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="Кількість: {n}">'
+        f'<button type="button" aria-label="Більше: {n}">+</button></div></div>' for k, n, s, pr in UNITS)
+    single = [("Макет допису або картка каруселі", f"{money(UNIT['post'])} грн"), ("Статична сторіз", f"{money(UNIT['story'])} грн"),
+              ("Рекламний креатив у форматах 1:1, 4:5 і 9:16", f"від {money(UNIT['creative'])} грн"), ("Банер для сайту чи розсилки", f"{money(UNIT['banner'])} грн"),
+              ("Обкладинка відео", f"{money(UNIT['cover'])} грн"), ("Слайд за готовим шаблоном", f"{money(UNIT['slide_tpl'])} грн"),
+              ("Слайд з індивідуальним компонуванням", f"{money(UNIT['slide_custom'])} грн"), ("Дизайн листівки або флаєра", f"від {money(ONEOFF['flyer'])} грн"),
+              ("Відмальовка готового логотипа у вектор", f"від {money(ONEOFF['logo_redraw'])} грн"), ("Логотип", f"від {money(ONEOFF['logo'])} грн"),
+              ("Логотип і фірмовий стиль", f"від {money(ONEOFF['logo_style'])} грн"), ("Верстка каталогу, звіту чи посібника", "після брифу"),
+              ("Сайт під ключ", "після брифу"), ("Матеріали для ГО за грантом", "за кошторисом проєкту")]
     srows = "".join(f"<tr><td><strong>{a}</strong></td><td>{b}</td></tr>" for a, b in single)
-    faq = [("Що, якщо мені не підходить жоден пакет?", "Зберемо індивідуальний пакет під ваш обсяг: скористайтеся калькулятором вище або опишіть задачу в формі – запропонуємо формат і ціну."),
-           ("Чи входить бюджет на рекламу у вартість?", "Ні, ціни вказано за дизайн і SMM-роботу. Рекламний бюджет ви оплачуєте напряму в Meta чи Google."),
+    faq = [("Що, якщо мені не підходить жоден пакет?", "Порахуйте потрібні матеріали в калькуляторі або опишіть задачу у формі. Оцінимо обсяг і запропонуємо ціну."),
+           ("Чи входить бюджет на рекламу у вартість?", "Ні, ціни вказано за дизайн і ведення. Рекламний бюджет ви оплачуєте напряму в Meta чи Google."),
+           ("Як рахуються слайди презентації?", f"Слайд за вашим готовим шаблоном коштує {money(UNIT['slide_tpl'])} грн, слайд з індивідуальним компонуванням – {money(UNIT['slide_custom'])} грн. В одній презентації можна поєднувати обидва види. Розробку шаблону, тексти й складну інфографіку оцінюємо окремо."),
            ("Чи можна змінити пакет?", "Так, пакет можна збільшити або зменшити з наступного місяця."),
            ("Які умови оплати?", "Передоплата за місяць для пакетів; для разових проєктів – 50% на старті та 50% після здачі. Оплата за рахунком від ФОП."),
-           ("Чи є знижки для громадських організацій?", "Для ГО ми готуємо кошторис під бюджет гранту та формат закупівлі. Напишіть нам – підберемо обсяг, який вкладеться в грант.")]
+           ("Чи є знижки для громадських організацій?", "Для ГО ми готуємо кошторис під бюджет гранту та формат закупівлі. Надішліть ТЗ, і ми підберемо обсяг, який вкладеться в грант.")]
+    data = json.dumps({"plans": [{k: p[k] for k in ("name", "design", "smm", "posts", "stories", "creatives")} for p in PLANS],
+                       "modes": {"design": MODE_DESIGN, "smm": MODE_SMM}}, ensure_ascii=False)
+    sw = (f'<button type="button" aria-pressed="true" data-mode="design">{MODE_DESIGN}</button>'
+          f'<button type="button" aria-pressed="false" data-mode="smm">{MODE_SMM}</button>')
     body = f'''
 <section class="hero" style="padding-bottom:40px"><div class="wrap">
   {crumbs_html(crumbs)}
   <span class="eyebrow">Ціни</span>
-  <h1 class="d1" data-split style="margin-top:18px">Ціни на дизайн і <em>SMM</em></h1>
-  <p class="lead" style="margin-top:22px">Готові пакети на місяць, конструктор власного пакета і ціни на разові задачі. Точну вартість фіксуємо після брифу – до початку роботи.</p>
+  <h1 class="d1" data-split style="margin-top:18px">Скільки коштує <em>дизайн</em></h1>
+  <p class="lead" style="margin-top:22px">Тут можна порахувати окремі матеріали або вибрати пакет на місяць. Якщо вашої задачі немає у списку, напишіть нам – оцінимо її окремо.</p>
 </div></section>
 <section class="sec sec--cream" id="plans"><div class="wrap">
   <div class="sec__head"><div><span class="eyebrow">Пакети на місяць</span><h2 class="d2">Щомісячний супровід</h2></div>
-    <div class="switch2" role="group" aria-label="Тип пакета"><button type="button" aria-pressed="true" data-mode="design">Тільки дизайн</button><button type="button" aria-pressed="false" data-mode="smm">Дизайн + SMM</button></div></div>
+    <div class="switch2" role="group" aria-label="Тип пакета">{sw}</div></div>
+  <p class="mode-note">{MODE_DESIGN} – ви надаєте тексти й публікуєте матеріали. {MODE_SMM} – ми складаємо контент-план, пишемо тексти й публікуємо погоджені матеріали в межах пакета.</p>
   <div class="plans" id="plansGrid">{pl}</div>
+  <p class="muted" style="margin-top:20px;font-size:15px">Усі суми пакетів у гривнях за місяць. Одна картка каруселі рахується як один макет. Рекламний бюджет оплачується окремо.</p>
   <div class="plan plan--ind" data-r style="margin-top:16px;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between">
-    <div style="max-width:640px"><h3>Індивідуальний пакет</h3><p style="margin-top:8px">Потрібно 6 постів і презентацію? Або 40 креативів на місяць без соцмереж? Зберемо пакет під ваш обсяг, канали й бюджет – зберіть його в калькуляторі нижче або опишіть задачу.</p></div>
-    <div class="btns"><a href="{TG}" class="btn btn--ember" target="_blank" rel="noopener" data-lead="Індивідуальний пакет"><span class="roll"><span>Обговорити індивідуально</span><span aria-hidden="true">Обговорити індивідуально</span></span><span class="arr">{ARROW}</span></a></div>
+    <div style="max-width:640px"><h3>Індивідуальний обсяг</h3><p style="margin-top:8px">Потрібно 6 дописів і презентацію? Або 40 креативів на місяць без соцмереж? Порахуйте матеріали в калькуляторі нижче або опишіть задачу.</p></div>
+    <div class="btns"><a href="{TG}" class="btn btn--ember" target="_blank" rel="noopener" data-lead="Індивідуальний обсяг"><span class="roll"><span>Обговорити задачу</span><span aria-hidden="true">Обговорити задачу</span></span><span class="arr">{ARROW}</span></a></div>
   </div>
-  <p class="muted" style="margin-top:20px;font-size:15px">Вартість без бюджету на рекламу. Разові проєкти без підписки рахуємо окремо після брифу.</p>
 </div></section>
 
 <section class="sec" id="calc"><div class="wrap">
-  <div class="sec__head"><div><span class="eyebrow">Конструктор</span><h2 class="d2">Зберіть свій пакет</h2></div><p class="muted">Вкажіть, скільки контенту потрібно на місяць, – покажемо орієнтовну вартість і підкажемо, чи вигідніше готовий пакет.</p></div>
+  <div class="sec__head"><div><span class="eyebrow">Калькулятор</span><h2 class="d2">Порахуйте свій обсяг</h2></div><p class="muted">Вкажіть, скільки матеріалів потрібно на місяць. Покажемо суму й підкажемо, чи охоплює цей обсяг готовий пакет.</p></div>
   <div class="calc">
-    <div class="calc__items">{rows}
-      <label class="calc__row" style="cursor:pointer"><div><b>Додати SMM-ведення</b><small>контент-план, тексти, публікації, модерація · +5 000 грн</small></div><input type="checkbox" id="calcSmm" style="width:22px;height:22px;accent-color:#8A31EF"></label>
+    <div class="calc__items">
+      <div class="switch2 switch2--dark" role="group" aria-label="Режим розрахунку" id="calcMode">{sw}</div>
+      {rows}
+      <p class="muted" style="font-size:14px;margin:6px 4px 0">Логотип, верстку видань і нестандартні роботи рахуємо окремо, ціни в таблиці нижче.</p>
     </div>
     <aside class="calc__sum" aria-live="polite">
-      <span class="eyebrow" style="color:#fff">Орієнтовно на місяць</span>
-      <div class="total"><span id="calcTotal">0</span> грн</div>
-      <p id="calcList">Оберіть позиції ліворуч.</p>
-      <div class="hint" id="calcHint" hidden></div>
-      <a href="{TG}" target="_blank" rel="noopener" class="btn btn--ember" id="calcBtn" data-lead="Індивідуальний пакет"><span class="roll"><span>Обговорити цей пакет</span><span aria-hidden="true">Обговорити цей пакет</span></span><span class="arr">{ARROW}</span></a>
-      <p style="font-size:13px;opacity:.75">Розрахунок орієнтовний. Фінальну ціну фіксуємо після брифу.</p>
+      <span class="eyebrow" style="color:#fff">Розрахунок на місяць</span>
+      <div class="total" id="calcTotalWrap" hidden><span id="calcTotal">0</span> грн</div>
+      <p id="calcLine" style="font-weight:600;color:#fff">Оберіть матеріали для розрахунку</p>
+      <p id="calcList" style="font-size:14px"></p>
+      <div class="hint" id="calcHint" hidden><span id="calcHintText"></span>
+        <a href="{TG}" target="_blank" rel="noopener" class="btn btn--ghost calc__plan" id="calcPlanBtn" data-lead=""><span class="roll"><span>Обрати пакет</span><span aria-hidden="true">Обрати пакет</span></span></a></div>
+      <a href="{TG}" target="_blank" rel="noopener" class="btn btn--ember" id="calcBtn" data-lead="Індивідуальний розрахунок"><span class="roll"><span>Обговорити цей пакет</span><span aria-hidden="true">Обговорити цей пакет</span></span><span class="arr">{ARROW}</span></a>
+      <p style="font-size:13px;opacity:.75">Розрахунок орієнтовний. Фінальну ціну фіксуємо до початку роботи.</p>
     </aside>
   </div>
 </div></section>
 
 <section class="sec sec--tight"><div class="wrap">
-  <div class="sec__head"><div><span class="eyebrow">Разово</span><h2 class="d2">Разові задачі</h2></div>{link_arr("Усі послуги", "/services/")}</div>
-  <div class="table-wrap" data-r><table class="ptable"><thead><tr><th>Послуга</th><th>Ціна</th></tr></thead><tbody>{srows}</tbody></table></div>
+  <div class="sec__head"><div><span class="eyebrow">Поштучно й разово</span><h2 class="d2">Окремі роботи</h2></div>{link_arr("Усі послуги", "/services/")}</div>
+  <div class="table-wrap" data-r><table class="ptable"><thead><tr><th>Робота</th><th>Ціна</th></tr></thead><tbody>{srows}</tbody></table></div>
 </div></section>
 <section class="sec"><div class="wrap"><div class="sec__head"><div><span class="eyebrow">FAQ</span><h2 class="d2">Питання про ціни</h2></div></div>{faq_html(faq)}</div></section>
-{cta("Порахуємо ваш проєкт", "Опишіть задачу – надішлемо кошторис з фіксованою ціною та термінами.", lead="Розрахунок вартості", secondary=("Послуги", "/services/"))}
-<script>
-(function(){{
-  var sw=document.querySelector('.switch2'),grid=document.getElementById('plansGrid');
-  sw.addEventListener('click',function(e){{var b=e.target.closest('button');if(!b)return;var m=b.getAttribute('data-mode');
-    sw.querySelectorAll('button').forEach(function(x){{x.setAttribute('aria-pressed',x===b?'true':'false')}});
-    grid.classList.toggle('mode-smm',m==='smm');
-    grid.querySelectorAll('[data-design]').forEach(function(s){{s.textContent=(+s.getAttribute('data-'+m)).toLocaleString('uk-UA')}});
-    grid.querySelectorAll('[data-plan]').forEach(function(a){{a.setAttribute('data-lead','Пакет «'+a.getAttribute('data-plan')+'» ('+(m==='smm'?'Дизайн + SMM':'Тільки дизайн')+')')}});
-  }});
-  var rows=document.querySelectorAll('.qty'),smm=document.getElementById('calcSmm'),tot=document.getElementById('calcTotal'),list=document.getElementById('calcList'),hint=document.getElementById('calcHint'),cb=document.getElementById('calcBtn');
-  function calc(){{var s=0,parts=[],q={{}};
-    rows.forEach(function(r){{var n=+r.querySelector('output').value||+r.querySelector('output').textContent;q[r.dataset.k]=n;if(n>0){{s+=n*(+r.dataset.p);parts.push(r.parentNode.querySelector('b').textContent+' × '+n)}}}});
-    if(smm.checked&&s>0){{s+=5000;parts.push('SMM-ведення')}}
-    tot.textContent=s.toLocaleString('uk-UA');list.textContent=parts.length?parts.join(', '):'Оберіть позиції ліворуч.';
-    var h='';var base=smm.checked?[9900,14900]:[4900,8900];
-    if(q.post>=8&&q.story>=12&&s>base[0]&&q.post<12)h='Пакет «Старт» за '+base[0].toLocaleString('uk-UA')+' грн може бути вигіднішим.';
-    if(q.post>=12&&q.story>=20&&s>base[1])h='Пакет «Ріст» за '+base[1].toLocaleString('uk-UA')+' грн включає ще й 4 креативи – вигідніше.';
-    if(s>14900&&!smm.checked)h='Схоже, вам підійде «Партнер» за 14 900 грн: 20 постів, 30 сторіз і 8 креативів.';
-    hint.hidden=!h;hint.textContent=h;
-    cb.setAttribute('data-lead','Індивідуальний пакет: '+(parts.join(', ')||'обсяг уточнимо')+(s?' ≈ '+s.toLocaleString('uk-UA')+' грн/міс':''));
-  }}
-  rows.forEach(function(r){{var o=r.querySelector('output'),b=r.querySelectorAll('button');
-    b[0].addEventListener('click',function(){{o.textContent=Math.max(0,(+o.textContent)-1);o.value=o.textContent;calc()}});
-    b[1].addEventListener('click',function(){{o.textContent=(+o.textContent)+1;o.value=o.textContent;calc()}});}});
-  smm.addEventListener('change',calc);calc();
-}})();
-</script>
+{cta("Порахуємо вашу задачу", "Опишіть, що потрібно зробити. Надішлемо кошторис з фіксованою ціною та строками.", lead="Розрахунок вартості", secondary=("Послуги", "/services/"))}
+<script>{CALC_JS.replace("__DATA__", data)}</script>
 '''
-    offers = [{"@type": "Offer", "name": f"Пакет «{n}» (дизайн)", "price": dz, "priceCurrency": "UAH", "url": SITE + path + "#plans"} for n, dz, *_ in plans]
-    offers += [{"@type": "Offer", "name": f"Пакет «{n}» (дизайн + SMM)", "price": sm, "priceCurrency": "UAH", "url": SITE + path + "#plans"} for n, dz, sm, *_ in plans]
-    register(path, page(path, "Ціни на дизайн і SMM: пакети та калькулятор | Perseus",
-                        "Скільки коштує дизайн-супровід, ведення соцмереж, логотип, презентація, креативи. Пакети від 4 900 грн/міс, калькулятор індивідуального пакета, ціни на разові задачі.",
+    offers = [{"@type": "Offer", "name": f"Пакет «{p['name']}» ({MODE_DESIGN.lower()})", "price": p["design"], "priceCurrency": "UAH", "url": SITE + path + "#plans"} for p in PLANS]
+    offers += [{"@type": "Offer", "name": f"Пакет «{p['name']}» ({MODE_SMM.lower()})", "price": p["smm"], "priceCurrency": "UAH", "url": SITE + path + "#plans"} for p in PLANS]
+    register(path, page(path, "Скільки коштує дизайн, пакети та калькулятор | Perseus",
+                        "Ціни на дизайн дописів, сторіз, рекламних креативів, презентацій і логотипа. Пакети Starter, Plus і Premium від 4 900 грн/міс, калькулятор вартості.",
                         body, active="/prices/", crumbs=crumbs,
-                        schema=[{"@type": "OfferCatalog", "name": "Пакети дизайну та SMM", "itemListElement": offers}, faq_schema(faq)]), "0.9")
+                        schema=[{"@type": "OfferCatalog", "name": "Пакети дизайну та ведення соцмереж", "itemListElement": offers}, faq_schema(faq)]), "0.9")
 
 # ---------------- Контакти ----------------
 def contacts():
@@ -330,24 +375,25 @@ def contacts():
     <div class="hero__text">
       <span class="eyebrow">Контакти</span>
       <h1 class="d1" data-split>Напишіть <em>нам</em></h1>
-      <p class="lead">Відповідаємо протягом 2 годин у робочий час. Перший дзвінок і оцінка проєкту – безкоштовно.</p>
-      <div class="btns">{btn("Заповнити бриф", TG, ext=True, lead="Сторінка контактів")}{btn("Telegram", TG, "ghost", ext=True)}</div>
+      <p class="lead">Напишіть нам про вашу задачу. Якщо у вас уже є технічне завдання чи приклади матеріалів, їх можна надіслати електронною поштою.</p>
+      <div class="btns">{btn("Обговорити задачу", TG, ext=True, lead="Сторінка контактів")}{btn("Написати в Telegram", TG, "ghost", ext=True)}</div>
     </div>
     <div class="grid" style="gap:12px">
       <a class="card" href="{TG}" target="_blank" rel="noopener" data-r="1" style="display:flex;justify-content:space-between;align-items:center;gap:16px"><div><span class="eyebrow">Найшвидше</span><h3 style="margin-top:10px">Telegram · @perseus_agency</h3></div><span class="link-arr"><i>{ARROW}</i></span></a>
       <div class="card" data-r="2" style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap"><div><span class="eyebrow">Email</span><h3 style="margin-top:10px"><a href="mailto:{EMAIL}">{EMAIL}</a></h3></div><button type="button" class="btn btn--ghost" style="height:44px;padding:0 18px" data-copy="{EMAIL}">Копіювати</button></div>
       <a class="card" href="{IG}" target="_blank" rel="noopener" data-r="3" style="display:flex;justify-content:space-between;align-items:center;gap:16px"><div><span class="eyebrow">Instagram</span><h3 style="margin-top:10px">@perseus_agency</h3></div><span class="link-arr"><i>{ARROW}</i></span></a>
       <a class="card" href="{LI}" target="_blank" rel="noopener" data-r="4" style="display:flex;justify-content:space-between;align-items:center;gap:16px"><div><span class="eyebrow">LinkedIn</span><h3 style="margin-top:10px">Perseus Agency</h3></div><span class="link-arr"><i>{ARROW}</i></span></a>
+      <p class="muted" data-r="4" style="margin:6px 4px 0;font-size:15px">Зручно листуватися поштою? Надішліть опис задачі, посилання або готове ТЗ на <a href="mailto:{EMAIL}" style="text-decoration:underline">{EMAIL}</a>.</p>
     </div>
   </div>
 </div></section>
 <section class="sec sec--night"><div class="wrap">
   <div class="sec__head"><div><span class="eyebrow">Як почати</span><h2 class="d2">Від повідомлення до першого макета</h2></div></div>
   <div class="steps">
-    <div class="step" data-r><div><h3>Ви пишете нам</h3><p>У Telegram, на email або через форму-бриф – коротко про задачу, терміни й бюджет.</p></div><span class="when">5 хвилин</span></div>
-    <div class="step" data-r><div><h3>Дзвінок-знайомство</h3><p>30 хвилин: цілі, аудиторія, що вже є. Безкоштовно.</p></div><span class="when">1 день</span></div>
+    <div class="step" data-r><div><h3>Ви пишете нам</h3><p>У Telegram, на email або через форму – коротко про задачу. Обсяг і дату можна додати, якщо вони вже відомі.</p></div><span class="when">5 хвилин</span></div>
+    <div class="step" data-r><div><h3>Відповідь і, за потреби, дзвінок</h3><p>Уточнюємо деталі в листуванні. Якщо задачу простіше обговорити голосом, пропонуємо дзвінок на 30 хвилин. Безкоштовно.</p></div><span class="when">1 день</span></div>
     <div class="step" data-r><div><h3>Пропозиція і договір</h3><p>Фіксуємо обсяг, ціну, терміни. Підписуємо договір, ви отримуєте рахунок.</p></div><span class="when">1–2 дні</span></div>
-    <div class="step" data-r><div><h3>Перші макети</h3><p>Погоджуємо стиль і запускаємо роботу.</p></div><span class="when">5–7 днів</span></div>
+    <div class="step" data-r><div><h3>Старт роботи</h3><p>Для разового проєкту строк називаємо в пропозиції. Старт місячного дизайн-супроводу – за 5–7 робочих днів: погоджуємо стиль і готуємо шаблони.</p></div><span class="when">за домовленістю</span></div>
   </div>
 </div></section>
 <section class="sec sec--tight"><div class="wrap">
@@ -355,10 +401,10 @@ def contacts():
   <div class="prose" data-r="2"><p><strong>{LEGAL}</strong><br>Бренд: {BRAND}<br>Працюємо онлайн з клієнтами з усієї України та з-за кордону.<br>Email: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
   <p>Оплата за рахунком у гривнях або в іноземній валюті. Договір, рахунки й акти виконаних робіт.</p></div></div>
 </div></section>
-{cta("Не любите писати?", "Заповніть короткий бриф з кількох кліків – ми самі уточнимо деталі.", lead="Сторінка контактів", secondary=("Ціни", "/prices/"))}
+{cta("Маєте задачу або хочете порадитися щодо формату?", "Оберіть послугу або опишіть задачу своїми словами. Залиште контакт, і ми відповімо.", lead="Сторінка контактів", secondary=("Ціни", "/prices/"))}
 '''
     cp = {"@type": "ContactPage", "url": SITE + path, "mainEntity": {"@id": ORG_ID}}
-    register(path, page(path, "Контакти Perseus Agency: Telegram, email, Instagram",
+    register(path, page(path, "Контакти Perseus Agency, Telegram, email та Instagram",
                         "Зв'яжіться з Perseus: Telegram @perseus_agency, email hello@perseus.studio. Відповідаємо протягом 2 годин у робочий час. Безкоштовна консультація та оцінка проєкту.",
                         body, active="/contacts/", crumbs=crumbs, schema=[cp]), "0.7")
 
@@ -389,7 +435,7 @@ def not_found():
   <span class="eyebrow">Помилка 404</span>
   <h1 class="giant" style="margin-top:18px">404</h1>
   <p class="lead" style="margin-top:22px">Такої сторінки немає – можливо, її перенесли. Почніть з головної або оберіть послугу.</p>
-  <div class="btns" style="margin-top:26px">{btn_back("На головну", "/")}{btn("Послуги", "/services/", "ghost")}{btn("Обговорити проєкт", TG, ext=True, lead="")}</div>
+  <div class="btns" style="margin-top:26px">{btn_back("На головну", "/")}{btn("Послуги", "/services/", "ghost")}{btn("Обговорити задачу", TG, ext=True, lead="")}</div>
 </div></section>'''
     write("/404.html", page("/404.html", "Сторінку не знайдено – Perseus", "Сторінку не знайдено.", body, noindex=True))
 

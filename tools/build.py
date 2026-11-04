@@ -20,7 +20,7 @@ LI = "https://www.linkedin.com/company/perseus-agency/"
 LEGAL = "ФОП Ісиченко Ігор Володимирович"
 TODAY = date.today().isoformat()
 # Дата останнього оновлення статичних сторінок (змінюйте вручну при правках текстів).
-SITE_UPDATED = "2026-11-02"
+SITE_UPDATED = "2026-11-04"
 import hashlib as _h
 def _ver(*files):
     m = _h.md5()
@@ -83,14 +83,86 @@ def link_arr(text, href):
 NAV = [("Послуги", "/services/"), ("Для ГО", "/ngo/"), ("Портфоліо", "/portfolio/"),
        ("Ціни", "/prices/"), ("Про нас", "/about/"), ("Контакти", "/contacts/")]
 
+# ---------- спільне джерело цін ----------
+# Пакети, поштучні ставки й разові ціни. Звідси беруть дані: картки пакетів на головній (між маркерами
+# <!-- PLANS:START/END -->), сторінка /prices/ (картки й калькулятор), сторінки послуг і статті блогу
+# (плейсхолдери {{plan:starter}}, {{price:starter}}, {{price:starter.smm}}, {{unit:post}} тощо).
+PLANS = [
+    dict(key="starter", name="Starter", design=4900, smm=9900, posts=8, stories=12, creatives=0, hot=False,
+         desc="Для сторінки, де щотижня виходять дописи й сторіз.",
+         extra=["Шаблони у вашому стилі", "2 кола правок на макет"],
+         smm_extra=["Контент-план і тексти", "Публікація погоджених матеріалів"]),
+    dict(key="plus", name="Plus", design=8900, smm=14900, posts=12, stories=20, creatives=4, hot=True,
+         desc="Коли до звичних публікацій додається реклама.",
+         extra=["Банери для сайту й розсилок", "Відповідь до 2 годин у робочий час"],
+         smm_extra=["Тексти й відповіді на коментарі", "Звіт і розбір цифр щомісяця"]),
+    dict(key="premium", name="Premium", design=14900, smm=22900, posts=20, stories=30, creatives=8, hot=False,
+         desc="Для кількох паралельних кампаній і більшого обсягу публікацій.",
+         extra=["До 5 погоджених задач з презентацій і друку", "Пріоритетна черга"],
+         smm_extra=["До 2 соцмереж на веденні", "План на наступний місяць"]),
+]
+PLAN = {p["key"]: p for p in PLANS}
+# Поштучні ставки для калькулятора (грн): ключ, назва, підпис, ціна
+UNITS = [
+    ("post", "Макет допису або картка каруселі", "статичний макет за шаблоном", 350),
+    ("story", "Статична сторіз", "", 200),
+    ("creative", "Рекламний креатив", "статичний, у форматах 1:1, 4:5 і 9:16", 600),
+    ("banner", "Банер для сайту чи розсилки", "", 500),
+    ("cover", "Обкладинка відео", "Reels, YouTube", 200),
+    ("slide_tpl", "Слайд за готовим шаблоном", "ваш текст у вашому шаблоні", 150),
+    ("slide_custom", "Слайд з індивідуальним компонуванням", "розташування елементів добираємо під слайд", 250),
+]
+UNIT = {k: p for k, _, _, p in UNITS}
+# Разові роботи поза місячним калькулятором (грн, «від»)
+ONEOFF = dict(logo=4000, logo_redraw=1000, logo_style=10000, flyer=1200)
+MODE_DESIGN, MODE_SMM = "Лише дизайн", "З веденням"
+
+def money(n):
+    return f"{int(n):,}".replace(",", "\u00a0")
+
+def plan_limits(p):
+    out = [f"{p['posts']} макетів для дописів", f"{p['stories']} сторіз"]
+    out.append(f"{p['creatives']} рекламні креативи з трьома адаптаціями" if p["creatives"] in (2, 3, 4) else
+               f"{p['creatives']} рекламних креативів з трьома адаптаціями" if p["creatives"] else "Рекламні креативи оплачуються окремо")
+    return out
+
+def plans_home_html():
+    """Картки пакетів для головної (розмітка головної сторінки)."""
+    out = []
+    for p in PLANS:
+        li = "".join(f'\n          <li><svg><use href="#check"/></svg>{x}</li>' for x in plan_limits(p) + p["extra"])
+        li += "".join(f'\n          <li class="smm-only"><svg><use href="#check"/></svg>{x}</li>' for x in p["smm_extra"])
+        flag = '<span class="flag">Найчастіше обирають</span>' if p["hot"] else ""
+        kind = "ember" if p["hot"] else "dark"
+        out.append(f'''      <div class="plan{' plan--hot' if p['hot'] else ''}">
+        <div class="plan__name"><h3>{p['name']}</h3>{flag}</div>
+        <div class="plan__price"><b data-design="{p['design']}" data-smm="{p['smm']}">{money(p['design'])}</b><span>грн / міс</span></div>
+        <p class="plan__desc">{p['desc']}</p>
+        <ul>{li}
+        </ul>
+        <a href="{TG}" class="btn btn--{kind}" data-lead="Пакет «{p['name']}» ({MODE_DESIGN})" data-plan="{p['name']}"><span class="roll"><span>Обрати пакет</span><span>Обрати пакет</span></span></a>
+      </div>''')
+    return "\n".join(out)
+
+def fill_prices(text):
+    """Підставляє назви пакетів і ціни зі спільного джерела в тексти (блог, описи)."""
+    def rep(m):
+        kind, key = m.group(1), m.group(2)
+        if kind == "plan": return PLAN[key]["name"]
+        if kind == "unit": return money(UNIT[key])
+        if kind == "oneoff": return money(ONEOFF[key])
+        k, _, mode = key.partition(".")
+        return money(PLAN[k]["smm" if mode == "smm" else "design"])
+    return re.sub(r"\{\{(plan|price|unit|oneoff):([a-z_]+(?:\.smm)?)\}\}", rep, text)
+
 SERVICES = [  # slug, назва, коротко, іконка, ціна
- ("design-support", "Дизайн-супровід бренду", "Дизайнер на аутсорсі за щомісячною підпискою", "pen", "від 4 900 грн/міс"),
- ("branding", "Логотип, айдентика, упаковка", "Фірмовий стиль, брендбук, упаковка й етикетки", "palette", "від 4 000 грн"),
- ("smm", "SMM і дизайн для соцмереж", "Пости, сторіз, Reels-обкладинки, ведення акаунтів", "grid", "від 350 грн/пост"),
- ("presentations", "Презентації та pitch-деки", "Для продажів, інвесторів, донорів і конференцій", "slides", "від 400 грн/слайд"),
- ("ad-creatives", "Рекламні креативи", "Банери для Meta Ads і Google Ads", "mega", "від 600 грн/креатив"),
- ("print-layout", "Поліграфія та верстка", "Каталоги, брошури, звіти, книги, меню", "print", "від 1 200 грн"),
- ("web-design", "Сайти під ключ", "Лендінги, сайти-візитки, корпоративні сайти, веб-застосунки", "web", "після брифу"),
+ ("design-support", "Дизайн-супровід", "Регулярні макети у вашому стилі за місячним обсягом", "pen", "від 4 900 грн/міс"),
+ ("branding", "Логотип, айдентика, упаковка", "Логотип, фірмовий стиль, брендбук, паковання й етикетки", "palette", "від 4 000 грн"),
+ ("smm", "Дизайн і ведення соцмереж", "Макети дописів і сторіз, ведення сторінки", "grid", "від 350 грн/макет"),
+ ("presentations", "Презентації", "Для виступів, зустрічей і розсилок", "slides", "від 150 грн/слайд"),
+ ("ad-creatives", "Рекламні креативи", "Статичні креативи для Meta Ads і Google Ads у трьох форматах", "mega", "від 600 грн/креатив"),
+ ("print-layout", "Поліграфія та верстка", "Листівки, каталоги, звіти, посібники", "print", "від 1 200 грн"),
+ ("web-design", "Сайти під ключ", "Лендінги, сайти організацій і компаній", "web", "після брифу"),
 ]
 
 def header(active):
@@ -101,13 +173,13 @@ def header(active):
   <div class="header__bar">
     <a href="/" class="logo" aria-label="Perseus – на головну"><svg viewBox="0 0 1346 272" aria-hidden="true"><use href="#wm" fill="currentColor"/></svg></a>
     <nav class="nav" aria-label="Основна навігація">{nav}</nav>
-    {btn("Обговорити проєкт", TG, ext=True, lead="")}
+    {btn("Обговорити задачу", TG, ext=True, lead="")}
     <button class="burger" id="burger" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mmenu"><span></span><span></span></button>
   </div>
 </header>
 <div class="mmenu" id="mmenu">
   <a href="/">Головна</a>{mm}
-  <a href="{TG}" target="_blank" rel="noopener" data-lead=""><em>Обговорити проєкт</em></a>
+  <a href="{TG}" target="_blank" rel="noopener" data-lead=""><em>Обговорити задачу</em></a>
   <small>Telegram @perseus_agency · Instagram @perseus_agency</small>
 </div>'''
 
@@ -216,7 +288,7 @@ def faq_schema(items):
     strip = lambda s: re.sub(r"<[^>]+>", "", s)
     return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in items]}
 
-def cta(title, text, primary=("Обговорити проєкт", TG, True), secondary=("Подивитися ціни", "/prices/"), lead=""):
+def cta(title, text, primary=("Обговорити задачу", TG, True), secondary=("Подивитися ціни", "/prices/"), lead=""):
     return f'''<section class="sec sec--tight"><div class="wrap"><div class="cta" data-r>
   <div><h2 class="d2">{title}</h2><p>{text}</p></div>
   <div class="btns">{btn(primary[0], primary[1], ext=primary[2], lead=lead)}{btn(secondary[0], secondary[1], "ghost") if secondary else ""}</div>
@@ -245,6 +317,7 @@ def stamp_index():
     s = open(p, encoding="utf-8").read()
     new = re.sub(r'/assets/(lead\.css|lead\.js|reviews\.css)(\?v=[0-9a-f]+)?"',
                  lambda m: f'/assets/{m.group(1)}?v={_ver("assets/" + m.group(1))}"', s)
+    new = re.sub(r"<!-- PLANS:START -->.*?<!-- PLANS:END -->", lambda m: "<!-- PLANS:START -->\n" + plans_home_html() + "\n<!-- PLANS:END -->", new, flags=re.S)
     if new != s:
         open(p, "w", encoding="utf-8").write(new)
 

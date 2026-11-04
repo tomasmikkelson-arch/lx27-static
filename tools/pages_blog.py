@@ -130,7 +130,8 @@ def load():
     if not os.path.isdir(BLOG_DIR): return posts
     for fn in sorted(os.listdir(BLOG_DIR)):
         if not fn.endswith(".md"): continue
-        meta, body = parse(open(os.path.join(BLOG_DIR, fn), encoding="utf-8").read())
+        from build import fill_prices  # назви пакетів і ціни зі спільного джерела
+        meta, body = parse(fill_prices(open(os.path.join(BLOG_DIR, fn), encoding="utf-8").read()))
         if meta.get("draft") is True: continue
         d = _date(meta.get("date"))
         if d > date.today(): continue
@@ -141,7 +142,8 @@ def load():
         if isinstance(tags, str): tags = [t.strip() for t in tags.split(",") if t.strip()]
         posts.append(dict(meta=meta, slug=slugify(str(slug)) or "post", date=d, updated=_date(meta.get("updated") or d), html=html_body, toc=toc,
                           minutes=max(1, math.ceil(words / 180)), tags=tags, title=str(meta.get("title", "Без назви")),
-                          desc=str(meta.get("description", ""))[:300], category=str(meta.get("category", "Блог"))))
+                          desc=str(meta.get("description", ""))[:300], category=str(meta.get("category", "Блог")),
+                          seo_title=str(meta.get("seo_title") or ""), seo_desc=str(meta.get("seo_description") or meta.get("description", ""))[:300]))
     posts.sort(key=lambda p: p["date"], reverse=True)
     return posts
 
@@ -174,7 +176,7 @@ def post_page(p, posts):
   {p["html"]}
   <div class="chips" style="margin-top:30px">{tags}</div>
   <div class="cta" style="margin-top:40px;grid-template-columns:1fr"><div><h2 class="d2" style="font-size:clamp(22px,3vw,34px)">Потрібна допомога з дизайном?</h2><p>Розкажіть про задачу – відповімо протягом 2 годин у робочий час.</p></div>
-  <div class="btns">{btn("Обговорити проєкт", TG, ext=True, lead="Блог: " + p["title"])}</div></div>
+  <div class="btns">{btn("Обговорити задачу", TG, ext=True, lead="Блог: " + p["title"])}</div></div>
 </div></article>
 {f'<section class="sec sec--tight"><div class="wrap"><div class="sec__head"><div><span class="eyebrow">Блог</span><h2 class="d2">Читайте також</h2></div>{link_arr("Усі статті", "/blog/")}</div><div class="grid g3">{more_html}</div></div></section>' if more else ""}
 '''
@@ -184,7 +186,8 @@ def post_page(p, posts):
            "mainEntityOfPage": SITE + path, "image": img, "keywords": ", ".join(p["tags"]),
            "author": {"@type": "Person", "@id": SITE + "/about/#ihor", "name": "Ігор Ісиченко", "url": SITE + "/about/"},
            "publisher": {"@id": ORG_ID}, "wordCount": len(re.sub(r"<[^>]+>", " ", p["html"]).split())}
-    register(path, page(path, (f'{p["title"]} | Perseus' if len(p["title"]) <= 52 else p["title"]), p["desc"], body, active="/blog/", crumbs=crumbs,
+    t = p["seo_title"] or p["title"]
+    register(path, page(path, (f'{t} | Perseus' if len(t) <= 52 else t), p["seo_desc"], body, active="/blog/", crumbs=crumbs,
                         schema=[art], og_type="article", image=img, lastmod=p["updated"].isoformat()), "0.6", lastmod=p["updated"].isoformat())
 
 def index(posts):
@@ -197,15 +200,15 @@ def index(posts):
 <section class="hero" style="padding-bottom:30px"><div class="wrap">
   {crumbs_html(crumbs)}
   <span class="eyebrow">Блог</span>
-  <h1 class="d1" data-split style="margin-top:18px">Блог про дизайн і <em>SMM</em></h1>
-  <p class="lead" style="margin-top:22px">Практичні поради для малого бізнесу та громадських організацій: скільки коштує дизайн, як працювати з підрядником, як оформити матеріали за вимогами донорів.</p>
+  <h1 class="d1" data-split style="margin-top:18px">Блог <em>Perseus</em></h1>
+  <p class="lead" style="margin-top:22px">Як порахувати вартість дизайну, обрати формат співпраці й підготувати матеріали до роботи.</p>
 </div></section>
 <section class="sec sec--tight"><div class="wrap"><div class="grid g3">{cards}</div></div></section>
-{cta("Маєте питання по дизайну?", "Напишіть нам – відповімо і, можливо, напишемо про це статтю.", lead="Блог")}
+{cta("Маєте задачу або хочете порадитися щодо формату?", "Напишіть нам. Відповімо й підкажемо, з чого почати.", lead="Блог")}
 '''
     lst = {"@type": "Blog", "@id": SITE + path + "#blog", "url": SITE + path, "name": "Блог Perseus", "publisher": {"@id": ORG_ID},
            "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f'{SITE}/blog/{p["slug"]}/', "datePublished": p["date"].isoformat()} for p in posts]}
-    register(path, page(path, "Блог Perseus: графічний дизайн, SMM і брендинг для бізнесу та ГО",
+    register(path, page(path, "Блог Perseus про дизайн, соцмережі й рекламу для бізнесу та ГО",
                         "Статті про графічний дизайн, SMM, брендинг і рекламу для малого й середнього бізнесу та громадських організацій. Ціни, поради, чек-листи.",
                         body, active="/blog/", crumbs=crumbs, schema=[lst], lastmod=newest), "0.7", lastmod=newest)
 

@@ -109,7 +109,7 @@ def preview():
 <p class="lead" style="margin-top:18px">Службова сторінка (не індексується). Поки реальних відгуків немає, на головній показуються ці ж заглушки. Щойно в адмінці зʼявиться реальний відгук з позначкою «Клієнт погодився на публікацію», заглушки автоматично зміняться на справжні відгуки.</p>
 </div></section>
 {section(demo, demo=True)}'''
-    write("/reviews-preview/", page("/reviews-preview/", "Демо: відгуки – Perseus", "Службова сторінка.", body, noindex=True))
+    write("/reviews-preview/", page("/reviews-preview/", "Демо відгуків – Perseus", "Службова сторінка.", body, noindex=True))
 
 def build():
     inject_index()
