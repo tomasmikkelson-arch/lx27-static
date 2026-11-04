@@ -26,8 +26,8 @@
     '<div class="lm__box" role="dialog" aria-modal="true" aria-labelledby="lmTitle" data-lenis-prevent>'+
       '<button class="lm__close" type="button" data-close aria-label="Закрити">'+ic.x+'</button>'+
       '<aside class="lm__side"><span class="lm__eyebrow">Perseus Agency</span>'+
-        '<h2 class="lm__title" id="lmTitle">Що потрібно зробити?</h2>'+
-        '<p class="lm__intro">Оберіть послугу або опишіть задачу. Відповімо на контакт, який ви залишите.</p>'+
+        '<h2 class="lm__title" id="lmTitle">Отримати розрахунок</h2>'+
+        '<p class="lm__intro">Оберіть послугу або опишіть задачу. Надішлемо ціну й строки на ваш контакт.</p>'+
         '<span class="lm__ctx" id="lmCtxWrap" hidden><span id="lmCtx"></span><button type="button" class="lm__ctx-x" id="lmCtxX" aria-label="Прибрати вибір">×</button></span>'+
       '</aside>'+
       '<div class="lm__main">'+
