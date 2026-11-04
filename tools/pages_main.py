@@ -3,7 +3,7 @@ import os
 import json
 from build import (ROOT, SITE, TG, IG, LI, EMAIL, LEGAL, BRAND, ORG_ID, SERVICES, page, register, write, crumbs_html,
                    faq_html, faq_schema, cta, btn, btn_back, link_arr, icon, marquee, e, ARR,
-                   PLANS, UNITS, UNIT, ONEOFF, MODE_DESIGN, MODE_SMM, money, plan_limits)
+                   PLANS, UNITS, UNIT, ONEOFF, MODE_DESIGN, MODE_SMM, money, plan_limits, plan_extra)
 from scenes import scene, cover
 from pages_services import svc_card
 
@@ -124,7 +124,7 @@ def about():
 <section class="sec sec--tight"><div class="wrap">
   <h2 class="d2" style="margin-bottom:clamp(24px,3vw,40px)">Коротко про Perseus</h2>
   <div class="stats4">
-    <div class="card stat-card" data-r="1"><div class="n">10<sup>+</sup></div><p>років досвіду команди</p></div>
+    <div class="card stat-card" data-r="1"><div class="n">10<sup>+</sup></div><p>років роботи</p></div>
     <div class="card stat-card" data-r="2"><div class="n">180</div><p>реалізованих проєктів</p></div>
     <div class="card stat-card" data-r="3"><div class="n">7</div><p>напрямів роботи</p></div>
     <div class="card stat-card" data-r="4"><div class="n">2</div><p>формати співпраці: окремі проєкти й щомісячний супровід</p></div>
@@ -211,7 +211,7 @@ CALC_JS = r'''
     sw.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
     grid.classList.toggle('mode-smm',m==='smm');
     grid.querySelectorAll('[data-design]').forEach(function(s){s.textContent=fmt(s.getAttribute('data-'+m))});
-    grid.querySelectorAll('[data-plan]').forEach(function(a){a.setAttribute('data-lead','Пакет «'+a.getAttribute('data-plan')+'» ('+D.modes[m]+')')});
+    grid.querySelectorAll('[data-plan]').forEach(function(a){a.setAttribute('data-lead','Пакет «'+a.getAttribute('data-plan')+'» ('+D.modes[m]+')');a.setAttribute('data-lead-extra',a.getAttribute('data-extra-'+m))});
   });
   var mode='design',ms=document.getElementById('calcMode'),rows=document.querySelectorAll('.qty'),
       tot=document.getElementById('calcTotal'),totW=document.getElementById('calcTotalWrap'),line=document.getElementById('calcLine'),list=document.getElementById('calcList'),
@@ -223,7 +223,8 @@ CALC_JS = r'''
     var q={},d=0,parts=[];
     rows.forEach(function(r){var n=qty(r.querySelector('input'));q[r.dataset.k]=n;
       if(n>0){d+=n*(+r.dataset.p);parts.push(r.parentNode.querySelector('b').textContent+' × '+n)}});
-    var extra={'Режим':D.modes[mode],'Позиції':parts.join('; ')||'–','Сума дизайну':fmt(d)+' грн','Пакет':'індивідуальна оцінка'};
+    var extra={'Режим':D.modes[mode],'Позиції':parts.join('; ')||'–','Сума дизайну':fmt(d)+' грн','Пакет':'індивідуальна оцінка',
+      'Підсумок':mode==='smm'?fmt(d)+' грн за дизайн, ведення – оцінка окремо':fmt(d)+' грн'};
     hint.hidden=true;hintS.hidden=true;pb.setAttribute('data-lead','');pb.removeAttribute('data-lead-extra');
     cb.setAttribute('data-lead-extra',JSON.stringify(extra));
     if(!d){totW.hidden=true;line.textContent='Оберіть матеріали для розрахунку';list.textContent='';
@@ -246,7 +247,7 @@ CALC_JS = r'''
     }
     if(offer){
       hint.hidden=false;setTxt('Обрати «'+offer.p.name+'»');
-      var ex=Object.assign({},extra,{'Пакет':offer.p.name+' – '+fmt(offer.pr)+' грн/міс ('+D.modes[mode]+')'});
+      var ex=Object.assign({},extra,{'Пакет':offer.p.name+' ('+D.modes[mode]+')','Підсумок':fmt(offer.pr)+' грн/міс'});
       pb.setAttribute('data-lead','Пакет «'+offer.p.name+'» ('+D.modes[mode]+')');pb.setAttribute('data-lead-extra',JSON.stringify(ex));
     }
   }
@@ -270,7 +271,7 @@ def prices():
         style = "" if hot else "color:var(--on-light);border-color:rgba(19,29,30,.25)"
         pl += (f'<div class="plan{" plan--hot" if hot else ""}" data-r>{"<span class=\"badge\">Найчастіше обирають</span>" if hot else ""}<h3>{n}</h3>\n'
                f'<div class="sum"><span data-design="{p["design"]}" data-smm="{p["smm"]}">{money(p["design"])}</span> <small>грн / міс</small></div><p>{p["desc"]}</p><ul>{li}</ul>\n'
-               f'<a href="{TG}" target="_blank" rel="noopener" class="btn btn--{"ember" if hot else "ghost"}" data-lead="Пакет «{n}» ({MODE_DESIGN})" data-plan="{n}" style="{style}">'
+               f'<a href="{TG}" target="_blank" rel="noopener" class="btn btn--{"ember" if hot else "ghost"}" data-lead="Пакет «{n}» ({MODE_DESIGN})" data-plan="{n}" data-lead-extra="{e(plan_extra(p))}" data-extra-design="{e(plan_extra(p))}" data-extra-smm="{e(plan_extra(p, 'smm'))}" style="{style}">'
                f'<span class="roll"><span>Обрати пакет</span><span aria-hidden="true">Обрати пакет</span></span><span class="arr">{ARROW}</span></a></div>')
     rows = "".join(
         f'<div class="calc__row"><div><b>{n}</b><small>{s + " · " if s else ""}{money(pr)} грн</small></div>\n'

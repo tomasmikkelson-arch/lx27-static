@@ -20,7 +20,7 @@ LI = "https://www.linkedin.com/company/perseus-agency/"
 LEGAL = "ФОП Ісиченко Ігор Володимирович"
 TODAY = date.today().isoformat()
 # Дата останнього оновлення статичних сторінок (змінюйте вручну при правках текстів).
-SITE_UPDATED = "2026-11-05"
+SITE_UPDATED = "2026-11-06"
 import hashlib as _h
 def _ver(*files):
     m = _h.md5()
@@ -94,11 +94,11 @@ PLANS = [
          smm_extra=["Контент-план і тексти", "Публікація погоджених матеріалів"]),
     dict(key="plus", name="Plus", design=8900, smm=14900, posts=12, stories=20, creatives=4, hot=True,
          desc="Коли до звичних публікацій додається реклама.",
-         extra=["Усе, що входить у Starter", "Банери для сайту й розсилок"],
+         extra=["Банери для сайту й розсилок", "2 кола правок на макет"],
          smm_extra=["Тексти й відповіді на коментарі", "Звіт і розбір цифр щомісяця"]),
     dict(key="premium", name="Premium", design=14900, smm=22900, posts=20, stories=30, creatives=8, hot=False,
          desc="Для кількох паралельних кампаній і більшого обсягу публікацій.",
-         extra=["Усе, що входить у Plus", "До 5 погоджених задач з презентацій і друку", "Пріоритетна черга"],
+         extra=["До 5 погоджених задач з презентацій і друку", "Пріоритетна черга", "2 кола правок на макет"],
          smm_extra=["До 2 соцмереж на веденні", "План на наступний місяць"]),
 ]
 PLAN = {p["key"]: p for p in PLANS}
@@ -126,6 +126,12 @@ def plan_limits(p):
                f"{p['creatives']} рекламних креативів з трьома адаптаціями" if p["creatives"] else "Рекламні креативи оплачуються окремо")
     return out
 
+def plan_extra(p, mode="design"):
+    """Дані пакета для листа із заявкою й підсумку в pop-up."""
+    lim = "; ".join(plan_limits(p))
+    return json.dumps({"Пакет": p["name"], "Режим": MODE_SMM if mode == "smm" else MODE_DESIGN, "Що входить": lim,
+                       "Підсумок": f"{money(p['smm'] if mode == 'smm' else p['design'])} грн/міс"}, ensure_ascii=False)
+
 def plans_home_html():
     """Картки пакетів для головної (розмітка головної сторінки)."""
     out = []
@@ -140,7 +146,7 @@ def plans_home_html():
         <p class="plan__desc">{p['desc']}</p>
         <ul>{li}
         </ul>
-        <a href="{TG}" class="btn btn--{kind}" data-lead="Пакет «{p['name']}» ({MODE_DESIGN})" data-plan="{p['name']}"><span class="roll"><span>Обрати пакет</span><span>Обрати пакет</span></span></a>
+        <a href="{TG}" class="btn btn--{kind}" data-lead="Пакет «{p['name']}» ({MODE_DESIGN})" data-plan="{p['name']}" data-lead-extra="{e(plan_extra(p))}" data-extra-smm="{e(plan_extra(p, 'smm'))}" data-extra-design="{e(plan_extra(p))}"><span class="roll"><span>Обрати пакет</span><span>Обрати пакет</span></span></a>
       </div>''')
     return "\n".join(out)
 
@@ -199,7 +205,7 @@ ORG_ID = SITE + "/#org"
 def org_schema():
     return {
         "@type": ["Organization", "ProfessionalService"], "@id": ORG_ID,
-        "name": BRAND, "alternateName": ["Perseus", "Персей", "Perseus Digital Studio", "Агенція візуальної комунікації Perseus"],
+        "name": BRAND, "alternateName": ["Perseus", "Персей", "Агенція візуальної комунікації Perseus"],
         "legalName": LEGAL, "url": SITE + "/", "email": EMAIL,
         "logo": {"@type": "ImageObject", "url": SITE + "/assets/icons/icon-512.png", "width": 512, "height": 512},
         "image": OG_IMG,
@@ -288,7 +294,7 @@ def faq_schema(items):
     strip = lambda s: re.sub(r"<[^>]+>", "", s)
     return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in items]}
 
-def cta(title, text, primary=("Обговорити задачу", TG, True), secondary=("Подивитися ціни", "/prices/"), lead=""):
+def cta(title, text, primary=("Обговорити задачу", TG, True), secondary=("Переглянути ціни", "/prices/"), lead=""):
     return f'''<section class="sec sec--tight"><div class="wrap"><div class="cta" data-r>
   <div><h2 class="d2">{title}</h2><p>{text}</p></div>
   <div class="btns">{btn(primary[0], primary[1], ext=primary[2], lead=lead)}{btn(secondary[0], secondary[1], "ghost") if secondary else ""}</div>

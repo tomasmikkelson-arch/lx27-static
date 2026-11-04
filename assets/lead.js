@@ -34,6 +34,7 @@
       '</aside>'+
       '<div class="lm__main">'+
         '<form class="lm__form" novalidate>'+
+          '<div class="lm__order" id="lmOrder" hidden></div>'+
           '<fieldset><legend>Що вас цікавить?</legend><div class="lm__chips">'+chips('svc',SERVICES,'checkbox')+'</div></fieldset>'+
           '<div><label class="lm__lbl" for="lmTask">Коротко про задачу</label><textarea id="lmTask" name="task" placeholder="Що ви плануєте? Якщо вже відомі обсяг або бажана дата, їх теж можна вказати"></textarea></div>'+
           '<div><label class="lm__lbl" for="lmContact">Куди вам відповісти?</label><input type="text" id="lmContact" name="contact" autocomplete="email" placeholder="Email, Telegram або телефон"></div>'+
@@ -97,9 +98,23 @@
       .catch(function(){err.innerHTML='Не вдалося надіслати повідомлення. Спробуйте ще раз або напишіть на <a href="mailto:'+MAIL+'" style="color:inherit;text-decoration:underline">'+MAIL+'</a>.'})
       .then(function(){btn.disabled=false;btn.textContent='Надіслати'});
   }
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  // Підсумок вибору (пакет або розрахунок із калькулятора): показуємо в pop-up і передаємо в лист.
+  function renderOrder(){
+    var box=root.querySelector('#lmOrder'),x=root._extra;
+    if(!x||!x['Підсумок']){box.hidden=true;box.innerHTML='';return}
+    var rows='';
+    if(x['Пакет']&&x['Пакет']!=='індивідуальна оцінка')rows+='<div><dt>Пакет</dt><dd>'+esc(x['Пакет'])+(x['Режим']&&String(x['Пакет']).indexOf(x['Режим'])<0?' · '+esc(x['Режим']):'')+'</dd></div>';
+    else if(x['Режим'])rows+='<div><dt>Режим</dt><dd>'+esc(x['Режим'])+'</dd></div>';
+    var items=x['Що входить']||x['Позиції'];
+    if(items&&items!=='–')rows+='<div><dt>'+(x['Що входить']?'Що входить':'Матеріали')+'</dt><dd><ul>'+String(items).split(/;\s*/).map(function(i){return '<li>'+esc(i)+'</li>'}).join('')+'</ul></dd></div>';
+    box.innerHTML='<p class="lm__order-t">Ваш вибір</p><dl>'+rows+'</dl><p class="lm__order-sum"><span>Разом</span><b>'+esc(x['Підсумок'])+'</b></p>';
+    box.hidden=false;
+  }
   function setCtx(ctx,extra){
     root._ctx=ctx||'';root._extra=extra||null;
     root.querySelector('#lmCtx').textContent=root._ctx;root.querySelector('#lmCtxWrap').hidden=!root._ctx;
+    renderOrder();
   }
   // Попередній вибір доповнює вже введене: нічого не стирає, лише позначає послугу за контекстом.
   function preselect(ctx){
