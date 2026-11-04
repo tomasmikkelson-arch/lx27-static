@@ -276,6 +276,7 @@ def page(path, title, desc, body, active=None, crumbs=None, schema=None, og_type
 {footer()}
 <script src="/assets/site.js?v={_ver("assets/site.js")}" defer></script>
 <script src="/assets/lead.js?v={_ver("assets/lead.js")}" defer></script>
+<script src="/assets/footer-sky.js?v={_ver("assets/footer-sky.js")}" defer></script>
 </body>
 </html>
 '''
@@ -321,7 +322,7 @@ def stamp_index():
     """Додає ?v=<хеш> до спільних файлів на головній, щоб браузер не брав застарілу версію з кешу."""
     p = os.path.join(ROOT, "index.html")
     s = open(p, encoding="utf-8").read()
-    new = re.sub(r'/assets/(lead\.css|lead\.js|reviews\.css)(\?v=[0-9a-f]+)?"',
+    new = re.sub(r'/assets/(lead\.css|lead\.js|reviews\.css|footer-sky\.js)(\?v=[0-9a-f]+)?"',
                  lambda m: f'/assets/{m.group(1)}?v={_ver("assets/" + m.group(1))}"', s)
     new = re.sub(r"<!-- PLANS:START -->.*?<!-- PLANS:END -->", lambda m: "<!-- PLANS:START -->\n" + plans_home_html() + "\n<!-- PLANS:END -->", new, flags=re.S)
     if new != s:

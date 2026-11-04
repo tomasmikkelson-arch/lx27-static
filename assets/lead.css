@@ -108,3 +108,4 @@ html.lm-lock,html.lm-lock body{overflow:hidden}
 .lm__main{padding:26px 32px 30px}
 .lm__form>.lm__order{margin-top:0}
 @media (max-width:820px){.lm__side{padding:22px 70px 20px 20px}.lm__close{top:14px;right:14px}.lm__main{padding:22px 20px calc(24px + env(safe-area-inset-bottom,0px))}}
+.lm.done .lm__intro,.lm.done .lm__ctx{display:none}
