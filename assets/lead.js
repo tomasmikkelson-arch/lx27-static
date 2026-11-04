@@ -7,7 +7,7 @@
    Під Google Ads / Meta: при надсиланні пушиться подія lead_submit у dataLayer і fbq('track','Lead'), якщо їх підключено.
    Особисті дані (імʼя, контакт, текст задачі) в аналітику не передаються. */
 (function(){
-  var TG='https://t.me/perseus_agency', MAIL='hello@perseus.studio';
+  var TG='https://t.me/perseus_agency';
   // Заявки надсилаються на пошту через FormSubmit (formsubmit.co). Першу заявку сервіс надішле як лист з кнопкою активації.
   var ENDPOINT='https://formsubmit.co/ajax/tomas.mikkelson@gmail.com';
   var SERVICES=['Дизайн-супровід','Логотип і фірмовий стиль','Дизайн дописів і сторіз','Ведення соцмереж','Презентація','Рекламні креативи','Поліграфія та верстка','Сайт під ключ','Поки хочу порадитися'];
@@ -26,11 +26,9 @@
     '<div class="lm__box" role="dialog" aria-modal="true" aria-labelledby="lmTitle" data-lenis-prevent>'+
       '<button class="lm__close" type="button" data-close aria-label="Закрити">'+ic.x+'</button>'+
       '<aside class="lm__side"><span class="lm__eyebrow">Perseus Agency</span>'+
-        '<h2 class="lm__title" id="lmTitle">Обговорімо вашу задачу</h2>'+
-        '<p class="lm__intro">Можна обрати послугу або описати своїми словами, що ви плануєте. Залиште контакт, за яким вам зручно отримати відповідь.</p>'+
+        '<h2 class="lm__title" id="lmTitle">Що потрібно зробити?</h2>'+
+        '<p class="lm__intro">Оберіть послугу або опишіть задачу. Відповімо на контакт, який ви залишите.</p>'+
         '<span class="lm__ctx" id="lmCtxWrap" hidden><span id="lmCtx"></span><button type="button" class="lm__ctx-x" id="lmCtxX" aria-label="Прибрати вибір">×</button></span>'+
-        '<ul class="lm__pts"><li>Відповідаємо протягом 2 годин у робочий час</li><li>Перший дзвінок і оцінка – безкоштовно</li><li>Фіксуємо обсяг і ціну до старту</li><li>Працюємо за договором з ФОП, є акти для бухгалтерії та донорів</li></ul>'+
-        '<div class="lm__direct"><a href="'+TG+'" target="_blank" rel="noopener" data-direct="telegram">Telegram <span>@perseus_agency</span></a><a href="mailto:'+MAIL+'" data-direct="email">Email <span>'+MAIL+'</span></a></div>'+
       '</aside>'+
       '<div class="lm__main">'+
         '<form class="lm__form" novalidate>'+
@@ -62,7 +60,6 @@
     var form=root.querySelector('form');
     form.addEventListener('submit',function(e){e.preventDefault();send()});
     root.querySelector('#lmCtxX').addEventListener('click',function(){setCtx('',null)});
-    root.querySelectorAll('[data-direct]').forEach(function(a){a.addEventListener('click',function(){track(a.getAttribute('data-direct')+'_direct')})});
   }
   function val(n){var f=root.querySelector('form');return Array.prototype.map.call(f.querySelectorAll('[name="'+n+'"]:checked'),function(x){return x.value})}
   function track(method){
@@ -95,7 +92,7 @@
     fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
       .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||j.success===false||j.success==='false')throw new Error(j.message||r.status);return j})})
       .then(function(){track('form');root.classList.add('done');f.reset();setCtx('',null);var c=root.querySelector('.lm__ok [data-close]');c&&setTimeout(function(){c.focus()},50)})
-      .catch(function(){err.innerHTML='Не вдалося надіслати повідомлення. Спробуйте ще раз або напишіть на <a href="mailto:'+MAIL+'" style="color:inherit;text-decoration:underline">'+MAIL+'</a>.'})
+      .catch(function(){err.textContent='Не вдалося надіслати повідомлення. Перевірте інтернет-зʼєднання й спробуйте ще раз.'})
       .then(function(){btn.disabled=false;btn.textContent='Надіслати'});
   }
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
