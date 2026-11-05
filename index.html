@@ -583,7 +583,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cta-big:hover::before{transform:scale(1.02)}
 .cta-big{transition:box-shadow .6s var(--ease)}
 .cta-big:hover{box-shadow:0 0 0 8px rgba(205,176,255,.45)}
-.cta-big .ast{position:absolute;right:20px;top:16px;width:26px;height:26px}
+.cta-big>span{position:relative}.cta-big .ast{position:absolute;left:100%;top:-.6em;margin-left:.2em;width:.85em;height:.85em;animation:astSpin 8s linear infinite}@keyframes astSpin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.cta-big .ast{animation:none}}
 .fcard__bottom{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px);padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line)}
 .flogo{display:grid;place-items:center;max-width:260px;align-self:start}
 .flogo svg{width:100%;height:auto;display:block;overflow:visible}
@@ -1298,8 +1298,7 @@ body{line-height:1.75;letter-spacing:.012em}
         <h2 class="split">Розкажіть нам про <em>задачу</em></h2>
         <span class="fcard__divider"></span>
         <a href="https://t.me/perseus_agency" target="_blank" rel="noopener" class="cta-big" data-magnetic data-cursor="Пишіть" data-lead="">
-          <span>Обговорити<br>задачу</span>
-          <svg class="ast" id="ast" viewBox="0 0 24 24"><g stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1"/></g></svg>
+          <span>Обговорити<br>задачу<svg class="ast" id="ast" viewBox="0 0 24 24"><g stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1"/></g></svg></span>
         </a>
       </div>
       <div class="fcard__bottom">
@@ -1563,7 +1562,6 @@ body{line-height:1.75;letter-spacing:.012em}
   gsap.to('#orbit .ring:not(.r2)', { rotation: -360, duration: 60, repeat: -1, ease: 'none' });
   gsap.to('#badgeTxt', { rotation: 360, duration: 16, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
   gsap.to('.shapes-pill .spin', { rotation: 360, duration: 6, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
-  gsap.to('#ast', { rotation: 360, duration: 8, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
   gsap.to('.chip', { yPercent: 22, duration: 2.4, ease: 'sine.inOut', repeat: -1, yoyo: true, stagger: { each: .5 } });
   gsap.to('#flStatue', { y: -40, duration: 3, ease: 'sine.inOut', repeat: -1, yoyo: true });
 
@@ -1801,7 +1799,7 @@ var k=b.getAttribute('data-mode');document.querySelectorAll('[data-plan]').forEa
 document.addEventListener('click',function(e){var c=e.target.closest('[data-cookie-settings]');if(!c)return;e.preventDefault();
 if(typeof window.openCookieSettings==='function'){window.openCookieSettings();return}location.href='/privacy/#consent'});
 </script>
-<script src="/assets/footer-sky.js?v=9abd95b5" defer></script>
+<script src="/assets/footer-sky.js?v=37da7c79" defer></script>
 <script src="/assets/lead.js?v=da352f04" defer></script>
 </body>
 </html>

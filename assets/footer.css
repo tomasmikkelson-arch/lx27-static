@@ -11,7 +11,7 @@
 .cta-big:hover::before{transform:scale(1.02)}
 .cta-big{transition:box-shadow .6s var(--ease)}
 .cta-big:hover{box-shadow:0 0 0 8px rgba(205,176,255,.45)}
-.cta-big .ast{position:absolute;right:20px;top:16px;width:26px;height:26px}
+.cta-big>span{position:relative}.cta-big .ast{position:absolute;left:100%;top:-.6em;margin-left:.2em;width:.85em;height:.85em;animation:astSpin 8s linear infinite}@keyframes astSpin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.cta-big .ast{animation:none}}
 .fcard__bottom{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px);padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line)}
 .flogo{display:grid;place-items:center;max-width:260px;align-self:start}
 .flogo svg{width:100%;height:auto;display:block;overflow:visible}
